@@ -1,0 +1,679 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>5</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1265</x>
+      <y>780</y>
+      <w>105</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>ReadLL
+Package::DataHandler
+--
+group=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1140</x>
+      <y>710</y>
+      <w>105</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>LidarHandler
+Package::DataHandler
+--
+group=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1265</x>
+      <y>710</y>
+      <w>105</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>SensorHandler
+Package::DataHandler
+--
+group=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1390</x>
+      <y>710</y>
+      <w>105</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>PositionHandler
+Package::DataHandler
+--
+group=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>990</x>
+      <y>580</y>
+      <w>105</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>OrderWrapper
+Package::Data
+--
+
+group=2
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>990</x>
+      <y>640</y>
+      <w>105</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>SendLL
+Package::Data
+--
+
+group=2
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1035</x>
+      <y>615</y>
+      <w>15</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+group=2
+layer=2</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>990</x>
+      <y>520</y>
+      <w>105</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Robot
+Package::Data
+--
+
+group=2
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1035</x>
+      <y>555</y>
+      <w>15</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+group=2
+layer=2</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>510</x>
+      <y>580</y>
+      <w>105</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Graphe
+Package::Data
+--
+group=2
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>700</x>
+      <y>580</y>
+      <w>105</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Table
+Package::Data
+--
+group=2
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>610</x>
+      <y>600</y>
+      <w>100</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-&gt;
+group=2
+layer=2</panel_attributes>
+    <additional_attributes>10.0;10.0;180.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>435</x>
+      <y>475</y>
+      <w>670</w>
+      <h>355</h>
+    </coordinates>
+    <panel_attributes>Data
+--
+bg=white
+group=2
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>825</x>
+      <y>655</y>
+      <w>105</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Obstacle
+Package::Data
+--
+group=2
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>780</x>
+      <y>615</y>
+      <w>105</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+group=2
+layer=2</panel_attributes>
+    <additional_attributes>10.0;10.0;190.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>815</x>
+      <y>690</y>
+      <w>45</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+group=2
+layer=2</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>760</x>
+      <y>715</y>
+      <w>105</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>ObstacleCircular
+Package::Data
+--
+group=2
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>890</x>
+      <y>715</y>
+      <w>105</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>ObstacleRectangular
+Package::Data
+--
+group=2
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>900</x>
+      <y>690</y>
+      <w>55</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+group=2
+layer=2</panel_attributes>
+    <additional_attributes>10.0;10.0;90.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>700</x>
+      <y>655</y>
+      <w>105</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>GameElement
+Package::Data
+--
+group=2
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>740</x>
+      <y>615</y>
+      <w>15</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+group=2
+layer=2</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>760</x>
+      <y>780</y>
+      <w>105</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Ennemy
+Package::Data
+--
+group=2
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>805</x>
+      <y>750</y>
+      <w>15</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>445</x>
+      <y>655</y>
+      <w>105</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Ridge
+Package::Data
+--
+group=2
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>575</x>
+      <y>655</y>
+      <w>105</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Node
+Package::Data
+--
+group=2
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>495</x>
+      <y>615</y>
+      <w>55</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+group=2
+layer=2</panel_attributes>
+    <additional_attributes>90.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>575</x>
+      <y>615</y>
+      <w>60</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+group=2
+layer=2</panel_attributes>
+    <additional_attributes>10.0;10.0;100.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>445</x>
+      <y>775</y>
+      <w>105</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>XYO
+Package::Data
+--
+group=2
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1185</x>
+      <y>740</y>
+      <w>120</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+group=1</panel_attributes>
+    <additional_attributes>10.0;10.0;220.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1310</x>
+      <y>740</y>
+      <w>15</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+group=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1330</x>
+      <y>740</y>
+      <w>125</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+group=1</panel_attributes>
+    <additional_attributes>230.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>1125</x>
+      <y>685</y>
+      <w>400</w>
+      <h>145</h>
+    </coordinates>
+    <panel_attributes>DataHandler
+--
+bg=blue
+group=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>440</x>
+      <y>170</y>
+      <w>470</w>
+      <h>280</h>
+    </coordinates>
+    <panel_attributes>MovementManager
+--
+bg=blue
+group=3</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>950</x>
+      <y>110</y>
+      <w>580</w>
+      <h>340</h>
+    </coordinates>
+    <panel_attributes>Strategy
+--
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>755</x>
+      <y>380</y>
+      <w>130</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>ReadOrder
+Package::MovementManager
+--
+layer=1
+group=3</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>470</x>
+      <y>315</y>
+      <w>130</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>LPA*
+Package::MovementManager
+--
+layer=1
+group=3</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>470</x>
+      <y>380</y>
+      <w>130</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>PathFollower
+Package::MovementManager
+--
+layer=1
+group=3</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>615</x>
+      <y>225</y>
+      <w>130</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>MovementManager
+Package::MovementManager
+--
+layer=1
+group=3</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>530</x>
+      <y>255</y>
+      <w>125</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+group=3</panel_attributes>
+    <additional_attributes>230.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>710</x>
+      <y>255</y>
+      <w>115</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+group=3</panel_attributes>
+    <additional_attributes>10.0;10.0;210.0;250.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>525</x>
+      <y>345</y>
+      <w>15</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+group=3</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>980</x>
+      <y>315</y>
+      <w>100</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>AtomicAction
+Package::Strategy
+--
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>980</x>
+      <y>195</y>
+      <w>100</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>ScriptManager ?
+Package::Strategy
+--
+layer=0</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>980</x>
+      <y>255</y>
+      <w>100</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>/AbstractScript/
+Package::Strategy
+--
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1180</x>
+      <y>150</y>
+      <w>105</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>IA
+Package::Strategy
+--
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1180</x>
+      <y>385</y>
+      <w>105</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>SendOrder
+Package::Strategy
+--
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>385</x>
+      <y>45</y>
+      <w>1200</w>
+      <h>825</h>
+    </coordinates>
+    <panel_attributes>Fonctionnel !
+--
+bg=gray</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>0</x>
+      <y>560</y>
+      <w>215</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>Simulateur ?</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>0</x>
+      <y>145</y>
+      <w>215</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>Interface Graphique ?</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
