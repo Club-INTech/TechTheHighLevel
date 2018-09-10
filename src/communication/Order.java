@@ -1,6 +1,6 @@
 package communication;
 
-enum Order {
+public enum Order {
 
     Test("test"),
     GoTo("goto"),

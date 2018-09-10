@@ -1,30 +1,42 @@
 package communication;
 
 import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 
-public class TCPIPServer extends AbstractComm{
+
+public class TCPIPClient extends AbstractComm{
 
     private int port;
+    private String ip;
     private BufferedReader listeningData;
     private PrintWriter sendingData;
     private String messageToSend;
 
-    /** Fonction permettant d'accepter la première connexion venant sur le port spécifié */
-    private void acceptConnection(){
-        ServerSocket serverSocket;
+
+    private void connectTo(){
         Socket connectionSocket;
         try {
-            //On initialise le socket en mode serveur
-            serverSocket = new ServerSocket(this.port);
+            //On crée la socket
+            SocketAddress address;
 
-            System.out.println("test");
+            connectionSocket = new Socket();
+            address = new InetSocketAddress(this.ip, this.port);
 
-            //Méthode bloquante
-            connectionSocket = serverSocket.accept();
 
-            System.out.println("test2");
+            while (!connectionSocket.isConnected()) {
+                try {
+                    connectionSocket.connect(address);
+                }
+                catch(IOException e){
+                    connectionSocket = new Socket();
+                    address = new InetSocketAddress(this.ip, this.port);
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            }
 
             //On définit les canaux d'entrée et de sortie
             this.listeningData = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
@@ -64,9 +76,10 @@ public class TCPIPServer extends AbstractComm{
     }
 
     /** Constructeur */
-    public TCPIPServer(int port){
-        this.port=port; //On spécifie uniquement le port sur lequel on attend les connexions
-        acceptConnection(); //On gère l'acceptation de la première connexion
+    public TCPIPClient(String ip, int port){
+        this.ip = ip; //On spécifie l'IP sur laquelle on se connecte
+        this.port = port; //On spécifie le port sur lequel on se connecte
+        connectTo(); //On gère la demande de connexion
         listen(); //On lance le listener
     }
 
