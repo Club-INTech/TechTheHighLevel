@@ -4,7 +4,7 @@ import communication.AbstractComm;
 import communication.Order;
 import communication.TCPIPClient;
 
-public class TCPIPCommunicationTest {
+public class TCPIPCommunicationClient {
 
     public static void main(String[] ip) {
         if (ip.length>1) {
@@ -22,7 +22,8 @@ public class TCPIPCommunicationTest {
             }
         }
         else{
-            System.out.println("L'argument doit être une unique chaîne de caractères représentant l'IP du serveur");
+            System.out.println("L'argument doit être une unique chaîne de caractères représentant l'ip");
         }
+
     }
 }
