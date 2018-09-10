@@ -314,7 +314,7 @@ xcuserdata/
 # Executables
 Supprimerait .gitignore
 Supprimerait .idea/
-Supprimerait highlevel-techthelunatic.iml
+Supprimerait TechTheHighLevel.iml
 Supprimerait out/
 /.idea/compiler.xml
 /.idea/misc.xml
