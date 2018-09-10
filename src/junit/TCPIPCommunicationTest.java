@@ -7,7 +7,7 @@ import communication.TCPIPServer;
 
 public class TCPIPCommunicationTest {
 
-    public static void main(String[] args) {
+    public static void main(String[] ip) {
         Thread thread = new Thread() {
             @Override
             public void run() {
