@@ -1,8 +1,11 @@
 package communication;
 
-enum Order {
+public enum Order {
 
     Test("test"),
+    Test1("test1"),
+    Test2("test2"),
+    Test3("test3"),
     GoTo("goto"),
     TurnToPoint("turntopoint"),
     TurnToAngle("turntoangle"),
@@ -14,7 +17,7 @@ enum Order {
     private int millisecondsToComplete;
 
     Order(String orderStr){
-        this(orderStr, 1);
+        this(orderStr, 0);
     }
 
     Order(String orderStr, int millisecondsToComplete){
