@@ -1,5 +1,6 @@
 package data;
 
+/** Correspond à une base de données des variables à propos du robot */
 public enum RobotState {
 
     //Exemples
@@ -15,10 +16,12 @@ public enum RobotState {
         this.dataObject=dataObject;
     }
 
+    /** Renvoie la valeur de la variable */
     public <T> T getData(){
         return (T)this.dataObject.getValue();
     }
 
+    /** Affecte une valeur à la variable */
     public <T> void setData(T value){
         this.dataObject.setValue(value);
     }
