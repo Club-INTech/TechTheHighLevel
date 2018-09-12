@@ -3,7 +3,7 @@ package junit;
 import communication.AbstractComm;
 import communication.TCPIPServer;
 
-public class TCPIPCommunicationServer {
+public class JUnit_TCPIPCommunicationServer {
 
     public static void main(String[] args) {
         Thread thread = new Thread() {

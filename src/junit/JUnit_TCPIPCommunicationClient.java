@@ -4,7 +4,7 @@ import communication.AbstractComm;
 import communication.Order;
 import communication.TCPIPClient;
 
-public class TCPIPCommunicationClient {
+public class JUnit_TCPIPCommunicationClient {
 
     public static void main(String[] ip) {
         if (ip.length>1) {
