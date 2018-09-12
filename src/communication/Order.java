@@ -15,6 +15,11 @@ public enum Order {
     TurnToAngle("turntoangle"),
 
 
+    Montlhery("montlhery"),
+    Avance("av"),
+    Recule("rc"),
+    Stop("sstop"),
+
     ;
 
     private String orderStr;
