@@ -1,5 +1,9 @@
 package communication;
 
+import config.ConfigData;
+import config.ConfigInstance;
+import pfg.config.Config;
+
 public enum Order {
 
     Test("test"),
@@ -16,13 +20,20 @@ public enum Order {
     private String orderStr;
     private int millisecondsToComplete;
 
+    private Config config = ConfigInstance.getConfig();
+
     Order(String orderStr){
-        this(orderStr, 0);
+        this(orderStr, -1);
     }
 
     Order(String orderStr, int millisecondsToComplete){
         this.orderStr=orderStr;
-        this.millisecondsToComplete=millisecondsToComplete;
+        if (millisecondsToComplete>-1) {
+            this.millisecondsToComplete = millisecondsToComplete;
+        }
+        else{
+            this.millisecondsToComplete = config.getInt(ConfigData.ETHERNET_DEFAULT_DELAY);
+        }
     }
 
     public String getOrderStr(){

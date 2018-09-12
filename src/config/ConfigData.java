@@ -1,4 +1,4 @@
-package data;
+package config;
 
 import pfg.config.ConfigInfo;
 
