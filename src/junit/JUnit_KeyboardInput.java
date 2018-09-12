@@ -24,13 +24,30 @@ public class JUnit_KeyboardInput {
                     if (keyboard.isRightPressed()){
                         System.out.println("right");
                     }
+                    if (keyboard.isCPressed()){
+                        System.out.println("C");
+                    }
+                    if (keyboard.isPPressed()){
+                        System.out.println("P");
+                    }
+                    if (keyboard.isVPressed()){
+                        System.out.println("V");
+                    }
+                    if (keyboard.isWPressed()){
+                        System.out.println("W");
+                    }
+                    if (keyboard.isXPressed()){
+                        System.out.println("X");
+                    }
+                    if (keyboard.isSpacePressed()){
+                        System.out.println("Space");
+                    }
                     if (keyboard.isEscapePressed()){
                         keyboard.getFrame().setVisible(false);
                         keyboard.getFrame().dispose();
                         throw new InterruptedException();
                     }
 
-                    
                     Thread.sleep(20);
                 }
             }

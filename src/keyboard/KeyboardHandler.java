@@ -6,22 +6,20 @@ import java.lang.reflect.InvocationTargetException;
 
 public class KeyboardHandler extends Thread {
 
-    private static KeyboardInputFrame frame;
+    private static InputFrame frame;
     public KeyboardHandler() {
         try {
-            SwingUtilities.invokeAndWait(new Runnable() {
-                public void run () {
-                    frame = new KeyboardInputFrame();
-                    frame.setFocusable(true);
-                    frame.setFocusTraversalKeysEnabled(false);
-                    frame.setTitle("Robot control interface");
-                    frame.setResizable(false);
-                    frame.setSize(300, 200);
-                    frame.setMinimumSize(new Dimension(300, 200));
-                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    frame.pack();
-                    frame.setVisible(true);
-                }
+            SwingUtilities.invokeAndWait(() -> {
+                frame = new InputFrame();
+                frame.setFocusable(true);
+                frame.setFocusTraversalKeysEnabled(false);
+                frame.setTitle("Robot control interface");
+                frame.setResizable(false);
+                frame.setSize(300, 200);
+                frame.setMinimumSize(new Dimension(300, 200));
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
             });
         } catch (InterruptedException | InvocationTargetException e) {
             e.printStackTrace();
@@ -40,6 +38,13 @@ public class KeyboardHandler extends Thread {
     public boolean isRightPressed(){
         return frame.isRightPressed;
     }
+    public boolean isSpacePressed(){ return frame.isSpacePressed; }
+    public boolean isCPressed(){ return frame.isCPressed; }
+    public boolean isPPressed(){ return frame.isPPressed; }
+    public boolean isVPressed(){ return frame.isVPressed; }
+    public boolean isWPressed(){ return frame.isWPressed; }
+    public boolean isXPressed(){ return frame.isXPressed; }
+
     public boolean isEscapePressed(){ return frame.isEscapePressed; }
 
 }
