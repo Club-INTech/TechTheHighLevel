@@ -15,26 +15,27 @@ public class TCPIPClient extends TCPIPAbstract{
     private String ip;
     private Socket socket;
 
+    /** Fonction permettant de se connecter à l'IP choisie*/
     private void connectTo(){
         try {
             //On crée la socket
             SocketAddress address;
 
-            this.socket = new Socket();
-            address = new InetSocketAddress(this.ip, this.port);
+            this.socket = new Socket(); //On crée une nouvelle socket
+            address = new InetSocketAddress(this.ip, this.port); //On crée l'objet contenant adresse à laquelle on veut se connecter
 
 
             while (!this.socket.isConnected()) {
                 try {
-                    this.socket.connect(address);
+                    this.socket.connect(address); //On essaye de se connecter
                 }
-                catch(IOException e){
-                    this.socket = new Socket();
+                catch(IOException e){ //Si on n'a pas réussi à se connecter
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(100); //On attend 100ms
                     } catch (InterruptedException e1) {
                         e1.printStackTrace();
                     }
+                    this.socket = new Socket(); //On recrée la socket
                 }
             }
 
@@ -46,6 +47,7 @@ public class TCPIPClient extends TCPIPAbstract{
         }
     }
 
+    /** Fonction permettant de fermer la socket proprement */
     public void close(){
         try {
             synchronized (synchronizedThread) {
