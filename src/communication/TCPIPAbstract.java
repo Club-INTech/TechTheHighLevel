@@ -12,6 +12,7 @@ public class TCPIPAbstract extends AbstractComm{
     protected PrintWriter sendingData;
     protected Thread listeningThread;
     private String messageToSend;
+    private String receivedMessage;
 
     @Override
     /** Fonction permettant d'envoyer un order au client */
@@ -39,14 +40,12 @@ public class TCPIPAbstract extends AbstractComm{
     protected void listen() {
         /** Listener */
         this.listeningThread = new Thread(){
-            BufferedReader listeningData;
-            String receivedMessage;
             @Override
             public void run() {
                 while (!Thread.currentThread().isInterrupted()) {
                     try {
-                        this.receivedMessage = this.listeningData.readLine();
-                        messageHandler(this.receivedMessage);
+                        receivedMessage = listeningData.readLine();
+                        messageHandler(receivedMessage);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
