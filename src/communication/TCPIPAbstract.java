@@ -17,11 +17,13 @@ public class TCPIPAbstract extends AbstractComm{
 
     @Override
     /** Fonction permettant d'envoyer un order au client */
-    public void send(Order order, boolean waitForCompletion, String... parameters) {
+    public void send(Order order, boolean waitForCompletion, String... parameters)
+    {
 
         //On forme le message
         this.messageToSend=order.getOrderStr();
-        for (String param : parameters){
+        for (String param : parameters)
+        {
             this.messageToSend += " " + param;
         }
 
@@ -29,9 +31,12 @@ public class TCPIPAbstract extends AbstractComm{
         this.sendingData.println(this.messageToSend);
 
         //On attend le temps que l'ordre met pour se réaliser
-        try {
+        try
+        {
             Thread.sleep(order.getTimeToComplete());
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e)
+        {
             e.printStackTrace();
         }
     }
@@ -42,25 +47,33 @@ public class TCPIPAbstract extends AbstractComm{
         /** Listener */
         this.listeningThread = new Thread(){
             @Override
-            public void run() {
-                while (true) {
-                    synchronized (synchronizedThread) {
-                        if (!Thread.currentThread().isInterrupted()) {
-                            try {
+            public void run()
+            {
+                while (true)
+                {
+                    try
+                    {
+                        synchronized (synchronizedThread)
+                        {
+                            if (!Thread.currentThread().isInterrupted())
+                            {
                                 receivedMessage = listeningData.readLine();
-                                messageHandler(receivedMessage);
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                            }
+                            else
+                            {
+                                break;
                             }
                         }
-                        else{
-                            break;
-                        }
+                        messageHandler(receivedMessage);
+                    }
+                    catch (IOException e)
+                    {
+                        e.printStackTrace();
                     }
                 }
             }
         };
-        listeningThread.start();
+        this.listeningThread.start();
     }
 
     /** Constructeur */
