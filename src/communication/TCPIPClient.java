@@ -13,23 +13,23 @@ import java.net.InetSocketAddress;
 public class TCPIPClient extends TCPIPAbstract{
 
     private String ip;
+    private Socket socket;
 
     private void connectTo(){
-        Socket connectionSocket;
         try {
             //On crée la socket
             SocketAddress address;
 
-            connectionSocket = new Socket();
+            this.socket = new Socket();
             address = new InetSocketAddress(this.ip, this.port);
 
 
-            while (!connectionSocket.isConnected()) {
+            while (!this.socket.isConnected()) {
                 try {
-                    connectionSocket.connect(address);
+                    this.socket.connect(address);
                 }
                 catch(IOException e){
-                    connectionSocket = new Socket();
+                    this.socket = new Socket();
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e1) {
@@ -39,8 +39,17 @@ public class TCPIPClient extends TCPIPAbstract{
             }
 
             //On définit les canaux d'entrée et de sortie
-            this.listeningData = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-            this.sendingData = new PrintWriter(new BufferedWriter(new OutputStreamWriter(connectionSocket.getOutputStream())),true);
+            this.listeningData = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+            this.sendingData = new PrintWriter(new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream())),true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void close(){
+        try {
+            this.listeningThread.interrupt();
+            this.socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -3,12 +3,14 @@ package communication;
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.IOException;
+import java.net.Socket;
 
 public class TCPIPAbstract extends AbstractComm{
 
     protected int port;
     protected BufferedReader listeningData;
     protected PrintWriter sendingData;
+    protected ListeningThread listeningThread;
     private String messageToSend;
 
     @Override
@@ -36,7 +38,7 @@ public class TCPIPAbstract extends AbstractComm{
     @Override
     /** Fonction permettant de lancer le listener */
     protected void listen() {
-        ListeningThread listeningThread = new ListeningThread(this.listeningData);
+        this.listeningThread = new ListeningThread(this.listeningData);
         listeningThread.start();
     }
 
@@ -46,7 +48,7 @@ public class TCPIPAbstract extends AbstractComm{
     }
 
     /** Listener */
-    private class ListeningThread extends Thread{
+    class ListeningThread extends Thread{
         BufferedReader listeningData;
         String receivedMessage;
 
@@ -71,6 +73,11 @@ public class TCPIPAbstract extends AbstractComm{
             System.out.println(message);
             //on veut mettre les messages reçus dans des buffers, mais pour le moment on fait juste en sorte de print le résultat
             //FIN TRAITEMENT
+        }
+
+        @Override
+        public void interrupt(){
+            this.interrupt();
         }
     }
 }
