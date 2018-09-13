@@ -48,7 +48,7 @@ public class TCPIPClient extends TCPIPAbstract{
 
     public void close(){
         try {
-            synchronized (this.listeningThread) {
+            synchronized (synchronizedThread) {
                 this.listeningThread.interrupt();
                 this.socket.close();
             }

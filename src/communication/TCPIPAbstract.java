@@ -11,6 +11,7 @@ public class TCPIPAbstract extends AbstractComm{
     protected BufferedReader listeningData;
     protected PrintWriter sendingData;
     protected Thread listeningThread;
+    protected final String synchronizedThread = "synchronized";
     private String messageToSend;
     private String receivedMessage;
 
@@ -43,7 +44,7 @@ public class TCPIPAbstract extends AbstractComm{
             @Override
             public void run() {
                 while (true) {
-                    synchronized (Thread.currentThread()) {
+                    synchronized (synchronizedThread) {
                         if (!Thread.currentThread().isInterrupted()) {
                             try {
                                 receivedMessage = listeningData.readLine();
