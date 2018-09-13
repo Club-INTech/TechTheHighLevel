@@ -1,5 +1,7 @@
 import communication.Order;
 import communication.TCPIPClient;
+import data.GameState;
+import data.RobotState;
 
 public class MainRaspi {
     public static void main(String[] args){
@@ -10,6 +12,7 @@ public class MainRaspi {
             }
         };
 
+        RobotState.BRAS_AVANT_DEPLOYE.getData();
         System.out.println("Begin");
 
         try {

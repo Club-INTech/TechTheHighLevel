@@ -48,8 +48,10 @@ public class TCPIPClient extends TCPIPAbstract{
 
     public void close(){
         try {
-            this.listeningThread.interrupt();
-            this.socket.close();
+            synchronized (this.listeningThread) {
+                this.listeningThread.interrupt();
+                this.socket.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -43,11 +43,13 @@ public class TCPIPAbstract extends AbstractComm{
             @Override
             public void run() {
                 while (!Thread.currentThread().isInterrupted()) {
-                    try {
-                        receivedMessage = listeningData.readLine();
-                        messageHandler(receivedMessage);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    synchronized (Thread.currentThread()) {
+                        try {
+                            receivedMessage = listeningData.readLine();
+                            messageHandler(receivedMessage);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
