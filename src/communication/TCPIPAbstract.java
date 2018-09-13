@@ -10,7 +10,7 @@ public class TCPIPAbstract extends AbstractComm{
     protected int port;
     protected BufferedReader listeningData;
     protected PrintWriter sendingData;
-    protected ListeningThread listeningThread;
+    protected Thread listeningThread;
     private String messageToSend;
 
     @Override
@@ -34,52 +34,31 @@ public class TCPIPAbstract extends AbstractComm{
         }
     }
 
-
     @Override
     /** Fonction permettant de lancer le listener */
     protected void listen() {
-        this.listeningThread = new ListeningThread(this.listeningData);
+        /** Listener */
+        this.listeningThread = new Thread(){
+            BufferedReader listeningData;
+            String receivedMessage;
+            @Override
+            public void run() {
+                while (!Thread.currentThread().isInterrupted()) {
+                    try {
+                        this.receivedMessage = this.listeningData.readLine();
+                        messageHandler(this.receivedMessage);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
         listeningThread.start();
     }
 
     /** Constructeur */
     TCPIPAbstract(int port){
         this.port=port; //On spécifie uniquement le port sur lequel on attend les connexions
-    }
-
-    /** Listener */
-    class ListeningThread extends Thread{
-        BufferedReader listeningData;
-        String receivedMessage;
-
-        ListeningThread(BufferedReader listeningData) {
-            this.listeningData=listeningData;
-        }
-
-        @Override
-        public void run() {
-            while (!Thread.currentThread().isInterrupted()) {
-                try {
-                    this.receivedMessage = this.listeningData.readLine();
-                    messageHandler(this.receivedMessage);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        private void messageHandler(String message){
-            //TRAITEMENT
-            // OVERRIDE CETTE FONCTION QUAND ON INSTANCIE
-            this.
-            System.out.println(message);
-            //on veut mettre les messages reçus dans des buffers, mais pour le moment on fait juste en sorte de print le résultat
-            //FIN TRAITEMENT
-        }
-    }
-
-    void messageHandlerTest(String message){
-
     }
 }
 
