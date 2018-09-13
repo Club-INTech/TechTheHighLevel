@@ -4,7 +4,7 @@ import communication.TCPIPClient;
 
 public class MainRaspi {
     public static void main(String[] args){
-        AbstractComm teensy = new TCPIPClient("192.168.0.1", 1337);
+        AbstractComm teensy = new TCPIPClient("192.168.0.1", 23500);
 
         System.out.println("Begin");
 
