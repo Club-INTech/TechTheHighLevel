@@ -14,14 +14,6 @@ public class MainRaspi {
             e.printStackTrace();
         }
 
-        teensy.send(Order.Recule, false);
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        teensy.send(Order.Stop, false);
+        teensy.send(Order.Ping, false);
     }
 }

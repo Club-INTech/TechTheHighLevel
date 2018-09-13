@@ -13,6 +13,7 @@ public enum Order {
     GoTo("goto"),
     TurnToPoint("turntopoint"),
     TurnToAngle("turntoangle"),
+    Ping("?"),
 
 
     Montlhery("montlhery"),
