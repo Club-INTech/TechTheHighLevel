@@ -70,15 +70,16 @@ public class TCPIPAbstract extends AbstractComm{
 
         private void messageHandler(String message){
             //TRAITEMENT
+            // OVERRIDE CETTE FONCTION QUAND ON INSTANCIE
+            this.
             System.out.println(message);
             //on veut mettre les messages reçus dans des buffers, mais pour le moment on fait juste en sorte de print le résultat
             //FIN TRAITEMENT
         }
+    }
 
-        @Override
-        public void interrupt(){
-            this.interrupt();
-        }
+    void messageHandlerTest(String message){
+
     }
 }
 
