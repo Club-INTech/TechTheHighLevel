@@ -13,6 +13,6 @@ public class JUnit_Config {
         System.out.println("Override TRUE value : \t\t" + config.getBoolean(ConfigData.PRINT_LOG));
         config.override(ConfigData.PRINT_LOG, false);
         System.out.println("Override FALSE value : \t\t" + config.getBoolean(ConfigData.PRINT_LOG));
-        System.out.println("Ethernet default delay :\t" + config.getInt(ConfigData.MIN_TIME_BETWEEN_TWO_ORDERS));
+        System.out.println("Ethernet default delay :\t" + config.getInt(ConfigData.ETHERNET_DEFAULT_TIME));
     }
 }

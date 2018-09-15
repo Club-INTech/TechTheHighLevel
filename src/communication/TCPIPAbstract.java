@@ -35,18 +35,13 @@ public class TCPIPAbstract extends AbstractComm{
         this.sendingData.println(this.messageToSend);
 
         //On attend le temps que l'ordre met pour se réaliser
-        try
-        {
-            if (waitForCompletion) {
+        if (waitForCompletion) {
+            try {
                 Thread.sleep(order.getTimeToComplete());
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            else {
-                Thread.sleep(config.getInt(ConfigData.MIN_TIME_BETWEEN_TWO_ORDERS));
-            }
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
         }
     }
 

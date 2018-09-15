@@ -23,8 +23,8 @@ public class MainRaspi {
         teensy.send(Order.Ping, false);
 
         long a = System.currentTimeMillis();
-        for (int i=0; i<10000; i++) {
-            teensy.send(Order.CXYO, false, Integer.toString(i), "1000", "0");
+        for (int i=0; i<100000; i++) {
+            teensy.send(Order.CXYO, false, Integer.toString(i), "0", "0");
             teensy.send(Order.XYO, false);
         }
         long b=System.currentTimeMillis();
