@@ -22,7 +22,7 @@ public class TCPIPAbstract extends AbstractComm{
 
     @Override
     /** Fonction permettant d'envoyer un order au client */
-    public void send(Order order, boolean waitForCompletion, String... parameters)
+    public synchronized void send(Order order, boolean waitForCompletion, String... parameters)
     {
         //On forme le message
         this.messageToSend=order.getOrderStr();
