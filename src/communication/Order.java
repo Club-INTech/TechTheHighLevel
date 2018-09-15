@@ -16,6 +16,7 @@ public enum Order {
     Ping("?"),
     NewHook("nh"),
     CXYO("cxyo"),
+    XYO("?xyo"),
 
 
     Montlhery("montlhery"),
