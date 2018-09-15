@@ -26,7 +26,7 @@ public class MainRaspi {
         teensy.send(Order.Ping, false);
 
         for (int i=0; i<1000; i++) {
-            teensy.send(Order.CXYO, false, "1000", "1000", "0");
+            teensy.send(Order.CXYO, false, Integer.toString(i), "1000", "0");
         }
 
         teensy.send(Order.XYO, false);
