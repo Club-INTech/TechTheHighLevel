@@ -8,7 +8,7 @@ public enum ConfigData implements ConfigInfo
     TABLE_X(3000),
     TABLE_Y(2000),
     TEMPS_MATCH(100),
-    ETHERNET_DEFAULT_DELAY(1),
+    MIN_TIME_BETWEEN_TWO_ORDERS(1),
 
     /** Paramètres log */
     PRINT_LOG(true),

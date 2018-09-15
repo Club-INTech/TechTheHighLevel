@@ -37,11 +37,11 @@ public enum Order {
 
     Order(String orderStr, int millisecondsToComplete){
         this.orderStr=orderStr;
-        if (millisecondsToComplete>-1) {
+        if (millisecondsToComplete>config.getInt(ConfigData.MIN_TIME_BETWEEN_TWO_ORDERS)) {
             this.millisecondsToComplete = millisecondsToComplete;
         }
         else{
-            this.millisecondsToComplete = config.getInt(ConfigData.ETHERNET_DEFAULT_DELAY);
+            this.millisecondsToComplete = config.getInt(ConfigData.MIN_TIME_BETWEEN_TWO_ORDERS);
         }
     }
 

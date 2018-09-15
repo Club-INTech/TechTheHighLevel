@@ -1,5 +1,9 @@
 package communication;
 
+import config.ConfigData;
+import config.ConfigInstance;
+import pfg.config.Config;
+
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.IOException;
@@ -14,12 +18,12 @@ public class TCPIPAbstract extends AbstractComm{
     protected final String synchronizedThread = "synchronized";
     private String messageToSend;
     private String receivedMessage;
+    private Config config = ConfigInstance.getConfig();
 
     @Override
     /** Fonction permettant d'envoyer un order au client */
     public void send(Order order, boolean waitForCompletion, String... parameters)
     {
-
         //On forme le message
         this.messageToSend=order.getOrderStr();
         for (String param : parameters)
@@ -33,7 +37,12 @@ public class TCPIPAbstract extends AbstractComm{
         //On attend le temps que l'ordre met pour se réaliser
         try
         {
-            Thread.sleep(order.getTimeToComplete());
+            if (waitForCompletion) {
+                Thread.sleep(order.getTimeToComplete());
+            }
+            else {
+                Thread.sleep(config.getInt(ConfigData.MIN_TIME_BETWEEN_TWO_ORDERS));
+            }
         }
         catch (InterruptedException e)
         {
