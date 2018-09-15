@@ -21,7 +21,7 @@ public class MainRaspi {
         }
 
         for (int i=0; i<1000; i++) {
-            teensy.send(Order.NewHook, false, new String[]{Integer.toString(i), "600", "2", "0.01", "?"});
+            teensy.send(Order.NewHook, false, new String[]{Integer.toString(i), "800", "600", "5", "2", "0.01", "?"});
         }
 
         try {
