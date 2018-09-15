@@ -1,5 +1,6 @@
 import communication.Order;
 import communication.TCPIPClient;
+import config.ConfigInstance;
 import data.RobotState;
 
 public class MainRaspi {
@@ -11,7 +12,9 @@ public class MainRaspi {
             }
         };
 
-        RobotState.BRAS_AVANT_DEPLOYE.getData();
+        ConfigInstance a = new ConfigInstance();
+
+        //RobotState.BRAS_AVANT_DEPLOYE.getData();
         System.out.println("Begin");
 
         try {
@@ -20,9 +23,13 @@ public class MainRaspi {
             e.printStackTrace();
         }
 
+        teensy.send(Order.Ping, false);
+        
         for (int i=0; i<1000; i++) {
-            teensy.send(Order.NewHook, false, new String[]{Integer.toString(i), "800", "600", "5", "2", "0.01", "?"});
+            teensy.send(Order.CXYO, false, Integer.toString(i), "0", "0");
         }
+
+        teensy.send(Order.GoTo, false, "800", "600");
 
         try {
             Thread.sleep(2000);

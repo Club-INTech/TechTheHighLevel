@@ -15,6 +15,7 @@ public enum Order {
     TurnToAngle("turntoangle"),
     Ping("?"),
     NewHook("nh"),
+    CXYO("cxyo"),
 
 
     Montlhery("montlhery"),
