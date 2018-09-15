@@ -26,6 +26,11 @@ public class MainRaspi {
         teensy.send(Order.Ping, false);
 
         for (int i=0; i<1000; i++) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             teensy.send(Order.CXYO, false, Integer.toString(i), "1000", "0");
         }
 
