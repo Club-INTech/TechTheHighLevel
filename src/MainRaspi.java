@@ -26,15 +26,10 @@ public class MainRaspi {
         teensy.send(Order.Ping, false);
 
         for (int i=0; i<1000; i++) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             teensy.send(Order.CXYO, false, Integer.toString(i), "1000", "0");
+            teensy.send(Order.XYO, false);
         }
 
-        teensy.send(Order.XYO, false);
 
         try {
             Thread.sleep(2000);
