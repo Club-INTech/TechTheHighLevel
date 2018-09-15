@@ -1,6 +1,5 @@
 import communication.Order;
 import communication.TCPIPClient;
-import data.GameState;
 import data.RobotState;
 
 public class MainRaspi {
@@ -21,7 +20,9 @@ public class MainRaspi {
             e.printStackTrace();
         }
 
-        teensy.send(Order.Ping, false);
+        for (int i=0; i<1000; i++) {
+            teensy.send(Order.NewHook, false, new String[]{Integer.toString(i), "600", "2", "0.01", "?"});
+        }
 
         try {
             Thread.sleep(2000);
