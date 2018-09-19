@@ -10,7 +10,6 @@ public class MainRaspi {
                 System.out.println(message);
             }
         };
-	
         //RobotState.BRAS_AVANT_DEPLOYE.getData();
         System.out.println("Begin");
 
