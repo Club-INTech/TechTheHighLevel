@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>500</x>
-      <y>210</y>
+      <x>180</x>
+      <y>30</y>
       <w>260</w>
       <h>130</h>
     </coordinates>
@@ -23,8 +23,8 @@ Package :: Locomotion
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>360</x>
-      <y>410</y>
+      <x>40</x>
+      <y>230</y>
       <w>260</w>
       <h>200</h>
     </coordinates>
@@ -46,8 +46,8 @@ Package :: Locomotion
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>660</x>
-      <y>490</y>
+      <x>340</x>
+      <y>310</y>
       <w>260</w>
       <h>120</h>
     </coordinates>
@@ -64,8 +64,8 @@ Package :: Locomotion
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>610</x>
-      <y>530</y>
+      <x>290</x>
+      <y>350</y>
       <w>70</w>
       <h>30</h>
     </coordinates>
@@ -75,8 +75,8 @@ Package :: Locomotion
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>480</x>
-      <y>330</y>
+      <x>160</x>
+      <y>150</y>
       <w>100</w>
       <h>100</h>
     </coordinates>

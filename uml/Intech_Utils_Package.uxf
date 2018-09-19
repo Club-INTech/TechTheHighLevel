@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>310</x>
-      <y>260</y>
+      <x>290</x>
+      <y>270</y>
       <w>190</w>
       <h>100</h>
     </coordinates>
@@ -22,8 +22,8 @@ _+getInstance() : Config_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>540</x>
-      <y>260</y>
+      <x>520</x>
+      <y>270</y>
       <w>190</w>
       <h>100</h>
     </coordinates>
@@ -39,8 +39,8 @@ _+error()_</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>50</x>
-      <y>20</y>
+      <x>30</x>
+      <y>30</y>
       <w>220</w>
       <h>210</h>
     </coordinates>
@@ -62,8 +62,8 @@ _+getInstance() : Container_</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>50</x>
-      <y>280</y>
+      <x>30</x>
+      <y>290</y>
       <w>220</w>
       <h>80</h>
     </coordinates>
@@ -77,8 +77,8 @@ Package :: Utils
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>150</x>
-      <y>220</y>
+      <x>130</x>
+      <y>230</y>
       <w>50</w>
       <h>80</h>
     </coordinates>
@@ -89,8 +89,8 @@ Package :: Utils
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>260</x>
-      <y>170</y>
+      <x>240</x>
+      <y>180</y>
       <w>160</w>
       <h>110</h>
     </coordinates>
@@ -101,8 +101,8 @@ Package :: Utils
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>260</x>
-      <y>120</y>
+      <x>240</x>
+      <y>130</y>
       <w>390</w>
       <h>160</h>
     </coordinates>

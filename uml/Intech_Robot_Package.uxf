@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>30</x>
+      <y>30</y>
+      <w>220</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>OrderWrapper
+Package :: Robot
+--
+--
++useOrder(Order)
++moveLengthwise(Nbr)
++turn(Nbr)
++immobilise()
++setPosition()
+...
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>30</x>
+      <y>260</y>
+      <w>220</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Sender
+Package :: Robot
+--
+-output : Buffer
+--
++communicate(String...)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>130</x>
+      <y>170</y>
+      <w>40</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>290</x>
+      <y>30</y>
+      <w>220</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Enum&gt;&gt;
+Order
+Package :: Robot
+--
+-stringOrder : String
+-duration : Nbr
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
