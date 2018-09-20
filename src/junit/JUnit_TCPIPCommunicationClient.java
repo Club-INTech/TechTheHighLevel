@@ -1,8 +1,8 @@
 package junit;
 
-import communication.AbstractComm;
-import communication.Order;
-import communication.TCPIPClient;
+import utils.communication.AbstractComm;
+import utils.communication.Order;
+import utils.communication.TCPIPClient;
 
 public class JUnit_TCPIPCommunicationClient {
 

@@ -1,7 +1,7 @@
 package junit;
 
-import communication.AbstractComm;
-import communication.TCPIPServer;
+import utils.communication.AbstractComm;
+import utils.communication.TCPIPServer;
 
 public class JUnit_TCPIPCommunicationServer {
 

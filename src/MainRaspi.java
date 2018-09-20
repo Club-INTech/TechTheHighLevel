@@ -1,6 +1,5 @@
-import communication.Order;
-import communication.TCPIPClient;
-import data.RobotState;
+import utils.communication.Order;
+import utils.communication.TCPIPClient;
 
 public class MainRaspi {
     public static void main(String[] args){

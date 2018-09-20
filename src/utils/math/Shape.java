@@ -1,4 +1,4 @@
-package math;
+package utils.math;
 
 public abstract class Shape {
 

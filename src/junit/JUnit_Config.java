@@ -1,7 +1,7 @@
 package junit;
 
-import config.ConfigData;
-import config.ConfigInstance;
+import utils.ConfigData;
+import utils.ConfigInstance;
 import pfg.config.Config;
 
 public class JUnit_Config {

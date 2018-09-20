@@ -1,4 +1,4 @@
-package math;
+package utils.math;
 
 public  class Calculs {
 
