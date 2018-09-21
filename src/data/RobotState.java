@@ -7,8 +7,6 @@ public enum RobotState {
     BRAS_AVANT_DEPLOYE(new Data<Boolean>(true)),
     BRAS_ARRIERE_DEPLOYE(new Data<Boolean>(true)),
 
-
-
     ;
     private Data dataObject;
 

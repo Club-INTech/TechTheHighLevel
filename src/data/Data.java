@@ -2,7 +2,7 @@ package data;
 
 class Data<T> {
 
-    /** Valeur stockée dans l'objet*/
+    /** Valeur stockée dans l'objet */
     private T value;
 
     Data (T value){
