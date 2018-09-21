@@ -2,6 +2,13 @@ package utils;
 
 import pfg.config.ConfigInfo;
 
+/**
+ * Enumération contenant la liste des valeurs configurable via un fichier (config/config.txt),
+ * La valeur associée dans cette classe est celle attribuée par défaut, lorsque l'on fait une faute d'orthographe
+ * dans le nom de la clé par exemple.
+ *
+ * @author pf
+ */
 public enum ConfigData implements ConfigInfo
 {
     /** Constantes (rarement modifiées) */
@@ -124,7 +131,7 @@ public enum ConfigData implements ConfigInfo
 
     /**
      * Constructor with some default value
-     * @param defaultValue
+     * @param defaultValue  valeur défaut du paramètre
      */
     private ConfigData(Object defaultValue)
     {
@@ -140,8 +147,5 @@ public enum ConfigData implements ConfigInfo
         return defaultValue;
     }
 
-    /**
-     * The toString() method is already adapted
-     */
 }
 
