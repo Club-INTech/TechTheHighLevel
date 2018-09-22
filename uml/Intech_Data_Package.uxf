@@ -434,12 +434,14 @@ bg=white</panel_attributes>
       <x>910</x>
       <y>49</y>
       <w>182</w>
-      <h>56</h>
+      <h>119</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Enum&gt;&gt;
 RobotState
 Package :: Data
 --
+
+- actuatorState //à compléter
 </panel_attributes>
     <additional_attributes/>
   </element>

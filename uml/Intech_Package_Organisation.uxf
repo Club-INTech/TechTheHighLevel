@@ -4,38 +4,8 @@
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>70</x>
-      <y>510</y>
-      <w>270</w>
-      <h>50</h>
-    </coordinates>
-    <panel_attributes>Strategy
---
-bg=gray
-?</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLPackage</id>
-    <coordinates>
-      <x>70</x>
-      <y>70</y>
-      <w>270</w>
-      <h>250</h>
-    </coordinates>
-    <panel_attributes>Data
---
-bg=gray
-
-
-group=1</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLPackage</id>
-    <coordinates>
-      <x>70</x>
-      <y>330</y>
+      <x>180</x>
+      <y>270</y>
       <w>270</w>
       <h>50</h>
     </coordinates>
@@ -47,8 +17,8 @@ bg=gray</panel_attributes>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>70</x>
-      <y>390</y>
+      <x>180</x>
+      <y>330</y>
       <w>270</w>
       <h>50</h>
     </coordinates>
@@ -60,25 +30,87 @@ bg=gray</panel_attributes>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>70</x>
-      <y>450</y>
+      <x>180</x>
+      <y>0</y>
       <w>270</w>
-      <h>50</h>
+      <h>250</h>
     </coordinates>
-    <panel_attributes>Utils
+    <panel_attributes>Data
 --
-bg=gray</panel_attributes>
+bg=gray
+
+
+group=2</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>100</x>
-      <y>180</y>
+      <x>210</x>
+      <y>50</y>
+      <w>200</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Table
+--
+bg=white
+group=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>210</x>
+      <y>170</y>
+      <w>200</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Controler
+--
+bg=white
+group=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>210</x>
+      <y>110</y>
       <w>200</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>Graphe
+--
+bg=white
+
+group=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>180</x>
+      <y>410</y>
+      <w>270</w>
+      <h>250</h>
+    </coordinates>
+    <panel_attributes>Utils
+--
+bg=gray
+
+
+group=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>210</x>
+      <y>520</y>
+      <w>200</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Math
 --
 bg=white
 group=1
@@ -88,12 +120,12 @@ group=1
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>100</x>
-      <y>120</y>
+      <x>210</x>
+      <y>460</y>
       <w>200</w>
       <h>50</h>
     </coordinates>
-    <panel_attributes>Table
+    <panel_attributes>Communication
 --
 bg=white
 group=1</panel_attributes>
@@ -102,15 +134,15 @@ group=1</panel_attributes>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>100</x>
-      <y>240</y>
-      <w>200</w>
+      <x>180</x>
+      <y>680</y>
+      <w>270</w>
       <h>50</h>
     </coordinates>
-    <panel_attributes>Controler
+    <panel_attributes>Strategy
 --
-bg=white
-group=1</panel_attributes>
+bg=gray
+?</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
