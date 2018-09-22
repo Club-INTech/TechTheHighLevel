@@ -316,6 +316,7 @@ Supprimerait .gitignore
 Supprimerait .idea/
 Supprimerait TechTheHighLevel.iml
 Supprimerait out/
+TechTheHighLevel.iml
 /.idea/compiler.xml
 /.idea/misc.xml
 /.idea/modules.xml
