@@ -19,8 +19,9 @@ public enum Log
      * Préfixes de couleurs pour l'affichage (Debug, Warning & Critical)
      */
     private static final String DEBUG       = "\u001B[32m";
-    private static final String WARNING     = "\u001B[30m";
+    private static final String WARNING     = "\u001B[33m";
     private static final String CRITICAL    = "\u001B[31m";
+    private static final String LOG_INFO    = "\u001B[36m";
 
     /**
      * Instance permettant d'avoir la date et l'heure
@@ -103,13 +104,13 @@ public enum Log
         if(this.active)
         {
             StackTraceElement elem = Thread.currentThread().getStackTrace()[3];
-            System.out.println(color + hour + this.name() + " " +
+            System.out.println(color + hour + " " + this.name() + " " +
                     elem.getClassName() + "." + elem.getMethodName() + ":" + elem.getLineNumber() + " > " + message);
         }
 
         if(saveLogs)
         {
-            writeToFile(hour + message);
+            writeToFile(hour + " " + this.name() + " > " + message);
         }
     }
 
@@ -159,10 +160,10 @@ public enum Log
      */
     public static void close()
     {
-        System.out.println(WARNING + "FERMETURE DU LOG");
+        System.out.println(LOG_INFO + "FERMETURE DU LOG");
         if(saveLogs)
             try {
-                System.out.println(DEBUG + "SAUVEGARDE DES FICHIERS DE LOG");
+                System.out.println(LOG_INFO + "SAUVEGARDE DES FICHIERS DE LOG");
                 if(writer != null)
                     writer.close();
             }

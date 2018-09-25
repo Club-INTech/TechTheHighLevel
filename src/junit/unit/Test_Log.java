@@ -34,6 +34,7 @@ public class Test_Log
     @After
     public void tearDown() throws Exception
     {
+        file.delete();
         file = null;
         output = null;
         input = null;
@@ -47,8 +48,8 @@ public class Test_Log
     {
         Log.COMMUNICATION.debug("TC");
         Log.LOCOMOTION.debug("TL");
-        Log.DATA_HANDLER.debug("TD");
-        Log.STRATEGY.debug("TS");
+        Log.DATA_HANDLER.warning("TD");
+        Log.STRATEGY.critical("TS");
         output.flush();
 
         Assert.assertTrue(input.readLine().endsWith("TC"));
@@ -65,8 +66,8 @@ public class Test_Log
 
         Log.COMMUNICATION.debug("TC");
         Log.LOCOMOTION.debug("TL");
-        Log.DATA_HANDLER.debug("TD");
-        Log.STRATEGY.debug("TS");
+        Log.DATA_HANDLER.warning("TD");
+        Log.STRATEGY.critical("TS");
         output.flush();
 
         Assert.assertTrue(input.readLine().endsWith("TL"));
