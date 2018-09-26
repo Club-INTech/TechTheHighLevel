@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>259</x>
-      <y>49</y>
+      <x>350</x>
+      <y>133</y>
       <w>154</w>
       <h>168</h>
     </coordinates>
@@ -32,8 +32,8 @@ _+entryPosition : Point_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>630</x>
-      <y>49</y>
+      <x>721</x>
+      <y>133</y>
       <w>154</w>
       <h>140</h>
     </coordinates>
@@ -56,8 +56,8 @@ Package :: Data
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>406</x>
-      <y>49</y>
+      <x>497</x>
+      <y>133</y>
       <w>238</w>
       <h>35</h>
     </coordinates>
@@ -69,19 +69,20 @@ Package :: Data
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>189</x>
-      <y>315</y>
+      <x>280</x>
+      <y>399</y>
       <w>154</w>
-      <h>119</h>
+      <h>133</h>
     </coordinates>
     <panel_attributes>/Obstacle/
 Package :: Table
 --
 #position : Point
+-lifeTime : Nbr
+-entryObstacleAllowed : Boolean
 --
 /+isInObstacle(Point) : Booléen/
 /+intersect(Segment) : Booléen/
-/+clone() : Obstacle/
 /@equals() : Booléen/
 /@hashCode() : Nbr/
 /@toString() : String/
@@ -91,8 +92,8 @@ Package :: Table
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>259</x>
-      <y>210</y>
+      <x>350</x>
+      <y>294</y>
       <w>91</w>
       <h>119</h>
     </coordinates>
@@ -103,29 +104,12 @@ Package :: Table
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>21</x>
-      <y>476</y>
-      <w>147</w>
-      <h>56</h>
-    </coordinates>
-    <panel_attributes>MobileObstacle
-Package :: Table
---
--circle : Cercle
--lifeTime : Nbr
-
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>189</x>
-      <y>476</y>
+      <x>280</x>
+      <y>560</y>
       <w>154</w>
       <h>49</h>
     </coordinates>
-    <panel_attributes>FixedCircularObstacle
+    <panel_attributes>CircularObstacle
 Package :: Table
 --
 -circle : Cercle
@@ -136,57 +120,44 @@ Package :: Table
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>364</x>
-      <y>476</y>
+      <x>455</x>
+      <y>560</y>
       <w>154</w>
       <h>56</h>
     </coordinates>
-    <panel_attributes>FixedRectangularObstacle
+    <panel_attributes>RectangularObstacle
 Package :: Table
 --
--sizeX : Nbr
--sizeY : Nbr
-</panel_attributes>
+- rectangle: Rectangle</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>84</x>
-      <y>427</y>
-      <w>133</w>
-      <h>63</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>170.0;10.0;170.0;40.0;10.0;40.0;10.0;70.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>259</x>
-      <y>427</y>
+      <x>350</x>
+      <y>525</y>
       <w>21</w>
-      <h>63</h>
+      <h>49</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>322</x>
-      <y>427</y>
+      <x>413</x>
+      <y>525</y>
       <w>140</w>
-      <h>63</h>
+      <h>49</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;40.0;180.0;40.0;180.0;70.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;30.0;180.0;30.0;180.0;50.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>539</x>
-      <y>315</y>
+      <x>630</x>
+      <y>399</y>
       <w>154</w>
       <h>140</h>
     </coordinates>
@@ -210,8 +181,8 @@ Package :: Graphe
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>735</x>
-      <y>315</y>
+      <x>826</x>
+      <y>399</y>
       <w>154</w>
       <h>119</h>
     </coordinates>
@@ -231,8 +202,8 @@ _-staticCost : Nbr_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>609</x>
-      <y>182</y>
+      <x>700</x>
+      <y>266</y>
       <w>84</w>
       <h>147</h>
     </coordinates>
@@ -243,8 +214,8 @@ _-staticCost : Nbr_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>728</x>
-      <y>182</y>
+      <x>819</x>
+      <y>266</y>
       <w>98</w>
       <h>147</h>
     </coordinates>
@@ -255,8 +226,8 @@ _-staticCost : Nbr_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1169</x>
-      <y>392</y>
+      <x>1260</x>
+      <y>476</y>
       <w>182</w>
       <h>140</h>
     </coordinates>
@@ -280,8 +251,8 @@ group=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>938</x>
-      <y>217</y>
+      <x>1029</x>
+      <y>301</y>
       <w>182</w>
       <h>119</h>
     </coordinates>
@@ -304,8 +275,8 @@ group=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1176</x>
-      <y>217</y>
+      <x>1267</x>
+      <y>301</y>
       <w>175</w>
       <h>105</h>
     </coordinates>
@@ -327,8 +298,8 @@ group=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1400</x>
-      <y>217</y>
+      <x>1491</x>
+      <y>301</y>
       <w>182</w>
       <h>84</h>
     </coordinates>
@@ -348,8 +319,8 @@ group=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1015</x>
-      <y>329</y>
+      <x>1106</x>
+      <y>413</y>
       <w>189</w>
       <h>77</h>
     </coordinates>
@@ -360,8 +331,8 @@ group=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1253</x>
-      <y>315</y>
+      <x>1344</x>
+      <y>399</y>
       <w>21</w>
       <h>91</h>
     </coordinates>
@@ -372,8 +343,8 @@ group=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1316</x>
-      <y>294</y>
+      <x>1407</x>
+      <y>378</y>
       <w>182</w>
       <h>112</h>
     </coordinates>
@@ -384,8 +355,8 @@ group=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>35</x>
-      <y>49</y>
+      <x>126</x>
+      <y>133</y>
       <w>182</w>
       <h>105</h>
     </coordinates>
@@ -405,8 +376,8 @@ _+getInstance() : XYO_
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>14</x>
-      <y>294</y>
+      <x>105</x>
+      <y>378</y>
       <w>511</w>
       <h>252</h>
     </coordinates>
@@ -418,8 +389,8 @@ bg=white</panel_attributes>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>532</x>
-      <y>294</y>
+      <x>623</x>
+      <y>378</y>
       <w>371</w>
       <h>252</h>
     </coordinates>
@@ -431,8 +402,8 @@ bg=white</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>910</x>
-      <y>49</y>
+      <x>1001</x>
+      <y>133</y>
       <w>182</w>
       <h>119</h>
     </coordinates>
@@ -448,8 +419,8 @@ Package :: Data
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1113</x>
-      <y>63</y>
+      <x>1204</x>
+      <y>147</y>
       <w>196</w>
       <h>42</h>
     </coordinates>
@@ -462,8 +433,8 @@ Package :: Data
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1085</x>
-      <y>63</y>
+      <x>1176</x>
+      <y>147</y>
       <w>42</w>
       <h>28</h>
     </coordinates>
@@ -474,8 +445,8 @@ Package :: Data
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>924</x>
-      <y>189</y>
+      <x>1015</x>
+      <y>273</y>
       <w>672</w>
       <h>357</h>
     </coordinates>
