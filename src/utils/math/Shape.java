@@ -35,8 +35,8 @@ public abstract class Shape {
      * @param yPoint : ordonnée du point
      * @return
      */
-    public float distanceToPoint(int xPoint, int yPoint){
-        return 0;
+    public double distanceToPoint(int xPoint, int yPoint){
+        return Math.sqrt (this.xCenter - xPoint) * (xCenter - xPoint) + (this.yCenter - yPoint) * (this.yCenter - yPoint);
     }
 
     /**getter de l'abscisse du centre*/
@@ -49,6 +49,9 @@ public abstract class Shape {
         return yCenter;
     }
 
+    public Vec2 getCenter(){
+        return new VectCartesian(this.xCenter,this.yCenter);
+    }
     /**setter de l'abscisse du centre*/
     public void setxCenter(int xCenter) {
         this.xCenter = xCenter;
