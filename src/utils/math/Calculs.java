@@ -3,7 +3,7 @@ package utils.math;
 /**
  * On fait des calculs à l'aide des méthodes de cette classe
  */
-public  class Calculs {
+public class Calculs {
 
     /**Cette méthode retourne le nombre congru à un nombre modulo un module
      * @param number nombre dont on veut calculer le nombre qui lui est congru
