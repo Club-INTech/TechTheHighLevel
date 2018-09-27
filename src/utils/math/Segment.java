@@ -2,6 +2,9 @@ package utils.math;
 
 import java.awt.geom.Line2D;
 
+/**
+ * Cette classe construit la structure segment : un segment est constitué de deux points
+ */
 public class Segment {
 
 
@@ -11,13 +14,16 @@ public class Segment {
     /**Deuxième point du segment*/
     private Vec2 pointB;
 
-    /**Constructeur*/
+    /**Constructeur
+     * @param pointA pointA
+     * @param pointB pointB*/
     public Segment(Vec2 pointA, Vec2 pointB) {
         this.pointA = pointA;
         this.pointB = pointB;
     }
 
-    /**cette méthode détermine si deux droites sont parallèles ou non*/
+    /**cette méthode détermine si deux droites sont parallèles ou non
+     * @param segment segment*/
     public boolean intersectsWithSegment(Segment segment){
         int xA1=this.getPointA().getX();
         int yA1=this.getPointA().getY();
@@ -31,7 +37,7 @@ public class Segment {
     }
 
     /**Cette méthode détermine la distance entre une droite et un point
-     * */
+     * @param point point*/
     public double distanceToPoint(Vec2 point){
         if(pointA.getX()==pointB.getX()){
             return Math.abs(point.getX() - pointA.getX() );

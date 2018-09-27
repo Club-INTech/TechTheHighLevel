@@ -1,8 +1,13 @@
 package utils.math;
 
+/**
+ * On fait des calculs à l'aide des méthodes de cette classe
+ */
 public  class Calculs {
 
-    /**Cette méthode retourne le module d'un nombre*/
+    /**Cette méthode retourne le nombre congru à un nombre modulo un module
+     * @param number nombre dont on veut calculer le nombre qui lui est congru
+     * @param module le modole*/
 
     public static double modulo(double number, double module){
         number = number%(2*module);
@@ -14,7 +19,10 @@ public  class Calculs {
         return number;
     }
 
-    /**Cette méthode détermine si x est bien entre y et z*/
+    /**Cette méthode détermine si x est bien entre y et z
+     * @param x nombre dont on veut savoir s'il est entre les deux autres nombres spécifiés
+     *@param y plus petit nombre
+     * @param z plus grand nombre*/
 
     public static boolean isBetween(double x, double y, double z) {
         //On inverse y et z si jamais on se trompe de paramètres

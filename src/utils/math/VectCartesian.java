@@ -1,5 +1,8 @@
 package utils.math;
 
+/**
+ * Classe héritante de Vec2 dont la fonction est de différencier son constructeur de Vec2
+ */
 public class VectCartesian extends Vec2 {
 
     /**

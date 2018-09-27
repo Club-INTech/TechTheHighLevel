@@ -3,8 +3,9 @@ package utils.math;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
-import static javax.print.attribute.standard.MediaSize.Engineering.A;
-
+/**
+ * @see utils.math.Shape
+ */
 public class Circle extends Shape {
 
     /**rayon du cercle*/
@@ -16,15 +17,22 @@ public class Circle extends Shape {
     /**angle où l'arc de cercle se termine*/
     private float angleEnd;
 
-    /**Constructeur d'un cercle*/
-    public Circle(int xCenter, int yCenter,float radius) {
-        super(xCenter, yCenter);
+    /**Constructeur d'un cercle
+     * @see Shape
+     * @param centre centre
+     * @param radius rayon du cercle*/
+    public Circle(Vec2 centre,float radius) {
+        super(centre);
         this.radius=radius;
     }
 
-    /**Constructeur d'un arc de cercle*/
-    public Circle(int xCenter, int yCenter,float radius,float angleStart, float angleEnd) {
-        super(xCenter, yCenter);
+    /**Constructeur d'un arc de cercle
+     * @param centre centre du cercle
+     * @param radius rayon du cercle
+     * @param angleStart angle de début
+     * @param angleEnd angle de fin*/
+    public Circle(Vec2 centre,float radius,float angleStart, float angleEnd) {
+        super(centre);
         this.radius=radius;
         this.angleStart=angleStart;
         this.angleEnd=angleEnd;
@@ -38,7 +46,8 @@ public class Circle extends Shape {
      * On veut savoir si (D) et (C) sont en intersection
      * On note (P) la droite perpendiculaire à (D) qui passe par le centre de (C)
      * On peut donc connaitre les coordonnées du point de l'intersection entre (P) et (D) qu'on note I vu qu'on dispose de deux équations à deux inconnues
-     * (D) et (C) sont en intersection ssi la distance entre I et le centre est inférieure à R le rayon du cercle*/
+     * (D) et (C) sont en intersection ssi la distance entre I et le centre est inférieure à R le rayon du cercle
+     * @param segment segment*/
     @Override
     public boolean intersectsWithSegment(Segment segment) {
 
@@ -46,7 +55,8 @@ public class Circle extends Shape {
     }
 
     /**cette méthode retourne true si notre objet cercle (this) contient un autre(celui passé en paramètre), c'est-à-dire si la distance entre les deux centres est inférieure
-     * au rayon de notre objet (on suppose ici que l'utilisateur veut savoir si son objet contient un cercle et non l'inverse*/
+     * au rayon de notre objet (on suppose ici que l'utilisateur veut savoir si son objet contient un cercle et non l'inverse
+     * @param circle cercle*/
     @Override
     public boolean containsCircle(Circle circle) {
         if(this.getCenter().equals(circle.getCenter())){
@@ -60,7 +70,7 @@ public class Circle extends Shape {
     /**
      * Cette méthode retourne true si deux cercles sont sécants, c'est-à-dire si la distance entre les deux centres est entre la valeur absolue de la différence des deux
      * rayons et la valeur absolue de la somme (valeur absolue ici pour la somme par sécurité, on sait jamais...)
-     * @param circle
+     * @param circle cercle
      * @return
      */
     public boolean intersectsWithCircle(Circle circle){
@@ -75,12 +85,12 @@ public class Circle extends Shape {
      * Cette méthode prend en paramètre un point et retourne le point du cercle le plus proche de ce point
      * Le point le plus proche du cercle est le point appartenant au cercle et à la droite passante par le centre
      * du cercle et le point en paramètre
-     * @param point
+     * @param point point
      * @return
      */
     public Vec2 closestPointToCircle(Vec2 point){
         if (this.containsPoint(point)) {
-            return (point);
+            return point;
         }
         Vec2 vec = point.minusVector(this.getCenter());
 
@@ -114,8 +124,8 @@ public class Circle extends Shape {
     public ArrayList<Vec2> pointsAroundCircle(int n){
         ArrayList<Vec2> l=new ArrayList<>();
         for(int i=0;i<n;i++){
-            int x=new Integer((int)(this.getRadius()*Math.cos(2*i*Math.PI/n))+this.getCenter().getX());
-            int y=new Integer((int)(this.getRadius()*Math.sin(2*i*Math.PI/n))+this.getCenter().getY());
+            int x=(int)(this.getRadius()*Math.cos(2*i*Math.PI/n))+this.getCenter().getX();
+            int y=(int)(this.getRadius()*Math.sin(2*i*Math.PI/n))+this.getCenter().getY();
             Vec2 vectoadd=new Vec2(x,y);
             l.add(vectoadd);
         }
@@ -141,18 +151,34 @@ public class Circle extends Shape {
         this.radius = radius;
     }
 
+    /**
+     * getter de l'angle de début
+     * @return
+     */
     public float getAngleStart() {
         return angleStart;
     }
 
+    /**
+     * getter de l'angle de fin
+     * @return
+     */
     public float getAngleEnd() {
         return angleEnd;
     }
 
+    /**
+     * Setter de l'angle de début
+     * @param angleStart
+     */
     public void setAngleStart(float angleStart) {
         this.angleStart = angleStart;
     }
 
+    /**
+     * setter de l'angle de fin
+     * @param angleEnd
+     */
     public void setAngleEnd(float angleEnd) {
         this.angleEnd = angleEnd;
     }

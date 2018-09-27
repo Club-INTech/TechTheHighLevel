@@ -1,5 +1,8 @@
 package utils.math;
 
+/**
+ * @see VectCartesian
+ */
 public class VectPolar extends Vec2 {
 
     /**

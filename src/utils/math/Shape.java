@@ -1,19 +1,20 @@
 package utils.math;
 
+/**
+ * Il s'agit d'une classe abstraite définissant un cadre pour créer des formes
+ */
 public abstract class Shape {
 
-    /**L'abscisse du centre*/
-    private int xCenter;
+    private Vec2 center;
 
-    /** L'ordonnée du centre*/
-    private int yCenter;
 
-    /**Constructeur*/
-    public Shape(int xCenter, int yCenter) {
-        this.xCenter=xCenter;
-        this.yCenter=yCenter;
-
+    /**Constructeur
+     * @param center centre */
+    protected Shape(Vec2 center) {
+        this.center =center;
     }
+
+
 
     /**
      * Cette méthode retourne true s'il y'a intersection avec un segment
@@ -31,34 +32,21 @@ public abstract class Shape {
 
     /**
      * Cette méthode retourne la distance entre le centre du shape et le point en question
-     * @param xPoint : abscisse du point
-     * @param yPoint : ordonnée du point
+     * @param vect vecteur en coordonneés
      * @return
      */
-    public double distanceToPoint(int xPoint, int yPoint){
-        return Math.sqrt (this.xCenter - xPoint) * (xCenter - xPoint) + (this.yCenter - yPoint) * (this.yCenter - yPoint);
+    public double distanceToPoint(Vec2 vect){
+        return this.center.distanceTo(vect);
     }
 
-    /**getter de l'abscisse du centre*/
-    public int getxCenter() {
-        return xCenter;
-    }
-
-    /**getter de l'ordonnée du centre*/
-    public int getyCenter() {
-        return yCenter;
-    }
-
+    /**
+     * Getter du centre
+     * @return
+     */
     public Vec2 getCenter(){
-        return new VectCartesian(this.xCenter,this.yCenter);
-    }
-    /**setter de l'abscisse du centre*/
-    public void setxCenter(int xCenter) {
-        this.xCenter = xCenter;
+        return this.center;
     }
 
-    /**setter de l'ordonnée du centre*/
-    public void setyCenter(int yCenter) {
-        this.yCenter = yCenter;
-    }
+
+
 }
