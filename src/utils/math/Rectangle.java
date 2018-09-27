@@ -29,6 +29,16 @@ public class Rectangle extends Shape {
         return circle.getRadius()< width || circle.getRadius()<length;
     }
 
+
+    /**
+     * Cette méthode retroune true si notre rectange contient un point
+     * @param point
+     * @return
+     */
+    public boolean containsPoint(Vec2 point){
+        return this.containsCircle(new Circle(point.getX(), point.getY(), 0));
+    }
+
     /**
      * Cette méthode retourne true s'il y'a intersection entre deux rectangles
      * @param rectangle
