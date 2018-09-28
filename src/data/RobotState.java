@@ -15,12 +15,12 @@ public enum RobotState {
     }
 
     /** Renvoie la valeur de la variable */
-    public <T> T getData(){
+    public synchronized <T> T getData(){
         return (T)this.dataObject.getValue();
     }
 
     /** Affecte une valeur à la variable */
-    public <T> void setData(T value){
+    public synchronized <T> void setData(T value){
         this.dataObject.setValue(value);
     }
 }

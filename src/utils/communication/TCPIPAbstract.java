@@ -1,13 +1,8 @@
-package communication;
-
-import config.ConfigData;
-import config.ConfigInstance;
-import pfg.config.Config;
+package utils.communication;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.IOException;
-import java.net.Socket;
 
 public class TCPIPAbstract extends AbstractComm{
 
@@ -18,14 +13,13 @@ public class TCPIPAbstract extends AbstractComm{
     protected final String synchronizedThread = "synchronized";
     private String messageToSend;
     private String receivedMessage;
-    private Config config = ConfigInstance.getConfig();
 
     @Override
     /** Fonction permettant d'envoyer un order au client */
-    public synchronized void send(Order order, boolean waitForCompletion, String... parameters)
+    public synchronized void send(String orderStr, String... parameters)
     {
         //On forme le message
-        this.messageToSend=order.getOrderStr();
+        this.messageToSend=orderStr;
         for (String param : parameters)
         {
             this.messageToSend += " " + param;
@@ -33,16 +27,6 @@ public class TCPIPAbstract extends AbstractComm{
 
         //Possède un auto-flush
         this.sendingData.println(this.messageToSend);
-
-        //On attend le temps que l'ordre met pour se réaliser
-        if (waitForCompletion) {
-            try {
-                Thread.sleep(order.getTimeToComplete());
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     @Override

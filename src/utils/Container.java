@@ -86,7 +86,7 @@ public class Container implements Service
         /* Instanciation des attributs & de la config */
         instanciedServices = new HashMap<>();
         instanciedThreads = new HashMap<>();
-        config = new Config(ConfigData.values(), true);
+        config = new Config(ConfigData.values(), true, "config/config.txt", "Basic, Simple");
 
         /* Le container est un service ! */
         instanciedServices.put(getClass().getSimpleName(), this);

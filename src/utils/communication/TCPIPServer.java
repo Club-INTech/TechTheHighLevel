@@ -1,4 +1,4 @@
-package communication;
+package utils.communication;
 
 import java.io.IOException;
 import java.io.BufferedReader;

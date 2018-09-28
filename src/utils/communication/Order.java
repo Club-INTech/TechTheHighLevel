@@ -1,8 +1,8 @@
-package communication;
+package utils.communication;
 
-import config.ConfigData;
-import config.ConfigInstance;
 import pfg.config.Config;
+import utils.ConfigData;
+import utils.ConfigInstance;
 
 public enum Order {
 
