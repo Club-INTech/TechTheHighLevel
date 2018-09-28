@@ -17,8 +17,8 @@ public class TestObstacle {
     @Before
     public void setUp()
     {
-        circularObstacle = new CircularObstacle(new Circle(0, 0, 42), 42, true);
-        rectangularObstacle = new RectangularObstacle(new Rectangle(0, 0, 42, 42), 42, true);
+        circularObstacle = new CircularObstacle(new Circle( new VectCartesian(0, 0), 42), 42, true);
+        rectangularObstacle = new RectangularObstacle(new Rectangle(new VectCartesian(0,0),42, 42), 42, true);
 
         Assert.assertNotNull(circularObstacle);
         Assert.assertNotNull(rectangularObstacle);
@@ -47,9 +47,9 @@ public class TestObstacle {
     @Test
     public void testCircularObstacleequale()
     {
-        CircularObstacle circularObstacletrue = new CircularObstacle(new Circle(0, 0, 42), 42, true);
-        CircularObstacle circularObstaclefalse = new CircularObstacle(new Circle(666, 666, 42), 42, true);
-        CircularObstacle circularObstaclefalse2 = new CircularObstacle(new Circle(0, 0, 12), 42, true);
+        CircularObstacle circularObstacletrue = new CircularObstacle(new Circle(new VectCartesian(0, 0), 42), 42, true);
+        CircularObstacle circularObstaclefalse = new CircularObstacle(new Circle(new VectCartesian(666, 666), 42), 42, true);
+        CircularObstacle circularObstaclefalse2 = new CircularObstacle(new Circle(new VectCartesian(0, 0), 12), 42, true);
 
         Assert.assertTrue(circularObstacle.equals(circularObstacletrue));
         Assert.assertFalse(circularObstacle.equals(circularObstaclefalse));

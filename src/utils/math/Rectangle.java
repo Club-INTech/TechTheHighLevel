@@ -43,7 +43,7 @@ public class Rectangle extends Shape {
      * @return
      */
     public boolean containsPoint(Vec2 point){
-        return this.containsCircle(new Circle(point.getX(), point.getY(), 0));
+        return this.containsCircle(new Circle(new Vec2(point.getX(), point.getY()), 0));
     }
 
     /**
