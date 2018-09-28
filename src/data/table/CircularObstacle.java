@@ -39,12 +39,12 @@ public class CircularObstacle extends Obstacle {
     }
 
     @Override
-    protected boolean isInObstacle(Vec2 point) {
+    public boolean isInObstacle(Vec2 point) {
         return this.circle.containsPoint(point);
     }
 
     @Override
-    protected boolean intersect(Segment segment) {
+    public boolean intersect(Segment segment) {
         return this.circle.intersectsWithSegment(segment);
     }
 

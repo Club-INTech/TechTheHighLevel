@@ -15,9 +15,9 @@ public abstract class Obstacle {
     protected boolean entryObstacleAllowed;
 
     /** Indique si un point est dans un obstacle */
-    protected abstract boolean isInObstacle(Vec2 point);
+    public abstract boolean isInObstacle(Vec2 point);
 
-    protected abstract boolean intersect(Segment segment);
+    public abstract boolean intersect(Segment segment);
 
     /** Indique si deux obstacles sont égaux */
     public abstract boolean equals(Obstacle obstacle);

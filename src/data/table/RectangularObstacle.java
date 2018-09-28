@@ -29,15 +29,13 @@ public class RectangularObstacle extends Obstacle {
     /**
      * Pour instancier un obstacle fixe
      *
-     * @param position
-     * @param sizeX
-     * @param sizeY
+     *
      * @param entryObstacleAllowed  autoriser ou non le robot à rentrer dans obstacle
      */
 
-    public RectangularObstacle(Vec2 position, float sizeX, float sizeY, boolean entryObstacleAllowed){
-        super.position = position;
-        this.rectangle = new Rectangle(position.getX(), position.getY(), sizeX, sizeY);
+    public RectangularObstacle(Rectangle rectangle, boolean entryObstacleAllowed){
+        super.position = rectangle.getCenter();
+        this.rectangle = rectangle;
         this.timeLife = -1;
         this.entryObstacleAllowed = entryObstacleAllowed;
     }
@@ -45,27 +43,22 @@ public class RectangularObstacle extends Obstacle {
     /**
      * Pour instancier un obstacle mobile
      *
-     * @param position
-     * @param sizeX
-     * @param sizeY
      * @param timeLife              durée de vie de l'obstacle
      * @param entryObstacleAllowed  autoriser ou non le robot à rentrer dans obstacle
      */
 
-    public RectangularObstacle(Vec2 position, float sizeX, float sizeY, int timeLife, boolean entryObstacleAllowed){
-        super.position = position;
-        this.rectangle = new Rectangle(position.getX(), position.getY(), sizeX, sizeY);
+    public RectangularObstacle(Rectangle rectangle, int timeLife, boolean entryObstacleAllowed){
+        super.position = rectangle.getCenter();
+        this.rectangle = rectangle;
         this.timeLife = timeLife;
         this.entryObstacleAllowed = entryObstacleAllowed;
     }
 
     @Override
-    protected boolean isInObstacle(Vec2 point) {
-        return false;
-    }
+    public boolean isInObstacle(Vec2 point) { return rectangle.containsPoint(point);   }
 
     @Override
-    protected boolean intersect(Segment segment) {
+    public boolean intersect(Segment segment) {
         return false;
     }
 
