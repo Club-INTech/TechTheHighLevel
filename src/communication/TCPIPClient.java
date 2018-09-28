@@ -1,4 +1,4 @@
-package utils.communication;
+package communication;
 
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -39,18 +39,6 @@ public class TCPIPClient extends TCPIPAbstract{
             //On définit les canaux d'entrée et de sortie
             this.listeningData = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             this.sendingData = new PrintWriter(new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream())),true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /** Fonction permettant de fermer la socket proprement */
-    public void close(){
-        try {
-            synchronized (synchronizedThread) {
-                this.listeningThread.interrupt();
-            }
-            this.socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

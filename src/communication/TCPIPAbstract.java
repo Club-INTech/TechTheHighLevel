@@ -1,4 +1,4 @@
-package utils.communication;
+package communication;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
@@ -9,27 +9,18 @@ public class TCPIPAbstract extends AbstractComm{
 
     protected String ip;
     protected int port;
+    protected Socket socket;
     protected BufferedReader listeningData;
     protected PrintWriter sendingData;
     protected Thread listeningThread;
-    protected final String synchronizedThread = "synchronized";
-    protected Socket socket;
-    private String messageToSend;
     private String receivedMessage;
 
     @Override
     /** Fonction permettant d'envoyer un order au client */
-    public synchronized void send(String orderStr, String... parameters)
+    public synchronized void send(String message)
     {
-        //On forme le message
-        this.messageToSend=orderStr;
-        for (String param : parameters)
-        {
-            this.messageToSend += " " + param;
-        }
-
         //Possède un auto-flush
-        this.sendingData.println(this.messageToSend);
+        this.sendingData.println(message);
     }
 
     @Override
@@ -40,39 +31,42 @@ public class TCPIPAbstract extends AbstractComm{
             @Override
             public void run()
             {
-            while (true)
-            {
-                try
+                while (true)
                 {
-                    synchronized (synchronizedThread)
+                    try
                     {
-                        if (!Thread.currentThread().isInterrupted())
-                        {
-                            receivedMessage = listeningData.readLine();
+                        //On synchronise au cas où on fermerait le thread
+                        synchronized (this) {
+                            if (!Thread.currentThread().isInterrupted()) {
+                                receivedMessage = listeningData.readLine();
+                            } else {
+                                break;
+                            }
                         }
-                        else
-                        {
-                            break;
-                        }
+                        //On transmet le message reçu au messageHandler
+                        messageHandler(receivedMessage);
                     }
-                    messageHandler(receivedMessage);
+                    catch (IOException e)
+                    {
+                        e.printStackTrace();
+                    }
                 }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-            }
             }
         };
+
+        //On lance le listener
         this.listeningThread.start();
     }
 
+    /** Fonction permettant de fermer la socket proprement */
     public void close(){
         try {
-            synchronized (synchronizedThread) {
+            //On synchronise au cas où on lit une donnée
+            synchronized (this) {
+                //On arrête le thread d'écoute en lançant une interruption
                 this.listeningThread.interrupt();
             }
-            this.socket.close();
+            this.socket.close(); //On ferme le socket
         } catch (IOException e) {
             e.printStackTrace();
         }
