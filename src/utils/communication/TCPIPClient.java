@@ -12,9 +12,6 @@ import java.net.InetSocketAddress;
 
 public class TCPIPClient extends TCPIPAbstract{
 
-    private String ip;
-    private Socket socket;
-
     /** Fonction permettant de se connecter à l'IP choisie*/
     private void connectTo(){
         try {

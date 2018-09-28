@@ -14,17 +14,16 @@ public class TCPIPServer extends TCPIPAbstract{
     /** Fonction permettant d'accepter la première connexion venant sur le port spécifié */
     private void acceptConnection(){
         ServerSocket serverSocket;
-        Socket connectionSocket;
         try {
             //On initialise le socket en mode serveur
             serverSocket = new ServerSocket(this.port);
 
             //Méthode bloquante
-            connectionSocket = serverSocket.accept();
+            this.socket = serverSocket.accept();
 
             //On définit les canaux d'entrée et de sortie
-            this.listeningData = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-            this.sendingData = new PrintWriter(new BufferedWriter(new OutputStreamWriter(connectionSocket.getOutputStream())),true);
+            this.listeningData = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+            this.sendingData = new PrintWriter(new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream())),true);
         } catch (IOException e) {
             e.printStackTrace();
         }
