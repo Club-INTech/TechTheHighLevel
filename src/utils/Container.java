@@ -41,7 +41,7 @@ public class Container implements Service
     /**
      * Liste des threads instanciés
      */
-    private HashMap<String, Runnable> instanciedThreads;
+    private HashMap<String, Thread> instanciedThreads;
 
     /**
      * Instancie le gestionnaire de dépendances ainsi que la config
@@ -69,7 +69,7 @@ public class Container implements Service
             System.out.println("Version : "+toprint_log.substring(0, index)+" on "+toprint_git.substring(index2+1)+" - ["+toprint_log.substring(index+1)+"]");
             input_git.close();
         } catch (IOException e1) {
-            System.out.println(e1);
+            e1.printStackTrace();
         }
 
         /* Infos diverses */
@@ -86,7 +86,7 @@ public class Container implements Service
         /* Instanciation des attributs & de la config */
         instanciedServices = new HashMap<>();
         instanciedThreads = new HashMap<>();
-        config = new Config(ConfigData.values(), true);
+        config = new Config(ConfigData.values(), true, "config/config.txt", "Basic, Simple");
 
         /* Le container est un service ! */
         instanciedServices.put(getClass().getSimpleName(), this);
@@ -105,15 +105,46 @@ public class Container implements Service
     }
 
     /**
+     * Méthode appelée au début du programme après instanciation des services,
+     * elle démarre tout les Threads instanciés, dans un certain ordre s'il faut
+     */
+    public void startInstanciedThreads()
+    {
+        // TODO : A compléter au fur et à mesure que l'on implémente les différents Threads
+        for (Thread thread : instanciedThreads.values()) {
+            thread.start();
+        }
+    }
+
+    /**
+     * Méthode appelée à la fin du programme,
+     * elle tue tout les threads (de manière propre ?) et ferme le log
+     *
+     * @throws InterruptedException interruption des threads
+     */
+    public void destructor() throws InterruptedException
+    {
+        // Arrêt des Threads
+        // TODO : A compléter au fur et à mesure que l'on implémente les différents Threads
+        for (Thread thread : instanciedThreads.values()) {
+            thread.interrupt();
+            thread.join(100);
+        }
+
+        Log.close();
+        printMessage("outro.txt");
+    }
+
+    /**
      * Méthode retournant une référence d'une classe demandée.
      *
      * @param   service classe demandée
      * @return  référene de l'instance de la classe demandée
-     * @throws  ContainerException
+     * @throws  ContainerException  voir méthode getService
      */
     public synchronized <S extends Service> S getService(Class<S> service) throws ContainerException
     {
-        return getService(service, new Stack<String>());
+        return getService(service, new Stack<>());
     }
 
     /**
@@ -171,12 +202,12 @@ public class Container implements Service
             constructor.setAccessible(true);    // Petit hack, ne faite pas ca chez vous !
             S s = constructor.newInstance(paramObject);
             constructor.setAccessible(false);
-            instanciedServices.put(service.getSimpleName(), (Service) s);
+            instanciedServices.put(service.getSimpleName(), s);
 
             /* Si c'est un Thread, on l'ajoute dans une liste à part */
-            if (s instanceof Runnable)
+            if (s instanceof Thread)
             {
-                instanciedThreads.put(service.getSimpleName(), (Runnable) s);
+                instanciedThreads.put(service.getSimpleName(), (Thread) s);
             }
 
             /* Mise à jour de la config */
@@ -213,7 +244,7 @@ public class Container implements Service
 
             reader.close();
         } catch (IOException e) {
-            System.err.println(e);
+            e.printStackTrace();
         }
     }
 

@@ -1,5 +1,8 @@
 package utils.math;
 
+/**
+ * Il s'agit d"une classe définissant des méthodes de calculs spécifiques pour les vecteurs, le constructeur de cette classe est protected
+ */
 public class Vec2 {
 
     /**abscisse du vecteur*/
@@ -17,7 +20,7 @@ public class Vec2 {
     /**
      * Constructeur d'un vecteur nul
      */
-    public Vec2(){
+    protected Vec2(){
         this.x = 0;
         this.y = 0;
         this.r = 0;
@@ -29,7 +32,7 @@ public class Vec2 {
      * @param x
      * @param y
      */
-    public Vec2(int x, int y) {
+    protected Vec2(int x, int y) {
         this.x = x;
         this.y = y;
         this.r = Math.sqrt(x*x+y*y);
@@ -38,10 +41,10 @@ public class Vec2 {
 
     /**
      * Constructeur d'un vecteur en coordonnées polaires
-     * @param r
-     * @param a
+     * @param r rayon
+     * @param a angle
      */
-    public Vec2(double r, double a) {
+    protected Vec2(double r, double a) {
         this.r = r;
         this.a = a;
         this.x = (int)(r*Math.cos(a));
@@ -63,7 +66,7 @@ public class Vec2 {
      * @return
      */
     public int crossProduct(Vec2 vecteur){
-        return x * vecteur.y - y * vecteur.x;
+        return x * vecteur.getY() - y * vecteur.getX();
     }
 
     /**On rajoute un autre vecteur et on retourne le nouveau*/
@@ -109,7 +112,7 @@ public class Vec2 {
     /**On renvoie un vecteur multiplié par un réel*/
     public Vec2 dotFloat(float a){
 
-        return new Vec2(a*this.x, a*this.y);
+        return new Vec2((int)a*this.x, (int)a*this.y);
     }
 
     @Override
@@ -117,15 +120,6 @@ public class Vec2 {
         return new Vec2(this.x, this.y);
     }
 
-    /**On retourne un vecteur en coordonnées polaires*/
-    public VectPolar toPolar(){
-        return new VectPolar(r,a);
-    }
-
-    /**On retourne un vecteur en cartésien*/
-    public VectCartesian toCartesian(){
-        return new VectCartesian(x,y);
-    }
 
     /**On calcule l'angle du vecteur entre -pi et pi (non incluses )*/
     public double angle(){

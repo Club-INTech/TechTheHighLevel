@@ -12,6 +12,9 @@ import org.junit.Test;
 import utils.Container;
 import utils.container.ContainerException;
 
+/**
+ * Tests du Container TODO Compléter pour tester le démarrage des Thread et la destruction des objets
+ */
 public class Test_Container
 {
     /**

@@ -88,7 +88,7 @@ Package :: Utils
       <w>520</w>
       <h>340</h>
     </coordinates>
-    <panel_attributes>communication
+    <panel_attributes>utils.communication
 --
 </panel_attributes>
     <additional_attributes/>
@@ -115,7 +115,7 @@ bg=white</panel_attributes>
       <h>100</h>
     </coordinates>
     <panel_attributes>/AbstractComm/
-Package :: communication
+Package :: utils.communication
 --
 --
 /+send(String)/
