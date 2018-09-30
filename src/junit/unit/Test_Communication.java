@@ -10,7 +10,7 @@ public class Test_Communication {
 
     private AbstractComm localhostClient;
     private AbstractComm localhostServer;
-    private int nbMessages=100;
+    private int nbMessages=10000;
 
     @SuppressWarnings("Duplicates")
     @Test

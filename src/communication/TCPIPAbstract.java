@@ -13,7 +13,6 @@ public class TCPIPAbstract extends AbstractComm{
     protected BufferedReader listeningData;
     protected PrintWriter sendingData;
     protected Thread listeningThread;
-    private String receivedMessage;
 
     @Override
     /** Fonction permettant d'envoyer un order au client */
@@ -47,7 +46,7 @@ public class TCPIPAbstract extends AbstractComm{
             }
         }
         catch (IOException e) {
-            throw new ConnectionException("Connection get IOException");
+            throw new ConnectionException("Connection got IOException");
         }
     }
 
