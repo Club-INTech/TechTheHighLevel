@@ -49,6 +49,5 @@ public class TCPIPClient extends TCPIPAbstract{
         super(port);
         this.ip = ip; //On spécifie l'IP sur laquelle on se connecte
         connectTo(); //On gère la demande de connexion
-        listen(); //On lance le listener
     }
 }

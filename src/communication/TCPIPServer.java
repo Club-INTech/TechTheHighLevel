@@ -34,6 +34,5 @@ public class TCPIPServer extends TCPIPAbstract{
     public TCPIPServer(int port){
         super(port);
         acceptConnection(); //On gère l'acceptation de la première connexion
-        listen(); //On lance le listener
     }
 }

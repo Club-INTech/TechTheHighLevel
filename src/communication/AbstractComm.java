@@ -1,10 +1,16 @@
 package communication;
 
 public abstract class AbstractComm {
+
+    private boolean connectionUp=true;
+
     public abstract void send(String string);
-    protected abstract void listen();
-    public void messageHandler(String message){
-        System.out.println("IL FAUT OVVERIDE CETTE PUTAIN DE METHODE A L'INSTANCIATION: messangeHandler");
-        //Override cette méthode quand on instancie la connexion
+    public abstract String read() throws ConnectionException;
+    public abstract boolean hasReceivedSomething();
+    public boolean isConnectionUp(){
+        return this.connectionUp;
+    }
+    public void setConnectionUp(boolean isUp){
+        this.connectionUp=isUp;
     }
 }
