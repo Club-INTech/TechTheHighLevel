@@ -14,34 +14,36 @@ public class TCPIPClient extends TCPIPAbstract{
 
     /** Fonction permettant de se connecter à l'IP choisie*/
     private void connectTo(){
-        try {
-            //On crée la socket
-            SocketAddress address;
+        Thread waitingForConnectionThread = new Thread(() -> {
+            try {
+                //On crée la socket
+                SocketAddress address;
 
-            this.socket = new Socket(); //On crée une nouvelle socket
-            address = new InetSocketAddress(this.ip, this.port); //On crée l'objet contenant adresse à laquelle on veut se connecter
+                socket = new Socket(); //On crée une nouvelle socket
+                address = new InetSocketAddress(this.ip, this.port); //On crée l'objet contenant adresse à laquelle on veut se connecter
 
-
-            while (!this.socket.isConnected()) {
-                try {
-                    this.socket.connect(address); //On essaye de se connecter
-                }
-                catch(IOException e){ //Si on n'a pas réussi à se connecter
+                while (!socket.isConnected()) {
                     try {
-                        Thread.sleep(100); //On attend 100ms
-                    } catch (InterruptedException e1) {
-                        e1.printStackTrace();
+                        socket.connect(address); //On essaye de se connecter
+                    } catch (IOException e) { //Si on n'a pas réussi à se connecter
+                        try {
+                            Thread.sleep(100); //On attend 100ms
+                        } catch (InterruptedException e1) {
+                            e1.printStackTrace();
+                        }
+                        socket = new Socket(); //On recrée la socket
                     }
-                    this.socket = new Socket(); //On recrée la socket
                 }
+                //On définit les canaux d'entrée et de sortie
+                listeningData = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                sendingData = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true);
+                setConnectionUp(true);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-            //On définit les canaux d'entrée et de sortie
-            this.listeningData = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
-            this.sendingData = new PrintWriter(new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream())),true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            Thread.currentThread().interrupt();
+        });
+        waitingForConnectionThread.start();
     }
 
     /** Constructeur */

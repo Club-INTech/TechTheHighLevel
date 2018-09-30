@@ -2,7 +2,7 @@ package communication;
 
 public abstract class AbstractComm {
 
-    private boolean connectionUp=true;
+    private boolean connectionUp=false;
 
     public abstract void send(String string);
     public abstract String read() throws ConnectionException;

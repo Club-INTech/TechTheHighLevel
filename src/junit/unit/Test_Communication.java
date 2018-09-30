@@ -10,7 +10,7 @@ public class Test_Communication {
 
     private AbstractComm localhostClient;
     private AbstractComm localhostServer;
-    private int nbMessages=10;
+    private int nbMessages=100;
 
     @SuppressWarnings("Duplicates")
     @Test
@@ -18,21 +18,17 @@ public class Test_Communication {
         CommunicationWrapper commWrapper = new CommunicationWrapper(){
             @Override
             protected void openConnections() {
-                Thread a = new Thread(() -> localhostServer = new TCPIPServer(20000));
-                Thread b = new Thread(() -> localhostClient = new TCPIPClient("localhost", 20000));
-                //On lance les threads
-                a.start();
-                b.start();
-
-                //On attend que les interfaces se connectent entre elles
-                try {
-                    a.join();
-                    b.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                localhostServer = new TCPIPServer(20000);
                 addInterface(localhostServer);
+                localhostClient = new TCPIPClient("localhost", 20000);
                 addInterface(localhostClient);
+                while (!areAllConnectionsReady()){
+                    try {
+                        Thread.sleep(5);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
@@ -92,21 +88,17 @@ public class Test_Communication {
         CommunicationWrapper commWrapper = new CommunicationWrapper(){
             @Override
             protected void openConnections() {
-                Thread a = new Thread(() -> localhostServer = new TCPIPServer(20000));
-                Thread b = new Thread(() -> localhostClient = new TCPIPClient("localhost", 20000));
-                //On lance les threads
-                a.start();
-                b.start();
-
-                //On attend que les interfaces se connectent entre elles
-                try {
-                    a.join();
-                    b.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                addInterface(localhostServer);
+                localhostClient = new TCPIPClient("localhost", 20000);
                 addInterface(localhostClient);
+                localhostServer = new TCPIPServer(20000);
+                addInterface(localhostServer);
+                while (!areAllConnectionsReady()){
+                    try {
+                        Thread.sleep(5);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override

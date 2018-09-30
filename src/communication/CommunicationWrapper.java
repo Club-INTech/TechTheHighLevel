@@ -15,9 +15,6 @@ public class CommunicationWrapper {
     }
 
     protected void addInterface(AbstractComm interfaceToAdd){
-        if (this.communicationInterfaces==null){
-            System.out.println("null");
-        }
         this.communicationInterfaces.add(interfaceToAdd);
     }
 
@@ -58,10 +55,27 @@ public class CommunicationWrapper {
         readingThread.start();
     }
 
+    public boolean areAllConnectionsReady(){
+        for (AbstractComm commInterface : communicationInterfaces){
+            if (!commInterface.isConnectionUp()){
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public CommunicationWrapper(){
         this.communicationInterfaces=new ArrayList<>();
+        this.lastMessage=null;
         openConnections();
+        while (!areAllConnectionsReady()){
+            try {
+                Thread.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         listenThread();
     }
 }
