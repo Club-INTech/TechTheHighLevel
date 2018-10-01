@@ -5,6 +5,9 @@ import java.io.PrintWriter;
 import java.io.IOException;
 import java.net.Socket;
 
+/** Classe gérant l'envoi et la réceptionde données sur une connexion TCP IP établie
+ * @author nayht
+ */
 public class TCPIPAbstract extends AbstractComm{
 
     protected String ip;
@@ -12,7 +15,6 @@ public class TCPIPAbstract extends AbstractComm{
     protected Socket socket;
     protected BufferedReader listeningData;
     protected PrintWriter sendingData;
-    protected Thread listeningThread;
 
     @Override
     /** Fonction permettant d'envoyer un order au client */
@@ -22,7 +24,8 @@ public class TCPIPAbstract extends AbstractComm{
         this.sendingData.println(message);
     }
 
-    public boolean hasReceivedSomething(){
+    /** Fonction permettant de savoir si le buffer de réception contient quelque chose*/
+    private boolean hasReceivedSomething(){
         try {
             return this.listeningData.ready();
         } catch (IOException e) {
@@ -32,16 +35,26 @@ public class TCPIPAbstract extends AbstractComm{
     }
 
     @Override
+    /** Fonction permettant de lire le buffer de réception*/
     public String read() throws ConnectionException {
         try
         {
             //On synchronise au cas où on fermerait le thread
             synchronized (this) {
-                if (!Thread.currentThread().isInterrupted()) {
-                    return listeningData.readLine();
+                if (this.isConnectionUp()) {
+                //Si la connexion a été établie
+                    //Si on le buffer de réception contient quelque chose
+                    if (this.hasReceivedSomething()) {
+                        //On renvoie la dernière ligne arrivée
+                        return listeningData.readLine();
+                    }
+                    else{
+                        //Si le buffer de reception est vide, on renvoie null
+                        return null;
+                    }
                 }
                 else{
-                    throw new ConnectionException("Conenction has been interrupted");
+                    return null;
                 }
             }
         }
@@ -55,10 +68,9 @@ public class TCPIPAbstract extends AbstractComm{
         try {
             //On synchronise au cas où on lit une donnée
             synchronized (this) {
-                //On arrête le thread d'écoute en lançant une interruption
-                this.listeningThread.interrupt();
+                this.socket.close(); //On ferme le socket
+                this.setConnectionUp(false);
             }
-            this.socket.close(); //On ferme le socket
         } catch (IOException e) {
             e.printStackTrace();
         }
