@@ -1,5 +1,7 @@
 package communication;
 
+import utils.Log;
+
 import java.util.ArrayList;
 
 /** Wrapper s'occupant de gérer l'établissement des connexions et le traitement des messages reçus
@@ -23,7 +25,7 @@ public class CommunicationWrapper {
     }
 
     protected void startAllConnections() {
-        System.out.println("OVERRIDE CETTE PUTAIN DE METHODE : openAllConnections");
+        Log.COMMUNICATION.critical("OVERRIDE CETTE PUTAIN DE METHODE : openAllConnections");
     }
 
     protected void startConnection(Connections connection){
