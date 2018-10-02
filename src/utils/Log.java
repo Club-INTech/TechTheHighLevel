@@ -64,7 +64,7 @@ public enum Log
      */
     public void debug(Object message)
     {
-        writeToLog(DEBUG, message.toString());
+        writeToLog(DEBUG, message.toString(), this.active);
     }
 
     /**
@@ -74,7 +74,7 @@ public enum Log
      */
     public void warning(Object message)
     {
-        writeToLog(WARNING, message.toString());
+        writeToLog(WARNING, message.toString(), this.active);
     }
 
     /**
@@ -84,7 +84,7 @@ public enum Log
      */
     public void critical(Object message)
     {
-        writeToLog(CRITICAL, message.toString());
+        writeToLog(CRITICAL, message.toString(), true);
     }
 
 
@@ -94,14 +94,14 @@ public enum Log
      * @param color     le préfixe pour la couleur en sortie standart
      * @param message   message à affiché
      */
-    private void writeToLog(String color, String message)
+    private void writeToLog(String color, String message, boolean active)
     {
         String hour = calendar.get(Calendar.HOUR_OF_DAY) + "h" +
                 calendar.get(Calendar.MINUTE) + ":" +
                 calendar.get(Calendar.SECOND) + "," +
                 calendar.get(Calendar.MILLISECOND);
 
-        if(this.active)
+        if(active)
         {
             StackTraceElement elem = Thread.currentThread().getStackTrace()[3];
             System.out.println(color + hour + " " + this.name() + " " +

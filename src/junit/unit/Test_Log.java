@@ -73,4 +73,17 @@ public class Test_Log
         Assert.assertTrue(input.readLine().endsWith("TL"));
         Assert.assertTrue(input.readLine().endsWith("TS"));
     }
+
+    @Test
+    public void testLogCritical() throws Exception
+    {
+        Log.COMMUNICATION.setActive(false);
+        Log.LOCOMOTION.setActive(false);
+
+        Log.COMMUNICATION.critical("SUUS");
+        Log.LOCOMOTION.critical("SU");
+
+        Assert.assertTrue(input.readLine().endsWith("SUUS"));
+        Assert.assertTrue(input.readLine().endsWith("SU"));
+    }
 }

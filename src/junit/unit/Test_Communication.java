@@ -3,6 +3,7 @@ package junit.unit;
 import communication.*;
 import org.junit.Assert;
 import org.junit.Test;
+import robot.Order;
 
 public class Test_Communication {
 
