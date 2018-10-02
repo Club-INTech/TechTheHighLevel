@@ -1,0 +1,31 @@
+package communication;
+
+import robot.Order;
+
+public enum Connections {
+
+    LOCALHOST_CLIENT(new TCPIPClient("localhost",20000)),
+    LOCALHOST_SERVER(new TCPIPServer(20000));
+
+
+    AbstractConnection connection;
+    Connections(AbstractConnection connection){
+        this.connection=connection;
+    }
+
+    public void establishConnection(){
+        this.connection.connect();
+    }
+
+    public AbstractConnection getConnection(){
+        return this.connection;
+    }
+
+    public void send(String message){
+        this.connection.send(message);
+    }
+
+    public void send(Order order){
+        this.connection.send(order.getOrderStr());
+    }
+}

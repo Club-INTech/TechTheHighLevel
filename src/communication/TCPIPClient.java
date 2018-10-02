@@ -16,7 +16,7 @@ import java.net.InetSocketAddress;
 public class TCPIPClient extends TCPIPAbstract{
 
     /** Fonction permettant de se connecter à l'IP choisie */
-    private void connectTo(){
+    public void connect(){
         //On définit le thread s'occupant de l'établissement de la connexion
         Thread waitingForConnectionThread = new Thread(() -> {
             try {
@@ -57,6 +57,5 @@ public class TCPIPClient extends TCPIPAbstract{
     public TCPIPClient(String ip, int port){
         super(port);
         this.ip = ip; //On spécifie l'IP sur laquelle on se connecte
-        connectTo(); //On gère la demande de connexion
     }
 }

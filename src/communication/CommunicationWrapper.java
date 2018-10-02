@@ -7,13 +7,28 @@ import java.util.ArrayList;
  */
 public class CommunicationWrapper {
 
-    protected ArrayList<AbstractComm> communicationInterfaces; //Liste des connexions instanciées (connectées ou non)
+    protected ArrayList<AbstractConnection> communicationInterfaces; //Liste des connexions instanciées (connectées ou non)
     private String lastMessage; //Dernier message reçu
 
-    /** Fonction permettant d'initialiser les connexions*/
-    protected void openConnections() {
-        TCPIPClient localhost = new TCPIPClient("localhost", 23000);
-        this.addCommunicationInterface(localhost);
+    /** Fonction permettant d'initialiser les connexions quand override */
+    private void secureSetupAllConnections(){
+        startAllConnections();
+        while (!areAllConnectionsUp()){
+            try {
+                Thread.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    protected void startAllConnections() {
+        System.out.println("OVERRIDE CETTE PUTAIN DE METHODE : openAllConnections");
+    }
+
+    protected void startConnection(Connections connection){
+        connection.establishConnection();
+        this.addCommunicationInterface(connection.getConnection());
     }
 
     /** Fonction s'occupant de gérer les messages reçus et de les distribuer aux thread de traitement */
@@ -24,7 +39,7 @@ public class CommunicationWrapper {
 
 
     /** Fonction permettant d'ajouter une interface à la liste des interfaces */
-    protected void addCommunicationInterface(AbstractComm interfaceToAdd){
+    private void addCommunicationInterface(AbstractConnection interfaceToAdd){
         this.communicationInterfaces.add(interfaceToAdd);
     }
 
@@ -36,7 +51,7 @@ public class CommunicationWrapper {
             while (true)
             {
                 //On parcourt chacune des connexions
-                for (AbstractComm commInterface : communicationInterfaces){
+                for (AbstractConnection commInterface : communicationInterfaces){
                     try {
                         //On essaye de lire le buffer de réception de la connexion
                         lastMessage = commInterface.read();
@@ -59,8 +74,8 @@ public class CommunicationWrapper {
     }
 
     /** Fonction permettant de savoir si toutes les connexions sont actives et établies*/
-    protected boolean areAllConnectionsUp(){
-        for (AbstractComm commInterface : communicationInterfaces){
+    private boolean areAllConnectionsUp(){
+        for (AbstractConnection commInterface : communicationInterfaces){
             if (!commInterface.isConnectionUp()){
                 return false;
             }
@@ -74,7 +89,7 @@ public class CommunicationWrapper {
         this.lastMessage=null;
 
         //On démarre les connexions
-        openConnections();
+        secureSetupAllConnections();
 
         //On attend que toutes les connexions soient établies
         while (!areAllConnectionsUp()){

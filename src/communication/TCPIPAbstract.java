@@ -8,7 +8,7 @@ import java.net.Socket;
 /** Classe gérant l'envoi et la réceptionde données sur une connexion TCP IP établie
  * @author nayht
  */
-public class TCPIPAbstract extends AbstractComm{
+public abstract class TCPIPAbstract extends AbstractConnection {
 
     protected String ip;
     protected int port;
@@ -16,12 +16,17 @@ public class TCPIPAbstract extends AbstractComm{
     protected BufferedReader listeningData;
     protected PrintWriter sendingData;
 
+    /** Fonction permettant de lancer l'établissement de la connexion */
+    protected abstract void connect();
+
     @Override
     /** Fonction permettant d'envoyer un order au client */
     public synchronized void send(String message)
     {
-        //Possède un auto-flush
-        this.sendingData.println(message);
+        if (this.isConnectionUp()) {
+            //Possède un auto-flush
+            this.sendingData.println(message);
+        }
     }
 
     /** Fonction permettant de savoir si le buffer de réception contient quelque chose*/

@@ -1,16 +1,11 @@
 package junit.unit;
 
-import communication.AbstractComm;
-import communication.CommunicationWrapper;
-import communication.TCPIPClient;
-import communication.TCPIPServer;
+import communication.*;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class Test_Communication {
 
-    private AbstractComm localhostClient;
-    private AbstractComm localhostServer;
     private int nbMessages=100; //Nombre de message à envoyer pour tester la connexion
 
     @SuppressWarnings("Duplicates")
@@ -21,21 +16,9 @@ public class Test_Communication {
         CommunicationWrapper commWrapper = new CommunicationWrapper(){
             @Override
             /** On setup les connexions en localhost*/
-            protected void openConnections() {
-                //On définit le serveur et le client
-                localhostServer = new TCPIPServer(20000);
-                addCommunicationInterface(localhostServer);
-                localhostClient = new TCPIPClient("localhost", 20000);
-                addCommunicationInterface(localhostClient);
-
-                //On attend que la connexion soit établie
-                while (!areAllConnectionsUp()){
-                    try {
-                        Thread.sleep(5);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
+            protected void startAllConnections() {
+                startConnection(Connections.LOCALHOST_CLIENT);
+                startConnection(Connections.LOCALHOST_SERVER);
             }
 
             @Override
@@ -57,12 +40,12 @@ public class Test_Communication {
 
         //On envoie les messages du client vers le serveur
         for (int i=0; i<this.nbMessages; i++){
-            localhostClient.send("From client : "+i);
+            Connections.LOCALHOST_CLIENT.send("From client : "+i);
         }
 
         //On envoie les messages du serveur vers le client
         for (int i=0; i<this.nbMessages; i++){
-            localhostServer.send("From server : "+i);
+            Connections.LOCALHOST_SERVER.send("From server : "+i);
         }
 
         //On attend 1 seconde pour que les sockets affichent tous les messages
@@ -101,21 +84,9 @@ public class Test_Communication {
         CommunicationWrapper commWrapper = new CommunicationWrapper(){
             @Override
             /** On setup les connexions en localhost*/
-            protected void openConnections() {
-                //On définit le serveur et le client
-                localhostServer = new TCPIPServer(20000);
-                addCommunicationInterface(localhostServer);
-                localhostClient = new TCPIPClient("localhost", 20000);
-                addCommunicationInterface(localhostClient);
-
-                //On attend que la connexion soit établie
-                while (!areAllConnectionsUp()){
-                    try {
-                        Thread.sleep(5);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
+            protected void startAllConnections() {
+                startConnection(Connections.LOCALHOST_CLIENT);
+                startConnection(Connections.LOCALHOST_SERVER);
             }
 
             @Override
@@ -135,12 +106,12 @@ public class Test_Communication {
 
         //On envoie les messages du client vers le serveur
         for (int i=0; i<this.nbMessages; i++){
-            localhostClient.send("CL"+i);
+            Connections.LOCALHOST_CLIENT.send("CL"+i);
         }
 
         //On envoie les messages du serveur vers le client
         for (int i=0; i<this.nbMessages; i++){
-            localhostServer.send("SE"+i);
+            Connections.LOCALHOST_SERVER.send("SE"+i);
         }
 
         //On attend 1 seconde pour que les sockets affichent tous les messages

@@ -16,7 +16,7 @@ import java.net.Socket;
 public class TCPIPServer extends TCPIPAbstract{
 
     /** Fonction permettant d'accepter la première connexion venant sur le port spécifié */
-    private void acceptConnection(){
+    public void connect(){
         //On définit le thread s'occupant de l'établissement de la connexion
         Thread waitingForConnectionThread = new Thread(() -> {
             try
@@ -49,6 +49,5 @@ public class TCPIPServer extends TCPIPAbstract{
     /** Constructeur */
     public TCPIPServer(int port){
         super(port);
-        acceptConnection(); //On gère l'acceptation de la première connexion
     }
 }

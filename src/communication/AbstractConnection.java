@@ -4,9 +4,12 @@ package communication;
 /** Classe mère de toutes les interfaces de connexion
  * @author nayht
  */
-public abstract class AbstractComm {
+public abstract class AbstractConnection {
 
     private boolean connectionUp=false; //Permet de savoir si la connexion est active
+
+    /** Fonction permettant de lancer l'établissement de la connexion */
+    protected abstract void connect();
 
     /** Permet d'envoyer un message */
     public abstract void send(String string);
@@ -23,4 +26,5 @@ public abstract class AbstractComm {
     protected void setConnectionUp(boolean isUp){
         this.connectionUp=isUp;
     }
+
 }
