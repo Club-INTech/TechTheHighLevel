@@ -94,6 +94,23 @@ public class Container implements Service
     }
 
     /**
+     * Méthode appelée juste avant la destruction de l'objet
+     */
+    @Override
+    public void finalize() {
+        Log.close();
+        try {
+            for (Thread thread : instanciedThreads.values()) {
+                thread.interrupt();
+                thread.join(100);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        printMessage("outro.txt");
+    }
+
+    /**
      * Getter pour instanciation du singleton
      */
     public static Container getInstance()
@@ -106,6 +123,14 @@ public class Container implements Service
     }
 
     /**
+     * WARNING : Utilisé UNIQUEMENT pour les tests !!! Jamais on fait appel au Garbage Collector, c'est sale !
+     */
+    public static void resetInstance() {
+        instance = null;
+        System.gc();
+    }
+
+    /**
      * Méthode appelée au début du programme après instanciation des services,
      * elle démarre tout les Threads instanciés, dans un certain ordre s'il faut
      */
@@ -115,25 +140,6 @@ public class Container implements Service
         for (Thread thread : instanciedThreads.values()) {
             thread.start();
         }
-    }
-
-    /**
-     * Méthode appelée à la fin du programme,
-     * elle tue tout les threads (de manière propre ?) et ferme le log
-     *
-     * @throws InterruptedException interruption des threads
-     */
-    public void destructor() throws InterruptedException
-    {
-        // Arrêt des Threads
-        // TODO : A compléter au fur et à mesure que l'on implémente les différents Threads
-        for (Thread thread : instanciedThreads.values()) {
-            thread.interrupt();
-            thread.join(100);
-        }
-
-        Log.close();
-        printMessage("outro.txt");
     }
 
     /**
@@ -261,7 +267,6 @@ public class Container implements Service
     public Config getConfig() {
         return config;
     }
-
     public HashMap<String, Service> getInstanciedServices() {
         return instanciedServices;
     }

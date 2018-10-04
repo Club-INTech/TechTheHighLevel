@@ -1,9 +1,5 @@
 package robot;
 
-import pfg.config.Config;
-import utils.ConfigData;
-import utils.ConfigInstance;
-
 /** Contient la base de donnée des ordres du robot. */
 
 public enum Order {
@@ -30,8 +26,6 @@ public enum Order {
 
     private String orderStr;
     private int millisecondsToComplete;
-
-    private Config config = ConfigInstance.getConfig();
 
     Order(String orderStr){
         this(orderStr, 0);
