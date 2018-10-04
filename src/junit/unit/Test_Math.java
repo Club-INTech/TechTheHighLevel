@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import utils.math.*;
 
-public class Test_math {
+public class Test_Math {
 
 
     private Circle circle;
@@ -42,11 +42,7 @@ public class Test_math {
         circle=new Circle(new VectCartesian(0,0),5);
         Circle circle2=new Circle(new VectCartesian(0,0),5);
         Assert.assertTrue(circle2.intersectsWithCircle(circle));
-
     }
-
-
-
 
     @Test
     public void circleContainsPoint(){

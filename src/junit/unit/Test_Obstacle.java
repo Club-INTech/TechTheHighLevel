@@ -2,14 +2,11 @@ package junit.unit;
 
 import data.table.CircularObstacle;
 import data.table.RectangularObstacle;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import utils.math.*;
 
 
-public class TestObstacle {
+public class Test_Obstacle {
 
     private CircularObstacle circularObstacle;
     private RectangularObstacle rectangularObstacle;
@@ -56,16 +53,16 @@ public class TestObstacle {
         Assert.assertFalse(circularObstacle.equals(circularObstaclefalse));
     }
 
-// TODO Ajouter test RectangularObstacle
-//    @Test
-//    public void testRectangularObstacleisInObstacle()
-//    {
-//        VectCartesian in = new VectCartesian(12, 12);
-//        VectCartesian out = new VectCartesian(666, 666);
-//
-//        Assert.assertTrue(rectangularObstacle.isInObstacle(in));
-//        Assert.assertFalse(rectangularObstacle.isInObstacle(out));
-//    }
+    @Ignore
+    @Test
+    public void testRectangularObstacleisInObstacle()
+    {
+        VectCartesian in = new VectCartesian(12, 12);
+        VectCartesian out = new VectCartesian(666, 666);
+
+        Assert.assertTrue(rectangularObstacle.isInObstacle(in));
+        Assert.assertFalse(rectangularObstacle.isInObstacle(out));
+    }
 
     @After
     public void tearDown()
