@@ -12,9 +12,32 @@ public class CommunicationWrapper {
     protected ArrayList<AbstractConnection> communicationInterfaces; //Liste des connexions instanciées (connectées ou non)
     private String lastMessage; //Dernier message reçu
 
-    /** Fonction permettant d'initialiser les connexions quand override */
+    /** Permet d'initier toutes les connexions quand override */
+    protected void startAllConnections() {
+        Log.COMMUNICATION.critical("OVERRIDE CETTE PUTAIN DE METHODE : openAllConnections");
+    }
+
+    /** Permet de démarrer l'établissement d'une connexion et de l'ajouter à la liste des connexions ouvertes */
+    protected void startConnection(Connections connection){
+        //On démarre l'établissement d'une connexion
+        connection.establishConnection();
+
+        //On ajoute la connexion à la liste des connexions dont l'établissmenet a été lancé
+        this.addCommunicationInterface(connection.getConnection());
+    }
+
+    /** S'occupe de gérer les messages reçus et de les distribuer aux thread de traitement, peut être override*/
+    protected void handleMessage(String header, String message){
+        System.out.println(header);
+        System.out.println(message);
+    }
+
+    /** Permet de démarrer et de finir l'établissement de toutes les connexions,
+     * avec un aspect bloquant tant que toutes les connexions ne sont pas établies*/
     private void secureSetupAllConnections(){
-        startAllConnections();
+        startAllConnections(); //On démarre les connexions
+
+        //On attent que les connexions soient établies
         while (!areAllConnectionsUp()){
             try {
                 Thread.sleep(5);
@@ -24,28 +47,12 @@ public class CommunicationWrapper {
         }
     }
 
-    protected void startAllConnections() {
-        Log.COMMUNICATION.critical("OVERRIDE CETTE PUTAIN DE METHODE : openAllConnections");
-    }
-
-    protected void startConnection(Connections connection){
-        connection.establishConnection();
-        this.addCommunicationInterface(connection.getConnection());
-    }
-
-    /** Fonction s'occupant de gérer les messages reçus et de les distribuer aux thread de traitement */
-    protected void handleMessage(String header, String message){
-        System.out.println(header);
-        System.out.println(message);
-    }
-
-
-    /** Fonction permettant d'ajouter une interface à la liste des interfaces */
+    /** Permet d'ajouter une interface à la liste des interfaces */
     private void addCommunicationInterface(AbstractConnection interfaceToAdd){
         this.communicationInterfaces.add(interfaceToAdd);
     }
 
-    /** Fonction permettant de lancer le listener de toutes les interfaces*/
+    /** Permet de lancer le listener de toutes les interfaces*/
     private void listenThread() {
         //On crée un thread de réceptions de données
         Thread readingThread = new Thread(() -> {
@@ -75,7 +82,7 @@ public class CommunicationWrapper {
         readingThread.start();
     }
 
-    /** Fonction permettant de savoir si toutes les connexions sont actives et établies*/
+    /** Permet de savoir si toutes les connexions sont actives et établies*/
     private boolean areAllConnectionsUp(){
         for (AbstractConnection commInterface : communicationInterfaces){
             if (!commInterface.isConnectionUp()){

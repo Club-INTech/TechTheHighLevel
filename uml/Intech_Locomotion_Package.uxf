@@ -10,7 +10,7 @@
       <h>130</h>
     </coordinates>
     <panel_attributes>LocomotionService(Thread)
-Package :: Locomotion
+Package :: locomotion
 --
 -table : Table
 -graphe : Graphe
@@ -29,7 +29,7 @@ Package :: Locomotion
       <h>200</h>
     </coordinates>
     <panel_attributes>Pathfinding
-Package :: Locomotion
+Package :: locomotion
 --
 -graphe : Graphe
 -table : Table
@@ -52,7 +52,7 @@ Package :: Locomotion
       <h>120</h>
     </coordinates>
     <panel_attributes>PathFollower(Thread)
-Package :: Locomotion
+Package :: locomotion
 --
 -path : Liste
 -orderWrapper : OrderWrapper

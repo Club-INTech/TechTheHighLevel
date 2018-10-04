@@ -68,7 +68,7 @@ public enum ConfigData implements ConfigInfo
     UNCERTAINTY(1),
     // TODO à compléter
 
-    /** Paramètres Locomotion */
+    /** Paramètres locomotion */
     BASIC_DETECTION(true),
     ADVANCED_DETECTION(false),
     BASIC_DETECTION_LOOP_DELAY(500),

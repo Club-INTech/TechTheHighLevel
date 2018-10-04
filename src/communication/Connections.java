@@ -25,7 +25,18 @@ public enum Connections {
         this.connection.send(message);
     }
 
-    public void send(Order order){
-        this.connection.send(order.getOrderStr());
+    public void send(Order order, String... arguments){
+        if (arguments!= null){
+            StringBuilder message = new StringBuilder();
+            message.append(order.getOrderStr());
+            for (String argument : arguments) {
+                message.append(" ");
+                message.append(argument);
+            }
+            this.connection.send(message.toString());
+        }
+        else {
+            this.connection.send(order.getOrderStr());
+        }
     }
 }

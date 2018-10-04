@@ -30,7 +30,7 @@ public class Container implements Service
     /**
      * La config, qui ici n'implémente pas service
      */
-    private Config config   = null;
+    private Config config = null;
 
     /**
      * Liste des services déjà instanciés. Contient au moins Config et Log.
@@ -211,7 +211,7 @@ public class Container implements Service
             }
 
             /* Mise à jour de la config */
-            s.updateConfig();
+            s.updateConfig(config);
 
             /* Mise à jour de la pile */
             stack.pop();
@@ -252,7 +252,7 @@ public class Container implements Service
      * @see Service
      */
     @Override
-    public void updateConfig() {}
+    public void updateConfig(Config config) {}
 
     /**
      * Getters

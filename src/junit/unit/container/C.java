@@ -1,5 +1,6 @@
 package junit.unit.container;
 
+import pfg.config.Config;
 import utils.container.Service;
 
 /**
@@ -11,5 +12,5 @@ public class C implements Service
     public C(A a) {}
 
     @Override
-    public void updateConfig() {}
+    public void updateConfig(Config config) {}
 }

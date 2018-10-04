@@ -1,5 +1,6 @@
 package junit.unit.container;
 
+import pfg.config.Config;
 import utils.container.Service;
 
 /**
@@ -16,8 +17,8 @@ public class D implements Service
     }
 
     @Override
-    public void updateConfig() {
-        config = true;
+    public void updateConfig(Config config) {
+        this.config = true;
     }
 
     public boolean isConfig() {
