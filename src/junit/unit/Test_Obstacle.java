@@ -15,7 +15,7 @@ public class Test_Obstacle {
     public void setUp()
     {
         circularObstacle = new CircularObstacle(new Circle( new VectCartesian(0, 0), 42), 42, true);
-        rectangularObstacle = new RectangularObstacle(new Rectangle(new VectCartesian(0,0),42, 42), 42, true);
+        rectangularObstacle = new RectangularObstacle(new Rectangle(new VectCartesian(0,0),50, 42), 42, true);
 
         Assert.assertNotNull(circularObstacle);
         Assert.assertNotNull(rectangularObstacle);
@@ -62,6 +62,16 @@ public class Test_Obstacle {
 
         Assert.assertTrue(rectangularObstacle.isInObstacle(in));
         Assert.assertFalse(rectangularObstacle.isInObstacle(out));
+    }
+
+    @Test
+    public void testRectangularObstacleintersect()
+    {
+        Segment in = new Segment(new VectCartesian(0, 0), new VectCartesian(12, 666));
+        Segment out = new Segment(new VectCartesian(600, 600), new VectCartesian(612, 612));
+
+        Assert.assertTrue(rectangularObstacle.intersect(in));
+        Assert.assertFalse(rectangularObstacle.intersect(out));
     }
 
     @After
