@@ -1,4 +1,4 @@
-package data.table;
+package data.table.obstacle;
 
 import utils.math.Rectangle;
 import utils.math.Segment;

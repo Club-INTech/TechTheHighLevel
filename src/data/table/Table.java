@@ -1,4 +1,4 @@
-package data;
+package data.table;
 
 import utils.math.Vec2;
 

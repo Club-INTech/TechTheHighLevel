@@ -1,7 +1,7 @@
 package junit.unit;
 
-import data.table.CircularObstacle;
-import data.table.RectangularObstacle;
+import data.table.obstacle.CircularObstacle;
+import data.table.obstacle.RectangularObstacle;
 import org.junit.*;
 import utils.math.*;
 

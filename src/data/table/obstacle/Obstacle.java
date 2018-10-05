@@ -1,9 +1,9 @@
-package data.table;
+package data.table.obstacle;
 
 import utils.math.Segment;
 import utils.math.Vec2;
 
-public abstract class Obstacle {
+public abstract class   Obstacle {
 
     /** Vecteur de position localisant un obstacle */
     protected Vec2 position;
