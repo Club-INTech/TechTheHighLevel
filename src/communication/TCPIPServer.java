@@ -13,28 +13,30 @@ import java.net.Socket;
  * @author nayht
  */
 
-public class TCPIPServer extends TCPIPAbstract{
+public class TCPIPServer extends TCPIPAbstract {
 
-    /** Fonction permettant d'accepter la première connexion venant sur le port spécifié */
-    public void connect(){
+    private ServerSocket serverSocket;
+
+    /**
+     * Fonction permettant d'accepter la première connexion venant sur le port spécifié
+     */
+    public void connect() {
         //On définit le thread s'occupant de l'établissement de la connexion
         Thread waitingForConnectionThread = new Thread(() -> {
-            try
-            {
+            try {
                 //On initialise le socket en mode serveur
-                ServerSocket serverSocket = new ServerSocket(port);
+                this.serverSocket = new ServerSocket(port);
 
                 //Méthode bloquante
-                Socket connectionSocket = serverSocket.accept();
+                this.socket = serverSocket.accept();
 
                 //On définit les canaux d'entrée et de sortie
-                listeningData = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-                sendingData = new PrintWriter(new BufferedWriter(new OutputStreamWriter(connectionSocket.getOutputStream())), true);
+                listeningData = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+                sendingData = new PrintWriter(new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream())), true);
 
                 //On marque la connexion comme active
                 setConnectionUp(true);
-            } catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
 
@@ -46,8 +48,22 @@ public class TCPIPServer extends TCPIPAbstract{
         waitingForConnectionThread.start();
     }
 
-    /** Constructeur */
-    public TCPIPServer(int port){
+    /**
+     * Constructeur
+     */
+    public TCPIPServer(int port) {
         super(port);
+    }
+
+    @Override
+    public void close() {
+        super.close();
+        try {
+            synchronized (this) {
+                this.serverSocket.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

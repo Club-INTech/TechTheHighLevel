@@ -1,7 +1,9 @@
 package junit.unit;
 
-import communication.*;
+import communication.CommunicationWrapper;
+import communication.Connections;
 import data.controller.LidarHandlerRunnable;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -9,6 +11,12 @@ import org.junit.Test;
 public class Test_Communication {
 
     private int nbMessages=100; //Nombre de message à envoyer pour tester la connexion
+    private CommunicationWrapper commWrapper;
+
+    @After
+    public void after(){
+        this.commWrapper.stopListeningThread(); //On ferme le thread du comm wrapper qui écoute les messages reçus
+    }
 
     @SuppressWarnings("Duplicates")
     @Test
@@ -16,7 +24,7 @@ public class Test_Communication {
     public void visualCommunicationTest(){
 
         //On crée le wrapper de communication en localhost
-        CommunicationWrapper commWrapper = new CommunicationWrapper(){
+        this.commWrapper = new CommunicationWrapper(){
             @Override
             /* On setup les connexions en localhost */
             protected void startAllConnections() {
@@ -27,18 +35,7 @@ public class Test_Communication {
             @Override
             /* On traite les messages selon leurs headers */
             protected void handleMessage(String header, String message) {
-                switch(header) {
-                    case "CL": //"CL" pour Client
-                        System.out.print("Message received from client: ");
-                        System.out.println(message);
-                        break;
-                    case "SE": //"SE" pour Server
-                        System.out.print("Message received from server: ");
-                        System.out.println(message);
-                        break;
-                    default:
-                        System.out.println(message);
-                }
+                System.out.println(header+message);
             }
         };
 
@@ -61,14 +58,14 @@ public class Test_Communication {
 
         //Close connections.
         Connections.LOCALHOST_CLIENT.close();
-
+        Connections.LOCALHOST_SERVER.close();
     }
 
 
     @SuppressWarnings("Duplicates")
+    @Ignore
     @Test
     public void lidarCommunicationTest(){
-
         System.out.println("Start test.");
 
         // Initialisation.
@@ -86,7 +83,7 @@ public class Test_Communication {
         System.out.println("Thread launched.");
 
         // On crée le wrapper de communication en localhost.
-        CommunicationWrapper commWrapper = new CommunicationWrapper(){
+        this.commWrapper = new CommunicationWrapper(){
             @Override
             /* On setup les connexions en localhost */
             protected void startAllConnections() {
@@ -104,7 +101,7 @@ public class Test_Communication {
                     System.out.print("Message received from server: ");
                     System.out.println("SE: " + message);
                 }
-                if (header.equals("LI")) {
+                else if (header.equals("LI")) {
                     System.out.print("Message received from lidar: ");
                     System.out.println("LI: " + message);
                     lidarHandlerRunnable.appendToQueue(message);
@@ -169,7 +166,7 @@ public class Test_Communication {
         StringBuilder serverReceivedBuilder = new StringBuilder();
 
         //On crée le wrapper de communication en localhost
-        CommunicationWrapper commWrapper = new CommunicationWrapper(){
+        this.commWrapper = new CommunicationWrapper(){
             @Override
             /* On setup les connexions en localhost*/
             protected void startAllConnections() {
@@ -257,7 +254,7 @@ public class Test_Communication {
 
         //Close connections.
         Connections.LOCALHOST_CLIENT.close();
-
+        Connections.LOCALHOST_SERVER.close();
     }
     
 }

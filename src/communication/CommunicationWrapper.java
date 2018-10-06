@@ -11,6 +11,7 @@ public class CommunicationWrapper {
 
     protected ArrayList<AbstractConnection> communicationInterfaces; //Liste des connexions instanciées (connectées ou non)
     private String lastMessage; //Dernier message reçu
+    private Thread readingThread;
 
     /** Permet d'initier toutes les connexions quand override */
     protected void startAllConnections() {
@@ -55,7 +56,7 @@ public class CommunicationWrapper {
     /** Permet de lancer le listener de toutes les interfaces*/
     private void listenThread() {
         //On crée un thread de réceptions de données
-        Thread readingThread = new Thread(() -> {
+        this.readingThread = new Thread(() -> {
             //On boucle indéfiniment
             while (true)
             {
@@ -74,12 +75,14 @@ public class CommunicationWrapper {
                         //On lance le traitement de ce message
                         handleMessage(lastMessage.substring(0,2),lastMessage.substring(2));
                     }
-
+                }
+                if (Thread.currentThread().isInterrupted()){
+                    break;
                 }
             }
         });
         //On lance le listener
-        readingThread.start();
+        this.readingThread.start();
     }
 
     /** Permet de savoir si toutes les connexions sont actives et établies*/
@@ -90,6 +93,11 @@ public class CommunicationWrapper {
             }
         }
         return true;
+    }
+
+    /** Permet d'interrompre le thread d'écoute */
+    public void stopListeningThread(){
+        this.readingThread.interrupt();
     }
 
     /** Constructeur */
