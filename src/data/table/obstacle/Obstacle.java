@@ -3,7 +3,7 @@ package data.table.obstacle;
 import utils.math.Segment;
 import utils.math.Vec2;
 
-public abstract class   Obstacle {
+public abstract class Obstacle {
 
     /** Vecteur de position localisant un obstacle */
     protected Vec2 position;
@@ -20,7 +20,7 @@ public abstract class   Obstacle {
     public abstract boolean intersect(Segment segment);
 
     /** Indique si deux obstacles sont égaux */
-    public abstract boolean equals(Obstacle obstacle);
+    public abstract boolean equals(Object object);
 
     /** Génére un hashCode à partir de l'obstacle. Utile pour les hashMap */
     public abstract int hashCode();

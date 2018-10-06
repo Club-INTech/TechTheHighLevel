@@ -117,4 +117,13 @@ public class Rectangle extends Shape {
     public void setWidth(float width) {
         this.width = width;
     }
+
+    @Override
+    /** On vérifie si le rectangle a le même centre, la même largeur et la même longueur */
+    public boolean equals(Object obj) {
+        if (obj instanceof Rectangle){
+            return ((Rectangle) obj).getCenter().equals(this.getCenter()) && ((Rectangle) obj).getLength()==this.getLength() && ((Rectangle) obj).getWidth()==this.getWidth();
+        }
+        return false;
+    }
 }
