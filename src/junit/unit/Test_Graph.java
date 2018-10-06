@@ -200,40 +200,6 @@ public class Test_Graph {
     }
 
     @Test
-    public void addCircularFixedObstacle(){
-        int sizeBefore = this.table.getFixedObstacles().size();
-        this.table.addFixedObstacle(new CircularObstacle(new Circle(new VectCartesian(0,0),0),false));
-        int sizeAfter = this.table.getFixedObstacles().size();
-        Assert.assertEquals(sizeBefore+1, sizeAfter);
-    }
-
-    @Test
-    public void addRectangularFixedObstacle(){
-        int sizeBefore = this.table.getFixedObstacles().size();
-        this.table.addFixedObstacle(new RectangularObstacle(new Rectangle(new VectCartesian(0,0), 50,50),false));
-        int sizeAfter = this.table.getFixedObstacles().size();
-        Assert.assertEquals(sizeBefore+1, sizeAfter);
-    }
-
-    @Test
-    public void addAlreadyExistingCircularObstacle(){
-        int sizeBefore = this.table.getFixedObstacles().size();
-        this.table.addFixedObstacle(new CircularObstacle(new Circle(new VectCartesian(0,0),0),false));
-        this.table.addFixedObstacle(new CircularObstacle(new Circle(new VectCartesian(0,0),0),false));
-        int sizeAfter = this.table.getFixedObstacles().size();
-        Assert.assertEquals(sizeBefore+1, sizeAfter);
-    }
-
-    @Test
-    public void addAlreadyExistingRectangularObstacle(){
-        int sizeBefore = this.table.getFixedObstacles().size();
-        this.table.addFixedObstacle(new RectangularObstacle(new Rectangle(new VectCartesian(0,0),50,50),false));
-        this.table.addFixedObstacle(new RectangularObstacle(new Rectangle(new VectCartesian(0,0),50,50),false));
-        int sizeAfter = this.table.getFixedObstacles().size();
-        Assert.assertEquals(sizeBefore+1, sizeAfter);
-    }
-
-    @Test
     public void createRidgesWithoutAnyNode(){
         this.graphe=new Graph(this.table);
         this.graphe.createRidges();

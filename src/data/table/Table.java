@@ -21,10 +21,6 @@ public class Table {
         this.mobileObstacles=new ArrayList<>();
     }
 
-    /** Renvoie les obstacles fixes */
-    public ArrayList<Obstacle> getFixedObstacles(){
-        return this.fixedObstacles;
-    }
 
     /** Ajoute un obstacle fixe */
     public void addFixedObstacle(Obstacle fixedObstacle){
@@ -33,14 +29,62 @@ public class Table {
         }
     }
 
+    /** Ajoute une liste d'obstacles fixes */
+    public void addFixedObstacles(Obstacle[] fixedObstacles){
+        for (Obstacle obstacle : fixedObstacles){
+            if (!this.fixedObstacles.contains(obstacle)){
+                this.fixedObstacles.add(obstacle);
+            }
+        }
+    }
+
+    /** Ajoute une liste d'obstacles fixes */
+    public void addFixedObstacles(ArrayList<Obstacle> fixedObstacles){
+        for (Obstacle obstacle : fixedObstacles){
+            if (!this.fixedObstacles.contains(obstacle)){
+                this.fixedObstacles.add(obstacle);
+            }
+        }
+    }
+
+    /** Renvoie les obstacles fixes */
+    public ArrayList<Obstacle> getFixedObstacles(){
+        return this.fixedObstacles;
+    }
+
+    /** Ajoute un obstacle mobile */
+    public void addMobileObstacle(Obstacle mobileObstacle){
+        if (!this.mobileObstacles.contains(mobileObstacle)) {
+            this.mobileObstacles.add(mobileObstacle);
+        }
+    }
+
+    /** Ajoute une liste d'obstacles mobiles */
+    public void addMobileObstacles(Obstacle[] mobileObstacles){
+        for (Obstacle obstacle : mobileObstacles){
+            if (!this.mobileObstacles.contains(obstacle)){
+                this.mobileObstacles.add(obstacle);
+            }
+        }
+    }
+
+    /** Ajoute une liste d'obstacles mobiles */
+    public void addMobileObstacles(ArrayList<Obstacle> mobileObstacles){
+        for (Obstacle obstacle : mobileObstacles){
+            if (!this.mobileObstacles.contains(obstacle)){
+                this.mobileObstacles.add(obstacle);
+            }
+        }
+    }
+
     /** Renvoie les obstacles mobiles */
     public ArrayList<Obstacle> getMobileObstacles(){
         return this.mobileObstacles;
     }
 
-    /** Ajoute un obstacle mobile */
-    public void addMobileObstacle(Obstacle mobileObstacle){
-        this.mobileObstacles.add(mobileObstacle);
+    /** Supprime un obstacle mobile */
+    public void removeMobileObstacle(Obstacle mobileObstacleToRemove){
+        this.mobileObstacles.remove(mobileObstacleToRemove);
     }
 
 
