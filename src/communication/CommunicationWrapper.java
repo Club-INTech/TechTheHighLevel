@@ -58,7 +58,7 @@ public class CommunicationWrapper {
         //On crée un thread de réceptions de données
         this.readingThread = new Thread(() -> {
             //On boucle indéfiniment
-            while (true)
+            while (!Thread.currentThread().isInterrupted())
             {
                 //On parcourt chacune des connexions
                 for (AbstractConnection commInterface : communicationInterfaces){
@@ -75,9 +75,6 @@ public class CommunicationWrapper {
                         //On lance le traitement de ce message
                         handleMessage(lastMessage.substring(0,2),lastMessage.substring(2));
                     }
-                }
-                if (Thread.currentThread().isInterrupted()){
-                    break;
                 }
             }
         });
