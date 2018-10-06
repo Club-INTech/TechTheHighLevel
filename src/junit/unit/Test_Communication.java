@@ -3,6 +3,7 @@ package junit.unit;
 import communication.*;
 import data.controller.LidarHandlerRunnable;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class Test_Communication {
@@ -148,7 +149,6 @@ public class Test_Communication {
     @Test
     /* Test utilisable pour Jenkins */
     public void booleanCommunicationTest(){
-
         //On crée des StringBuilder pour définir les messages qu'on devrait recevoir
         StringBuilder referenceClientReceivedBuilder = new StringBuilder();
         StringBuilder referenceServerReceivedBuilder = new StringBuilder();
@@ -259,5 +259,6 @@ public class Test_Communication {
         Connections.LOCALHOST_CLIENT.close();
 
     }
+    
 }
 

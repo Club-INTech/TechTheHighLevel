@@ -63,10 +63,10 @@ public class RectangularObstacle extends Obstacle {
     }
 
     @Override
-    public boolean equals(Obstacle obstacle) {
-        if (obstacle instanceof RectangularObstacle){
-            RectangularObstacle rectangularObstacle = (RectangularObstacle) obstacle;
-            return super.position == rectangularObstacle.getPosition() && this.rectangle.equals(rectangularObstacle.getRectangle());
+    public boolean equals(Object Obj) {
+        if (Obj instanceof RectangularObstacle){
+            RectangularObstacle rectangularObstacle = (RectangularObstacle) Obj;
+            return this.getPosition().equals(rectangularObstacle.getPosition()) && this.rectangle.equals(rectangularObstacle.getRectangle());
         }
         return false;
     }

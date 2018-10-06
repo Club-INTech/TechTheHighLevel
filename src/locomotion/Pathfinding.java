@@ -22,13 +22,11 @@ public class Pathfinding {
     }
 
 
-
-
-
     /** Permet de savoir si, dans le chemin prévu, il y a une position cible qui n'est pas en train d'être atteinte*/
     boolean doesNextNodeExist(){
         return (this.path.peek()!=null);
     }
+
     /** Permet d'avoir la prochaine position vers laquelle le robot doit se déplacer */
     Vec2 getNextNode(){
         if (this.path.peek() != null){
@@ -42,10 +40,12 @@ public class Pathfinding {
     void clearPath(){
         this.path.clear();
     }
+
     /** Permet d'ajouter une étape à la fin du chemin prévu*/
     void addPositionToPath(Vec2 position){
         this.path.add(position);
     }
+
     /** Permet de remplacer le chemin prévu actuel par un autre chemin prévu*/
     void setPath(ConcurrentLinkedQueue<Vec2> path){
         this.path=path;

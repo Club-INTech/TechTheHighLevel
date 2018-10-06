@@ -103,8 +103,8 @@ public class Circle extends Shape {
 
         // Sinon, on doit choisir entre le point du début de l'arc de cercle et celui de fin
         else {
-            Vec2 circleCenterStart = new Vec2(this.getRadius(), this.getAngleStart());
-            Vec2 circleCenterEnd = new Vec2(this.getRadius(), this.getAngleEnd());
+            Vec2 circleCenterStart = new VectPolar(this.getRadius(), this.getAngleStart());
+            Vec2 circleCenterEnd = new VectPolar(this.getRadius(), this.getAngleEnd());
 
             if (this.getCenter().plusVector(circleCenterStart).distanceTo(point) >= this.getCenter().plusVector(circleCenterEnd).distanceTo(point)){
                 return circleCenterEnd.plusVector(this.getCenter());
@@ -124,10 +124,10 @@ public class Circle extends Shape {
     public ArrayList<Vec2> pointsAroundCircle(int n){
         ArrayList<Vec2> l=new ArrayList<>();
         for(int i=0;i<n;i++){
-            int x=(int)(this.getRadius()*Math.cos(2*i*Math.PI/n))+this.getCenter().getX();
-            int y=(int)(this.getRadius()*Math.sin(2*i*Math.PI/n))+this.getCenter().getY();
-            Vec2 vectoadd=new Vec2(x,y);
-            l.add(vectoadd);
+            int x=(int)Math.round(this.getRadius()*Math.cos(2*i*Math.PI/n))+this.getCenter().getX();
+            int y=(int)Math.round(this.getRadius()*Math.sin(2*i*Math.PI/n))+this.getCenter().getY();
+            Vec2 vectToAdd=new VectCartesian(x,y);
+            l.add(vectToAdd);
         }
         return l;
     }

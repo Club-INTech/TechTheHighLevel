@@ -9,6 +9,7 @@ public class Node {
 
     private Vec2 position; //Position de la node sur la table
     private ArrayList<Node> neighbours; //Liste des nodes voisines (ie accessibles lorsqu'il n'y a pas d'obstacle)
+    private ArrayList<Ridge> neighboursRidges;
 
     //Valeur de priorité dans la recherche des nodes (utile et mis à jour lors de l'exécution du pathfinding)
     private int heuristique = 0;
@@ -18,14 +19,41 @@ public class Node {
     private Node predecessor;
 
     /** Constructeur */
-    Node(Vec2 position){
+    public Node(Vec2 position){
         this.position=position;
         this.neighbours=new ArrayList<>();
+        this.neighboursRidges =new ArrayList<>();
+    }
+
+    /** Renvoie la position da la node */
+    public Vec2 getPosition(){
+        return this.position;
+    }
+
+    /** Renvoie les voisins de la node*/
+    public ArrayList<Node> getNeighbours(){
+        return this.neighbours;
+    }
+
+    /** Renvoie les voisins de la node*/
+    public ArrayList<Ridge> getNeighboursRidges(){
+        return this.neighboursRidges;
     }
 
     /** Ajoute un voisin à cette node */
     public void addNeighbour(Node neighbour, Ridge ridge){
         this.neighbours.add(neighbour);
+        this.neighboursRidges.add(ridge);
+    }
+
+    /** Supprime un voisin de cette node */
+    public void removeNeighbour(Node neighbour){
+        for (Ridge ridge : (ArrayList<Ridge>)this.getNeighboursRidges().clone()){
+            if (ridge.containsNode(this)){
+                this.getNeighboursRidges().remove(ridge);
+            }
+        }
+        this.neighbours.remove(neighbour);
     }
 
     @Override

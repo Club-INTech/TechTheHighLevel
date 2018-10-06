@@ -14,16 +14,28 @@ public class Ridge {
     /** Constructeur */
     public Ridge(Segment segment){
         this.segment=segment;
+        this.usable=false;
     }
 
     /** Constructeur avec Vec2 */
     public Ridge(Vec2 firstPoint, Vec2 secondPoint){
         this.segment=new Segment(firstPoint,secondPoint);
+        this.usable=false;
     }
 
     /** Renvoie le segment */
     public Segment getSegment(){
         return this.segment;
+    }
+
+    /** Set le segment */
+    public void setSegment(Segment segment){
+        this.segment=segment;
+    }
+
+    /** Renvoie si la node en argument correspond à une des 2 nodes qui constituent le ridge, */
+    public boolean containsNode(Node node){
+        return (this.segment.getPointA().equals(node.getPosition())) || (this.segment.getPointB().equals(node.getPosition()));
     }
 
     /** Définit si l'arête est utilisable */
@@ -56,6 +68,12 @@ public class Ridge {
         else{
             return false;
         }
+    }
+
+    @Override
+    /** Clone le ridge */
+    protected Ridge clone(){
+        return new Ridge(this.segment.clone());
     }
 
     @Override

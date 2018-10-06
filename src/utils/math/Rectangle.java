@@ -43,7 +43,7 @@ public class Rectangle extends Shape {
      * @return
      */
     public boolean containsPoint(Vec2 point){
-        return this.containsCircle(new Circle(new Vec2(point.getX(), point.getY()), 0));
+        return this.containsCircle(new Circle(new VectCartesian(point.getX(), point.getY()), 0));
     }
 
     /**
@@ -61,10 +61,10 @@ public class Rectangle extends Shape {
      * @return
      */
     public Segment[] getDiagonals(){
-        Vec2 pointA= new Vec2((int)(this.getCenter().getX() - width/2),(int)(this.getCenter().getY() + length/2));
-        Vec2 pointB=new Vec2((int)(pointA.getX()+width),pointA.getY());
-        Vec2 pointC=new Vec2(pointB.getX(), (int) (pointB.getY() - length));
-        Vec2 pointD=new Vec2(pointA.getX(), (int)(pointA.getY() - length));
+        Vec2 pointA= new VectCartesian(Math.round(this.getCenter().getX() - width/2), Math.round(this.getCenter().getY() + length/2));
+        Vec2 pointB=new VectCartesian(Math.round(pointA.getX()+width),pointA.getY());
+        Vec2 pointC=new VectCartesian(pointB.getX(), Math.round(pointB.getY() - length));
+        Vec2 pointD=new VectCartesian(pointA.getX(), Math.round(pointA.getY() - length));
         Segment[] segments=new Segment[2];
         segments[0]=new Segment(pointA,pointC);
         segments[1]=new Segment(pointB,pointD);
@@ -76,10 +76,10 @@ public class Rectangle extends Shape {
      * @return
      */
     public Segment[] getSegments(){
-        Vec2 pointA= new Vec2((int)(this.getCenter().getX() - width/2),(int)(this.getCenter().getY() + length/2));
-        Vec2 pointB=new Vec2((int)(pointA.getX()+width),pointA.getY());
-        Vec2 pointC=new Vec2(pointB.getX(), (int) (pointB.getY() - length));
-        Vec2 pointD=new Vec2(pointA.getX(), (int)(pointA.getY() - length));
+        Vec2 pointA= new VectCartesian(Math.round(this.getCenter().getX() - width/2), Math.round(this.getCenter().getY() + length/2));
+        Vec2 pointB=new VectCartesian(Math.round(pointA.getX()+width),pointA.getY());
+        Vec2 pointC=new VectCartesian(pointB.getX(), Math.round(pointB.getY() - length));
+        Vec2 pointD=new VectCartesian(pointA.getX(), Math.round(pointA.getY() - length));
         Segment[] segments=new Segment[4];
         segments[0]= new Segment(pointA,pointB);
         segments[1]=new Segment(pointB,pointC);
@@ -116,5 +116,14 @@ public class Rectangle extends Shape {
     /**setter de la largeur*/
     public void setWidth(float width) {
         this.width = width;
+    }
+
+    @Override
+    /** On vérifie si le rectangle a le même centre, la même largeur et la même longueur */
+    public boolean equals(Object obj) {
+        if (obj instanceof Rectangle){
+            return ((Rectangle) obj).getCenter().equals(this.getCenter()) && ((Rectangle) obj).getLength()==this.getLength() && ((Rectangle) obj).getWidth()==this.getWidth();
+        }
+        return false;
     }
 }
