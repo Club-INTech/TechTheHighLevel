@@ -23,6 +23,11 @@ public class Node {
         this.neighbours=new ArrayList<>();
     }
 
+    /** Renvoie la position da la node */
+    public Vec2 getPosition(){
+        return this.position;
+    }
+
     /** Ajoute un voisin à cette node */
     public void addNeighbour(Node neighbour, Ridge ridge){
         this.neighbours.add(neighbour);

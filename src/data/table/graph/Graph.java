@@ -1,6 +1,8 @@
 package data.table.graph;
 
 import data.table.obstacle.Obstacle;
+import utils.math.Segment;
+import utils.math.VectCartesian;
 
 import java.util.ArrayList;
 
@@ -32,8 +34,20 @@ public class Graph {
     }
 
     /** Définit les ridges */
-    public void createRidge(){
-
+    public void createRidges(){
+        Segment segment = new Segment(new VectCartesian(0,0), new VectCartesian(0,0));
+        for (int i = 0; i<this.nodes.size()-1; i++){
+            segment.setPointA(this.nodes.get(i).getPosition());
+            for (int j = i+1; j<this.nodes.size(); j++){
+                segment.setPointB(this.nodes.get(j).getPosition());
+                for (Obstacle obstacle : this.fixedObstacles){
+                    if (!obstacle.intersect(segment)){
+                        this.nodes.get(i).addNeighbour(this.nodes.get(j), new Ridge((Segment)segment.clone()));
+                        this.nodes.get(j).addNeighbour(this.nodes.get(i), new Ridge((Segment)segment.clone()));
+                    }
+                }
+            }
+        }
     }
 
     /** Définit si les ridges sont empruntables */

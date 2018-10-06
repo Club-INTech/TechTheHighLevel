@@ -2,8 +2,8 @@ package junit.unit;
 
 import communication.*;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
-import robot.Order;
 
 public class Test_Communication {
 
@@ -11,57 +11,8 @@ public class Test_Communication {
 
     @SuppressWarnings("Duplicates")
     @Test
-    /** Test visuel */
-    public void visualCommunicationTest(){
-        //On crée le wrapper de communication en localhost
-        CommunicationWrapper commWrapper = new CommunicationWrapper(){
-            @Override
-            /** On setup les connexions en localhost*/
-            protected void startAllConnections() {
-                startConnection(Connections.LOCALHOST_CLIENT);
-                startConnection(Connections.LOCALHOST_SERVER);
-            }
-
-            @Override
-            /** On traite les messages selon leurs headers*/
-            protected void handleMessage(String header, String message) {
-                if (header.equals("CL")) { //"CL" pour Client
-                    System.out.print("Message received from client: ");
-                    System.out.println(message);
-                }
-                else if (header.equals("SE")){ //"SE" pour Server
-                    System.out.print("Message received from server: ");
-                    System.out.println(message);
-                }
-                else {
-                    System.out.println(message);
-                }
-            }
-        };
-
-        //On envoie les messages du client vers le serveur
-        for (int i=0; i<this.nbMessages; i++){
-            Connections.LOCALHOST_CLIENT.send("From client : "+i);
-        }
-
-        //On envoie les messages du serveur vers le client
-        for (int i=0; i<this.nbMessages; i++){
-            Connections.LOCALHOST_SERVER.send("From server : "+i);
-        }
-
-        //On attend 1 seconde pour que les sockets affichent tous les messages
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @SuppressWarnings("Duplicates")
-    @Test
     /** Test utilisable pour Jenkins */
     public void booleanCommunicationTest(){
-
         //On crée des StringBuilder pour définir les messages qu'on devrait recevoir
         StringBuilder referenceClientReceivedBuilder = new StringBuilder();
         StringBuilder referenceServerReceivedBuilder = new StringBuilder();
@@ -168,6 +119,55 @@ public class Test_Communication {
                 System.out.println("Client received:");
                 System.out.println(clientReceivedBuilder.toString());
             }
+        }
+    }
+
+    @SuppressWarnings("Duplicates")
+    @Ignore
+    @Test
+    /** Test visuel */
+    public void visualCommunicationTest(){
+        //On crée le wrapper de communication en localhost
+        CommunicationWrapper commWrapper = new CommunicationWrapper(){
+            @Override
+            /** On setup les connexions en localhost*/
+            protected void startAllConnections() {
+                startConnection(Connections.LOCALHOST_CLIENT);
+                startConnection(Connections.LOCALHOST_SERVER);
+            }
+
+            @Override
+            /** On traite les messages selon leurs headers*/
+            protected void handleMessage(String header, String message) {
+                if (header.equals("CL")) { //"CL" pour Client
+                    System.out.print("Message received from client: ");
+                    System.out.println(message);
+                }
+                else if (header.equals("SE")){ //"SE" pour Server
+                    System.out.print("Message received from server: ");
+                    System.out.println(message);
+                }
+                else {
+                    System.out.println(message);
+                }
+            }
+        };
+
+        //On envoie les messages du client vers le serveur
+        for (int i=0; i<this.nbMessages; i++){
+            Connections.LOCALHOST_CLIENT.send("From client : "+i);
+        }
+
+        //On envoie les messages du serveur vers le client
+        for (int i=0; i<this.nbMessages; i++){
+            Connections.LOCALHOST_SERVER.send("From server : "+i);
+        }
+
+        //On attend 1 seconde pour que les sockets affichent tous les messages
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }
