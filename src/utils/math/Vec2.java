@@ -14,7 +14,7 @@ public class Vec2 {
     /**coordonnée radiale*/
     private double r;
 
-    /**angle polaire du point*/
+    /**calculateAngle polaire du point*/
     private double a;
 
     /**
@@ -36,19 +36,19 @@ public class Vec2 {
         this.x = x;
         this.y = y;
         this.r = Math.sqrt(x*x+y*y);
-        this.a = this.angle();
+        this.a = this.calculateAngle();
     }
 
     /**
      * Constructeur d'un vecteur en coordonnées polaires
      * @param r rayon
-     * @param a angle
+     * @param a calculateAngle
      */
     protected Vec2(double r, double a) {
         this.r = r;
         this.a = a;
-        this.x = (int)(r*Math.cos(a));
-        this.y = (int)(r*Math.sin(a));
+        this.x = (int)Math.round((r*Math.cos(a)));
+        this.y = (int)Math.round((r*Math.sin(a)));
     }
 
     /**
@@ -104,14 +104,17 @@ public class Vec2 {
     }
 
     /**retourne vrai si les deux vecteurs sont égaux*/
-    public boolean equals(Vec2 vecteur){
-
-        return vecteur.getX() == this.getX() && vecteur.getY() == this.getY() ;
+    public boolean equals(Object obj){
+        if (obj instanceof Vec2) {
+            return ((Vec2) obj).getX() == this.getX() && ((Vec2) obj).getY() == this.getY();
+        }
+        else{
+            return false;
+        }
     }
 
     /**On renvoie un vecteur multiplié par un réel*/
     public Vec2 dotFloat(float a){
-
         return new Vec2((int)a*this.x, (int)a*this.y);
     }
 
@@ -120,12 +123,10 @@ public class Vec2 {
         return new Vec2(this.x, this.y);
     }
 
-
-    /**On calcule l'angle du vecteur entre -pi et pi (non incluses )*/
-    public double angle(){
+    /**On calcule l'calculateAngle du vecteur entre -pi et pi (non incluses )*/
+    private double calculateAngle(){
         return Math.atan2(this.y,this.x);
     }
-
 
     public int getX() {
         return x;
@@ -157,5 +158,11 @@ public class Vec2 {
 
     public void setA(double a) {
         this.a = a;
+    }
+
+    @Override
+    /** Renvoie les coordonnées x et y du Vec2*/
+    public String toString() {
+        return String.format("(%s,%s)",this.x,this.y);
     }
 }

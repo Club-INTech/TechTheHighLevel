@@ -117,7 +117,7 @@ public class Circle extends Shape {
     }
 
     /**
-     * Cette méthode retourne une liste de points autour d'un cercle, utile pour la construction de noeuds d'un graphe autour d'obstacles circulaires ;)
+     * Cette méthode retourne une liste de points autour d'un cercle, utile pour la construction de noeuds d'un graph autour d'obstacles circulaires ;)
      * @param n : nombre de points qu'on veut autour du cercle
      * @return
      */

@@ -103,4 +103,9 @@ public class Segment {
     public void setPointB(Vec2 pointB) {
         this.pointB = pointB;
     }
+
+    @Override
+    public String toString() {
+        return String.format("[%s:%s]", this.pointA.toString(), this.pointB.toString());
+    }
 }
