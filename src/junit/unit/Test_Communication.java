@@ -1,9 +1,9 @@
 package junit.unit;
 
 import communication.*;
+import data.controller.LidarHandlerRunnable;
 import org.junit.Assert;
 import org.junit.Test;
-import robot.Order;
 
 public class Test_Communication {
 
@@ -11,30 +11,32 @@ public class Test_Communication {
 
     @SuppressWarnings("Duplicates")
     @Test
-    /** Test visuel */
+    /* Test visuel */
     public void visualCommunicationTest(){
+
         //On crée le wrapper de communication en localhost
         CommunicationWrapper commWrapper = new CommunicationWrapper(){
             @Override
-            /** On setup les connexions en localhost*/
+            /* On setup les connexions en localhost */
             protected void startAllConnections() {
                 startConnection(Connections.LOCALHOST_CLIENT);
                 startConnection(Connections.LOCALHOST_SERVER);
             }
 
             @Override
-            /** On traite les messages selon leurs headers*/
+            /* On traite les messages selon leurs headers */
             protected void handleMessage(String header, String message) {
-                if (header.equals("CL")) { //"CL" pour Client
-                    System.out.print("Message received from client: ");
-                    System.out.println(message);
-                }
-                else if (header.equals("SE")){ //"SE" pour Server
-                    System.out.print("Message received from server: ");
-                    System.out.println(message);
-                }
-                else {
-                    System.out.println(message);
+                switch(header) {
+                    case "CL": //"CL" pour Client
+                        System.out.print("Message received from client: ");
+                        System.out.println(message);
+                        break;
+                    case "SE": //"SE" pour Server
+                        System.out.print("Message received from server: ");
+                        System.out.println(message);
+                        break;
+                    default:
+                        System.out.println(message);
                 }
             }
         };
@@ -55,11 +57,96 @@ public class Test_Communication {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        //Close connections.
+        Connections.LOCALHOST_CLIENT.close();
+
     }
+
 
     @SuppressWarnings("Duplicates")
     @Test
-    /** Test utilisable pour Jenkins */
+    public void lidarCommunicationTest(){
+
+        System.out.println("Start test.");
+
+        // Initialisation.
+        LidarHandlerRunnable lidarHandlerRunnable = new LidarHandlerRunnable();
+        Thread lidarHandlerThread = new Thread(lidarHandlerRunnable);
+        System.out.println("Thread state : " + lidarHandlerThread.getState() + "\n");
+        lidarHandlerRunnable.showLidarQueue();
+
+        // Test queue.
+        lidarHandlerRunnable.appendToQueue("FIRST");
+        lidarHandlerRunnable.clearLidarQueue();
+
+        // Starts the thread.
+        lidarHandlerThread.start();
+        System.out.println("Thread launched.");
+
+        // On crée le wrapper de communication en localhost.
+        CommunicationWrapper commWrapper = new CommunicationWrapper(){
+            @Override
+            /* On setup les connexions en localhost */
+            protected void startAllConnections() {
+                startConnection(Connections.LIDAR_SOCKET);
+            }
+
+            @Override
+            /* On traite les messages selon leurs headers */
+            protected void handleMessage(String header, String message) {
+                if (header.equals("CL")) { //"CL" pour Client
+                    System.out.print("Message received from client: ");
+                    System.out.println("CL: " + message);
+                }
+                else if (header.equals("SE")){ //"SE" pour Server
+                    System.out.print("Message received from server: ");
+                    System.out.println("SE: " + message);
+                }
+                if (header.equals("LI")) {
+                    System.out.print("Message received from lidar: ");
+                    System.out.println("LI: " + message);
+                    lidarHandlerRunnable.appendToQueue(message);
+                }
+                else {
+                    System.out.println("LIDAR: " + message);
+                    lidarHandlerRunnable.appendToQueue(message);
+                }
+            }
+        };
+
+        System.out.println("Wait...");
+
+
+        // Waits.
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Stops the threads.
+        lidarHandlerRunnable.stop();
+        System.out.println("Thread stoped.");
+        while (lidarHandlerThread.getState() != Thread.State.TERMINATED) {
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("Thread state : " + lidarHandlerThread.getState() + "\n");
+        lidarHandlerRunnable.clearLidarQueue();
+
+        // Close connections.
+        Connections.LIDAR_SOCKET.close();
+
+    }
+
+
+    @SuppressWarnings("Duplicates")
+    @Test
+    /* Test utilisable pour Jenkins */
     public void booleanCommunicationTest(){
 
         //On crée des StringBuilder pour définir les messages qu'on devrait recevoir
@@ -84,14 +171,14 @@ public class Test_Communication {
         //On crée le wrapper de communication en localhost
         CommunicationWrapper commWrapper = new CommunicationWrapper(){
             @Override
-            /** On setup les connexions en localhost*/
+            /* On setup les connexions en localhost*/
             protected void startAllConnections() {
                 startConnection(Connections.LOCALHOST_CLIENT);
                 startConnection(Connections.LOCALHOST_SERVER);
             }
 
             @Override
-            /** On traite les messages selon leurs headers*/
+            /* On traite les messages selon leurs headers*/
             protected void handleMessage(String header, String message) {
                 if (header.equals("CL")) { //"CL" pour Client
                     clientReceivedBuilder.append(header);
@@ -103,7 +190,6 @@ public class Test_Communication {
                 }
             }
         };
-
 
         //On envoie les messages du client vers le serveur
         for (int i=0; i<this.nbMessages; i++){
@@ -121,7 +207,6 @@ public class Test_Communication {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
 
         //On vérifie que les paquets arrivés correspondent bien à ce qui est attendu
         boolean serverToClient = false;
@@ -169,6 +254,10 @@ public class Test_Communication {
                 System.out.println(clientReceivedBuilder.toString());
             }
         }
+
+        //Close connections.
+        Connections.LOCALHOST_CLIENT.close();
+
     }
 }
 
