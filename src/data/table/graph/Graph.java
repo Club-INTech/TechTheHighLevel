@@ -1,5 +1,6 @@
 package data.table.graph;
 
+import data.table.Table;
 import data.table.obstacle.Obstacle;
 import utils.math.Segment;
 import utils.math.VectCartesian;
@@ -11,15 +12,13 @@ public class Graph {
 
     private ArrayList<Node> nodes;
     private ArrayList<Ridge> ridges;
-    private ArrayList<Obstacle> fixedObstacles;
-    private ArrayList<Obstacle> mobileObstacles;
+    private Table table;
 
     /** Constructeur */
-    public Graph(){
+    public Graph(Table table){
+        this.table=table;
         this.nodes=new ArrayList<>();
         this.ridges=new ArrayList<>();
-        this.fixedObstacles=new ArrayList<>();
-        this.mobileObstacles=new ArrayList<>();
     }
 
     /** Initialise le graph */
@@ -75,7 +74,7 @@ public class Graph {
             for (int j = i+1; j<this.nodes.size(); j++){
                 isIntersectingWithFixedObstacles=false;
                 segment.setPointB(this.nodes.get(j).getPosition());
-                for (Obstacle obstacle : this.fixedObstacles){
+                for (Obstacle obstacle : this.table.getFixedObstacles()){
                     if (!obstacle.intersect(segment)){
                         isIntersectingWithFixedObstacles=true;
                         break;
@@ -97,14 +96,14 @@ public class Graph {
         for (Node node : this.nodes){
             for (Ridge ridge : node.getNeighboursRidges()) {
                 isIntersecting = false;
-                for (Obstacle obstacle : this.fixedObstacles) {
+                for (Obstacle obstacle : this.table.getFixedObstacles()) {
                     if (obstacle.intersect(ridge.getSegment())) {
                         isIntersecting = true;
                         break;
                     }
                 }
                 if (!isIntersecting) {
-                    for (Obstacle obstacle : this.mobileObstacles) {
+                    for (Obstacle obstacle : this.table.getMobileObstacles()) {
                         if (obstacle.intersect(ridge.getSegment())) {
                             isIntersecting = true;
                             break;
@@ -119,27 +118,5 @@ public class Graph {
                 }
             }
         }
-    }
-
-    /** Renvoie les obstacles fixes */
-    public ArrayList<Obstacle> getFixedObstacles(){
-        return this.fixedObstacles;
-    }
-
-    /** Ajoute un obstacle fixe */
-    public void addFixedObstacle(Obstacle fixedObstacle){
-        if (!this.fixedObstacles.contains(fixedObstacle)) {
-            this.fixedObstacles.add(fixedObstacle);
-        }
-    }
-
-    /** Renvoie les obstacles mobiles */
-    public ArrayList<Obstacle> getMobileObstacles(){
-        return this.mobileObstacles;
-    }
-
-    /** Ajoute un obstacle mobile */
-    public void addMobileObstacle(Obstacle mobileObstacle){
-        this.mobileObstacles.add(mobileObstacle);
     }
 }

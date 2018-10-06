@@ -1,5 +1,6 @@
 package junit.unit;
 
+import data.table.Table;
 import data.table.graph.Graph;
 import data.table.graph.Node;
 import data.table.graph.Ridge;
@@ -18,10 +19,12 @@ import org.junit.Test;
 public class Test_Graph {
 
     private Graph graphe;
+    private Table table;
 
     @Before
     public void before(){
-        this.graphe=new Graph();
+        this.table=new Table();
+        this.graphe=new Graph(this.table);
         this.graphe.addNode(new Node(new VectCartesian(0,0)));
         this.graphe.addNode(new Node(new VectCartesian(500,0)));
         this.graphe.addNode(new Node(new VectCartesian(1000,0)));
@@ -90,7 +93,7 @@ public class Test_Graph {
 
     @Test
     public void workingUpdateRidgesWithFixedCircularObstacles(){
-        this.graphe=new Graph();
+        this.graphe=new Graph(this.table);
         this.graphe.addNode(new Node(new VectCartesian(0,0)));
         this.graphe.addNode(new Node(new VectCartesian(1000,0)));
         this.graphe.addNode(new Node(new VectCartesian(1000,1000)));
@@ -102,7 +105,7 @@ public class Test_Graph {
                 nbRidgesUsable++;
             }
         }
-        this.graphe.addFixedObstacle(new CircularObstacle(new Circle(new VectCartesian(500,500),50),false));
+        this.table.addFixedObstacle(new CircularObstacle(new Circle(new VectCartesian(500,500),50),false));
         this.graphe.updateRidges();
 
         int nbRidgesUsableAfter=0;
@@ -117,7 +120,7 @@ public class Test_Graph {
 
     @Test
     public void workingUpdateRidgesWithFixedRectangularObstacles(){
-        this.graphe=new Graph();
+        this.graphe=new Graph(this.table);
         this.graphe.addNode(new Node(new VectCartesian(0,0)));
         this.graphe.addNode(new Node(new VectCartesian(1000,0)));
         this.graphe.addNode(new Node(new VectCartesian(1000,1000)));
@@ -129,7 +132,7 @@ public class Test_Graph {
                 nbRidgesUsable++;
             }
         }
-        this.graphe.addFixedObstacle(new RectangularObstacle(new Rectangle(new VectCartesian(500,500),50,50),false));
+        this.table.addFixedObstacle(new RectangularObstacle(new Rectangle(new VectCartesian(500,500),50,50),false));
         this.graphe.updateRidges();
 
         int nbRidgesUsableAfter=0;
@@ -144,7 +147,7 @@ public class Test_Graph {
 
     @Test
     public void workingUpdateRidgesWithMobileCircularObstacles(){
-        this.graphe=new Graph();
+        this.graphe=new Graph(this.table);
         this.graphe.addNode(new Node(new VectCartesian(0,0)));
         this.graphe.addNode(new Node(new VectCartesian(1000,0)));
         this.graphe.addNode(new Node(new VectCartesian(1000,1000)));
@@ -156,7 +159,7 @@ public class Test_Graph {
                 nbRidgesUsable++;
             }
         }
-        this.graphe.addMobileObstacle(new CircularObstacle(new Circle(new VectCartesian(500,500),50),false));
+        this.table.addMobileObstacle(new CircularObstacle(new Circle(new VectCartesian(500,500),50),false));
         this.graphe.updateRidges();
 
         int nbRidgesUsableAfter=0;
@@ -171,7 +174,7 @@ public class Test_Graph {
 
     @Test
     public void workingUpdateRidgesWithMobileRectangularObstacles(){
-        this.graphe=new Graph();
+        this.graphe=new Graph(this.table);
         this.graphe.addNode(new Node(new VectCartesian(0,0)));
         this.graphe.addNode(new Node(new VectCartesian(1000,0)));
         this.graphe.addNode(new Node(new VectCartesian(1000,1000)));
@@ -183,7 +186,7 @@ public class Test_Graph {
                 nbRidgesUsable++;
             }
         }
-        this.graphe.addMobileObstacle(new RectangularObstacle(new Rectangle(new VectCartesian(500,500),50,50),false));
+        this.table.addMobileObstacle(new RectangularObstacle(new Rectangle(new VectCartesian(500,500),50,50),false));
         this.graphe.updateRidges();
 
         int nbRidgesUsableAfter=0;
@@ -198,41 +201,41 @@ public class Test_Graph {
 
     @Test
     public void addCircularFixedObstacle(){
-        int sizeBefore = this.graphe.getFixedObstacles().size();
-        this.graphe.addFixedObstacle(new CircularObstacle(new Circle(new VectCartesian(0,0),0),false));
-        int sizeAfter = this.graphe.getFixedObstacles().size();
+        int sizeBefore = this.table.getFixedObstacles().size();
+        this.table.addFixedObstacle(new CircularObstacle(new Circle(new VectCartesian(0,0),0),false));
+        int sizeAfter = this.table.getFixedObstacles().size();
         Assert.assertEquals(sizeBefore+1, sizeAfter);
     }
 
     @Test
     public void addRectangularFixedObstacle(){
-        int sizeBefore = this.graphe.getFixedObstacles().size();
-        this.graphe.addFixedObstacle(new RectangularObstacle(new Rectangle(new VectCartesian(0,0), 50,50),false));
-        int sizeAfter = this.graphe.getFixedObstacles().size();
+        int sizeBefore = this.table.getFixedObstacles().size();
+        this.table.addFixedObstacle(new RectangularObstacle(new Rectangle(new VectCartesian(0,0), 50,50),false));
+        int sizeAfter = this.table.getFixedObstacles().size();
         Assert.assertEquals(sizeBefore+1, sizeAfter);
     }
 
     @Test
     public void addAlreadyExistingCircularObstacle(){
-        int sizeBefore = this.graphe.getFixedObstacles().size();
-        this.graphe.addFixedObstacle(new CircularObstacle(new Circle(new VectCartesian(0,0),0),false));
-        this.graphe.addFixedObstacle(new CircularObstacle(new Circle(new VectCartesian(0,0),0),false));
-        int sizeAfter = this.graphe.getFixedObstacles().size();
+        int sizeBefore = this.table.getFixedObstacles().size();
+        this.table.addFixedObstacle(new CircularObstacle(new Circle(new VectCartesian(0,0),0),false));
+        this.table.addFixedObstacle(new CircularObstacle(new Circle(new VectCartesian(0,0),0),false));
+        int sizeAfter = this.table.getFixedObstacles().size();
         Assert.assertEquals(sizeBefore+1, sizeAfter);
     }
 
     @Test
     public void addAlreadyExistingRectangularObstacle(){
-        int sizeBefore = this.graphe.getFixedObstacles().size();
-        this.graphe.addFixedObstacle(new RectangularObstacle(new Rectangle(new VectCartesian(0,0),50,50),false));
-        this.graphe.addFixedObstacle(new RectangularObstacle(new Rectangle(new VectCartesian(0,0),50,50),false));
-        int sizeAfter = this.graphe.getFixedObstacles().size();
+        int sizeBefore = this.table.getFixedObstacles().size();
+        this.table.addFixedObstacle(new RectangularObstacle(new Rectangle(new VectCartesian(0,0),50,50),false));
+        this.table.addFixedObstacle(new RectangularObstacle(new Rectangle(new VectCartesian(0,0),50,50),false));
+        int sizeAfter = this.table.getFixedObstacles().size();
         Assert.assertEquals(sizeBefore+1, sizeAfter);
     }
 
     @Test
     public void createRidgesWithoutAnyNode(){
-        this.graphe=new Graph();
+        this.graphe=new Graph(this.table);
         this.graphe.createRidges();
         Assert.assertEquals(0, this.graphe.getRidges().size());
         Assert.assertEquals(0, this.graphe.getNodes().size());
