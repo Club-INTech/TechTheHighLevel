@@ -82,7 +82,7 @@ public class Graph {
                     }
                 }
                 if (!isIntersectingWithFixedObstacles){
-                    Ridge ridge = new Ridge(segment);
+                    Ridge ridge = new Ridge(segment.clone());
                     this.ridges.add(ridge);
                     this.nodes.get(i).addNeighbour(this.nodes.get(j), ridge);
                     this.nodes.get(j).addNeighbour(this.nodes.get(i), ridge);
