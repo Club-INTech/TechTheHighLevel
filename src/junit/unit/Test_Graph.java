@@ -15,6 +15,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Map;
+
 @SuppressWarnings("Duplicates")
 public class Test_Graph {
 
@@ -56,7 +58,22 @@ public class Test_Graph {
     @Test
     public void nodeRemovalTest(){
         this.graphe.createRidges();
-        this.graphe.removeNode(new Node(new VectCartesian(0,0)));
+        Node nodeToRemove = new Node(new VectCartesian(0,0));
+        this.graphe.removeNode(nodeToRemove);
+
+
+        boolean removedNodeExistsAsNeighbour = false;
+        int i = 0;
+        for (Node node : graphe.getNodes()){
+            for (Map.Entry<Ridge, Node> entry : node.getNeighbours().entrySet()){
+                if (entry.getValue().getNeighbours().containsValue(nodeToRemove)){
+                    removedNodeExistsAsNeighbour=true;
+                    break;
+                }
+            }
+        }
+
+        Assert.assertFalse(removedNodeExistsAsNeighbour);
         Assert.assertEquals(15, this.graphe.getRidges().size());
         Assert.assertFalse(this.graphe.getNodes().contains(new Node(new VectCartesian(0,0))));
     }

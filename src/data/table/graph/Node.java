@@ -2,14 +2,14 @@ package data.table.graph;
 
 import utils.math.Vec2;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /** Point dans le graphe */
 public class Node {
 
     private Vec2 position; //Position de la node sur la table
-    private ArrayList<Node> neighbours; //Liste des nodes voisines (ie accessibles lorsqu'il n'y a pas d'obstacle)
-    private ArrayList<Ridge> neighboursRidges;
+    private HashMap<Ridge, Node> neighbours; //Liste des nodes voisines (ie accessibles lorsqu'il n'y a pas d'obstacle)
 
     //Valeur de priorité dans la recherche des nodes (utile et mis à jour lors de l'exécution du pathfinding)
     private int heuristique = 0;
@@ -21,8 +21,7 @@ public class Node {
     /** Constructeur */
     public Node(Vec2 position){
         this.position=position;
-        this.neighbours=new ArrayList<>();
-        this.neighboursRidges =new ArrayList<>();
+        this.neighbours=new HashMap<>();
     }
 
     /** Renvoie la position da la node */
@@ -31,29 +30,19 @@ public class Node {
     }
 
     /** Renvoie les voisins de la node*/
-    public ArrayList<Node> getNeighbours(){
+    public HashMap<Ridge,Node> getNeighbours(){
         return this.neighbours;
     }
 
-    /** Renvoie les voisins de la node*/
-    public ArrayList<Ridge> getNeighboursRidges(){
-        return this.neighboursRidges;
-    }
 
     /** Ajoute un voisin à cette node */
     public void addNeighbour(Node neighbour, Ridge ridge){
-        this.neighbours.add(neighbour);
-        this.neighboursRidges.add(ridge);
+        this.neighbours.putIfAbsent(ridge, neighbour);
     }
 
-    /** Supprime un voisin de cette node */
-    public void removeNeighbour(Node neighbour){
-        for (Ridge ridge : (ArrayList<Ridge>)this.getNeighboursRidges().clone()){
-            if (ridge.containsNode(this)){
-                this.getNeighboursRidges().remove(ridge);
-            }
-        }
-        this.neighbours.remove(neighbour);
+    /** Supprime un voisin de cette node à partir du ridge le composant*/
+    public void removeNeighbour(Ridge ridge){
+        this.neighbours.remove(ridge);
     }
 
     @Override

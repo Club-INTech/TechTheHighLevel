@@ -6,6 +6,8 @@ import utils.math.Segment;
 import utils.math.VectCartesian;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
 
 /** Graphe regroupant les nodes et les arêtes pour le pathfinding */
 public class Graph {
@@ -43,13 +45,11 @@ public class Graph {
                 break;
             }
         }
+
         if (nodeToRemove!=null) {
-            //On
-            for (Ridge ridgeToRemove : nodeToRemove.getNeighboursRidges()) {
-                this.ridges.remove(ridgeToRemove);
-            }
-            for (Node neighbourNode : nodeToRemove.getNeighbours()) {
-                neighbourNode.removeNeighbour(nodeToRemove);
+            for (Map.Entry<Ridge,Node> entry : nodeToRemove.getNeighbours().entrySet()){
+                entry.getValue().removeNeighbour(entry.getKey());
+                this.ridges.remove(entry.getKey());
             }
             this.nodes.remove(nodeToRemove);
         }
@@ -94,7 +94,7 @@ public class Graph {
     public void updateRidges(){
         boolean isIntersecting = false;
         for (Node node : this.nodes){
-            for (Ridge ridge : node.getNeighboursRidges()) {
+            for (Ridge ridge : node.getNeighbours().keySet()) {
                 isIntersecting = false;
                 for (Obstacle obstacle : this.table.getFixedObstacles()) {
                     if (obstacle.intersect(ridge.getSegment())) {
