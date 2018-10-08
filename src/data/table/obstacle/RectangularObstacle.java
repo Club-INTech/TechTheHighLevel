@@ -1,4 +1,4 @@
-package data.table;
+package data.table.obstacle;
 
 import utils.math.Rectangle;
 import utils.math.Segment;
@@ -14,10 +14,10 @@ public class RectangularObstacle extends Obstacle {
      *      |---------------------------------
      *      |                                |
      *      |                                |
+     *      |               0                |
      *      |                                |
      *      |                                |
-     *      |                                |
-     *      O----------------------------------> x
+     *      |----------------------------------> x
      *
      *      0: origine du rectangle, indiqué dans le Vec2 position d'Obstacle
      *           *
@@ -59,13 +59,21 @@ public class RectangularObstacle extends Obstacle {
 
     @Override
     public boolean intersect(Segment segment) {
-        return false;
+        return rectangle.intersectsWithSegment(segment);
     }
 
     @Override
-    public boolean equals(Obstacle obstacle) {
+    public boolean equals(Object Obj) {
+        if (Obj instanceof RectangularObstacle){
+            RectangularObstacle rectangularObstacle = (RectangularObstacle) Obj;
+            return this.getPosition().equals(rectangularObstacle.getPosition()) && this.rectangle.equals(rectangularObstacle.getRectangle());
+        }
         return false;
     }
+
+    public Vec2 getPosition(){ return super.position;   }
+
+    public Rectangle getRectangle() { return rectangle; }
 
     @Override
     public int hashCode() {

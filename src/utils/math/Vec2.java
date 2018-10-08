@@ -3,7 +3,7 @@ package utils.math;
 /**
  * Il s'agit d"une classe définissant des méthodes de calculs spécifiques pour les vecteurs, le constructeur de cette classe est protected
  */
-public class Vec2 {
+public abstract class Vec2 {
 
     /**abscisse du vecteur*/
     private int x;
@@ -14,7 +14,7 @@ public class Vec2 {
     /**coordonnée radiale*/
     private double r;
 
-    /**angle polaire du point*/
+    /**calculateAngle polaire du point*/
     private double a;
 
     /**
@@ -36,19 +36,19 @@ public class Vec2 {
         this.x = x;
         this.y = y;
         this.r = Math.sqrt(x*x+y*y);
-        this.a = this.angle();
+        this.a = this.calculateAngle();
     }
 
     /**
      * Constructeur d'un vecteur en coordonnées polaires
      * @param r rayon
-     * @param a angle
+     * @param a calculateAngle
      */
     protected Vec2(double r, double a) {
         this.r = r;
         this.a = a;
-        this.x = (int)(r*Math.cos(a));
-        this.y = (int)(r*Math.sin(a));
+        this.x = (int)Math.round((r*Math.cos(a)));
+        this.y = (int)Math.round((r*Math.sin(a)));
     }
 
     /**
@@ -72,12 +72,12 @@ public class Vec2 {
     /**On rajoute un autre vecteur et on retourne le nouveau*/
     public Vec2 plusVector(Vec2 vecteur){
 
-        return new Vec2(this.x + vecteur.getX(), this.y + vecteur.getY());
+        return new VectCartesian(this.x + vecteur.getX(), this.y + vecteur.getY());
     }
 
     /**On retranche un vecteur et on retourne le nouveau*/
     public Vec2 minusVector(Vec2 vecteur){
-        return new Vec2(this.x - vecteur.getX(), this.y - vecteur.getY());
+        return new VectCartesian(this.x - vecteur.getX(), this.y - vecteur.getY());
     }
 
     /**On rajoute un vecteur*/
@@ -105,65 +105,79 @@ public class Vec2 {
     }
 
     /**retourne vrai si les deux vecteurs sont égaux*/
-    public boolean equals(Vec2 vecteur){
-
-        return vecteur.getX() == this.getX() && vecteur.getY() == this.getY() ;
+    public boolean equals(Object obj){
+        if (obj instanceof Vec2) {
+            return ((Vec2) obj).getX() == this.getX() && ((Vec2) obj).getY() == this.getY();
+        }
+        else{
+            return false;
+        }
     }
 
     /**On renvoie un vecteur multiplié par un réel*/
     public Vec2 dotFloat(float a){
-
-        return new Vec2((int)a*this.x, (int)a*this.y);
+        return new VectCartesian(Math.round(a*this.x), Math.round(a*this.y));
     }
 
     @Override
     public Vec2 clone() {
-        return new Vec2(this.x, this.y);
+        return new VectCartesian(this.x, this.y);
     }
 
-
-    /**On calcule l'angle du vecteur entre -pi et pi (non incluses )*/
-    public double angle(){
+    /**On calcule l'calculateAngle du vecteur entre -pi et pi (non incluses )*/
+    private double calculateAngle(){
         return Math.atan2(this.y,this.x);
     }
 
-    @Override
-    public String toString(){
-        return "Vecteur : (x : "+this.x + ";"+ " y : "+this.y+")";
 
-    }
-
+    /** Renvoie la position X du vecteur */
 
     public int getX() {
         return x;
     }
 
+    /** Set la position X du vecteur */
     public void setX(int x) {
         this.x = x;
     }
 
+    /** Renvoie la position Y du vecteur */
     public int getY() {
         return y;
     }
 
+    /** Set la position Y du vecteur */
     public void setY(int y) {
         this.y = y;
     }
 
+    /** Renvoie le rayon R du vecteur */
     public double getR() {
         return r;
     }
 
+    /** Set le rayon R du vecteur */
     public void setR(double r) {
         this.r = r;
     }
 
+    /** Renvoie l'angle A du vecteur */
     public double getA() {
         return a;
     }
 
+    /** Set l'angle A du vecteur */
     public void setA(double a) {
         this.a = a;
     }
+
+
+    @Override
+    /** Renvoie les coordonnées x et y du Vec2*/
+    public String toString() {
+        return String.format("(%s,%s)",this.x,this.y);
+    }
+
+
 
 }

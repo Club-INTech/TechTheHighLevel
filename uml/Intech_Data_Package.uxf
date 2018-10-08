@@ -191,7 +191,7 @@ Package :: Graphe
 --
 -segment : Segment
 -COST : Nbr
--reachable : Booléen
+-usable : Booléen
 _-staticCost : Nbr_
 --
 @equals(Object) : Booléen

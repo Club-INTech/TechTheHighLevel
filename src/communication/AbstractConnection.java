@@ -17,6 +17,9 @@ public abstract class AbstractConnection {
     /** Permet de lire un message reçu */
     public abstract String read() throws ConnectionException;
 
+    /** Permet de fermer la connexion */
+    public abstract void close();
+
     /** Getter pour savoir si la connxion est active */
     protected boolean isConnectionUp(){
         return this.connectionUp;

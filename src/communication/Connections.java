@@ -5,7 +5,8 @@ import robot.Order;
 public enum Connections {
 
     LOCALHOST_CLIENT(new TCPIPClient("localhost",20000)),
-    LOCALHOST_SERVER(new TCPIPServer(20000));
+    LOCALHOST_SERVER(new TCPIPServer(20000)),
+    LIDAR_SOCKET(new TCPIPClient("localhost", 17685));
 
 
     AbstractConnection connection;
@@ -38,5 +39,9 @@ public enum Connections {
         else {
             this.connection.send(order.getOrderStr());
         }
+    }
+
+    public void close(){
+        this.connection.close();
     }
 }

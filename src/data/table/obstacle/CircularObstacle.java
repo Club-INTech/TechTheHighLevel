@@ -1,4 +1,4 @@
-package data.table;
+package data.table.obstacle;
 
 import utils.math.Circle;
 import utils.math.Segment;
@@ -49,9 +49,9 @@ public class CircularObstacle extends Obstacle {
     }
 
     @Override
-    public boolean equals(Obstacle obstacle) {
-        if (obstacle instanceof CircularObstacle){
-            CircularObstacle circularObstacle = (CircularObstacle) obstacle;
+    public boolean equals(Object obj) {
+        if (obj instanceof CircularObstacle){
+            CircularObstacle circularObstacle = (CircularObstacle) obj;
             return circularObstacle.circle.getRadius() == this.circle.getRadius() && circularObstacle.getPosition().equals(this.getPosition());
         }
         return false;

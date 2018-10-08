@@ -73,6 +73,8 @@ public abstract class TCPIPAbstract extends AbstractConnection {
         try {
             //On synchronise au cas où on lit une donnée
             synchronized (this) {
+                this.listeningData.close();
+                this.sendingData.close();
                 this.socket.close(); //On ferme le socket
                 this.setConnectionUp(false);
             }
