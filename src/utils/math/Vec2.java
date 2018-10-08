@@ -126,7 +126,24 @@ public abstract class Vec2 {
 
     /**On calcule l'calculateAngle du vecteur entre -pi et pi (non incluses )*/
     private double calculateAngle(){
-        return Math.atan2(this.y,this.x);
+        if (this.squaredLength() == 0)
+            return 0;
+
+        double a = Math.min((double) Math.abs(x), Math.abs(y)) / Math.max(Math.abs(x), Math.abs(y));
+        double s = a * a;
+        double r = ((-0.0464964749 * s + 0.15931422) * s - 0.327622764) * s * a + a;
+
+        if (Math.abs(y) > Math.abs(x))
+            r = 1.57079637 - r;
+        if (x < 0)
+            r = 3.14159274 - r;
+        if (y < 0)
+            r = -r;
+        return r;
+    }
+
+    public double squaredLength(){
+        return (int) (r * r);
     }
 
 
@@ -177,6 +194,8 @@ public abstract class Vec2 {
     public String toString() {
         return String.format("(%s,%s)",this.x,this.y);
     }
+
+
 
 
 

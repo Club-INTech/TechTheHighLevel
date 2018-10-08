@@ -83,18 +83,8 @@ public class Test_Math {
 
     @Test
     public void segmentDistanceTopoint(){
-
-    }
-
-    @Test
-    public void segmentVecteurDirecteur(){
-
-    }
-
-
-    @Test
-    public void Vect2AnglePolaire(){
-
+        segment=new Segment(new VectCartesian(0,0),new VectCartesian(0,5));
+        System.out.println(segment.distanceToPoint(new VectCartesian(3,3)));
     }
 
 
