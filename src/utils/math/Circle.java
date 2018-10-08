@@ -78,7 +78,7 @@ public class Circle extends Shape {
         float r2=circle.getRadius();
         //distance entre les deux centres
         double d=this.getCenter().distanceTo(circle.getCenter());
-        return d>Math.abs(r2-r1) && d<Math.abs(r2+r1);
+        return d>=Math.abs(r2-r1) && d<=Math.abs(r2+r1);
     }
 
     /**

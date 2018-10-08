@@ -101,6 +101,7 @@ public class Vec2 {
         int x2=(this.x - other.getX()) * (this.x - other.getX());
         int y2=(this.y - other.getY()) * (y - other.getY());
         return Math.sqrt( x2 +y2 );
+
     }
 
     /**retourne vrai si les deux vecteurs sont égaux*/
@@ -124,6 +125,12 @@ public class Vec2 {
     /**On calcule l'angle du vecteur entre -pi et pi (non incluses )*/
     public double angle(){
         return Math.atan2(this.y,this.x);
+    }
+
+    @Override
+    public String toString(){
+        return "Vecteur : (x : "+this.x + ";"+ " y : "+this.y+")";
+
     }
 
 
@@ -158,4 +165,5 @@ public class Vec2 {
     public void setA(double a) {
         this.a = a;
     }
+
 }

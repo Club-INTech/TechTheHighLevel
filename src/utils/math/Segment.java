@@ -43,7 +43,7 @@ public class Segment {
             return Math.abs(point.getX() - pointA.getX() );
         }
         else{
-            double a=(pointB.getY() - pointA.getY() )/ (pointB.getX() - pointA.getX());
+            double a=(pointB.getY() - pointA.getY())/ (pointB.getX() - pointA.getX());
             double b= pointB.getY() - a*pointB.getX();
             return Math.abs(point.getY() - a*point.getX() - b)/Math.sqrt(1 + a*a);
         }

@@ -53,37 +53,32 @@ public class Test_Math {
 
     @Test
     public void closestPointToCircle(){
-
+        circle=new Circle(new VectCartesian(5,0),5);
+        Vec2 closestPoint=circle.closestPointToCircle(new VectCartesian(5,6));
+        System.out.println(closestPoint);
     }
 
     @Test
     public void rectangleIntersectsWithSegment(){
-
+        rectangle=new Rectangle(new VectCartesian(0,0),5,3);
+        segment=new Segment(new VectCartesian(0,0),new VectCartesian(7,9));
+        Assert.assertTrue(rectangle.intersectsWithSegment(segment));
     }
 
     @Test
     public void rectangleContainsCircle(){
-
+        rectangle=new Rectangle(new VectCartesian(0,0),5,3);
+        circle=new Circle(new VectCartesian(0,0),5);
+        Assert.assertTrue(rectangle.containsCircle(circle));
     }
 
-    @Test
-    public void rectangleIntersectsWithRectangle(){
 
-    }
-
-    @Test
-    public void rectangleGetSegments(){
-
-    }
-
-    @Test
-    public void rectangleGetDiagonals(){
-
-    }
 
     @Test
     public void segmentIntersectsWithSegment(){
-
+        Segment segment1=new Segment(new VectCartesian(0,0), new VectCartesian(0,2));
+        Segment segment2=new Segment(new VectCartesian(0,0), new VectCartesian(0,4));
+        Assert.assertTrue(segment1.intersectsWithSegment(segment2));
     }
 
     @Test
@@ -96,10 +91,6 @@ public class Test_Math {
 
     }
 
-    @Test
-    public void shapeDistanceToPoint(){
-
-    }
 
     @Test
     public void Vect2AnglePolaire(){

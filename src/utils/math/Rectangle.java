@@ -33,7 +33,7 @@ public class Rectangle extends Shape {
      * @param circle cercle*/
     @Override
     public boolean containsCircle(Circle circle) {
-        return circle.getRadius()< width || circle.getRadius()<length;
+        return circle.getRadius()<= width || circle.getRadius()<=length;
     }
 
 
