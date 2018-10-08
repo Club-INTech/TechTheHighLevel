@@ -20,53 +20,51 @@ import java.util.Map;
 @SuppressWarnings("Duplicates")
 public class Test_Graph {
 
-    private Graph graphe;
+    private Graph graph;
     private Table table;
 
     @Before
     public void before(){
         this.table=new Table();
-        this.graphe=new Graph(this.table);
-        this.graphe.addNode(new Node(new VectCartesian(0,0)));
-        this.graphe.addNode(new Node(new VectCartesian(500,0)));
-        this.graphe.addNode(new Node(new VectCartesian(1000,0)));
-        this.graphe.addNode(new Node(new VectCartesian(0,500)));
-        this.graphe.addNode(new Node(new VectCartesian(0,1000)));
-        this.graphe.addNode(new Node(new VectCartesian(500,500)));
-        this.graphe.addNode(new Node(new VectCartesian(1000,1000)));
+        this.graph =new Graph(this.table);
+        this.graph.addNode(new Node(new VectCartesian(0,0)));
+        this.graph.addNode(new Node(new VectCartesian(500,0)));
+        this.graph.addNode(new Node(new VectCartesian(1000,0)));
+        this.graph.addNode(new Node(new VectCartesian(0,500)));
+        this.graph.addNode(new Node(new VectCartesian(0,1000)));
+        this.graph.addNode(new Node(new VectCartesian(500,500)));
+        this.graph.addNode(new Node(new VectCartesian(1000,1000)));
     }
 
     @After
     public void after(){
-        this.graphe=null;
+        this.graph =null;
     }
 
     @Test
     public void goodNumberOfRidges(){
-        this.graphe.createRidges();
-        Assert.assertEquals(21, this.graphe.getRidges().size());
+        this.graph.createRidges();
+        Assert.assertEquals(21, this.graph.getRidges().size());
     }
 
     @Test
     public void findNodeTest(){
         Node addedNode = new Node(new VectCartesian(123,123));
-        this.graphe.addNode(addedNode);
-        Assert.assertTrue(this.graphe.getNodes().contains(addedNode));
-        Assert.assertTrue(this.graphe.getNodes().contains(new Node(new VectCartesian(500,500))));
+        this.graph.addNode(addedNode);
+        Assert.assertTrue(this.graph.getNodes().contains(addedNode));
+        Assert.assertTrue(this.graph.getNodes().contains(new Node(new VectCartesian(500,500))));
     }
 
     @Test
     public void nodeRemovalTest(){
-        this.graphe.createRidges();
+        this.graph.createRidges();
         Node nodeToRemove = new Node(new VectCartesian(0,0));
-        this.graphe.removeNode(nodeToRemove);
-
+        this.graph.removeNode(nodeToRemove);
 
         boolean removedNodeExistsAsNeighbour = false;
-        int i = 0;
-        for (Node node : graphe.getNodes()){
-            for (Map.Entry<Ridge, Node> entry : node.getNeighbours().entrySet()){
-                if (entry.getValue().getNeighbours().containsValue(nodeToRemove)){
+        for (Node node : graph.getNodes()){
+            for (Map.Entry<Ridge, Node> entry : node.getNeighboursCopy().entrySet()){
+                if (entry.getValue().getNeighboursCopy().containsValue(nodeToRemove)){
                     removedNodeExistsAsNeighbour=true;
                     break;
                 }
@@ -74,32 +72,32 @@ public class Test_Graph {
         }
 
         Assert.assertFalse(removedNodeExistsAsNeighbour);
-        Assert.assertEquals(15, this.graphe.getRidges().size());
-        Assert.assertFalse(this.graphe.getNodes().contains(new Node(new VectCartesian(0,0))));
+        Assert.assertEquals(15, this.graph.getRidges().size());
+        Assert.assertFalse(this.graph.getNodes().contains(new Node(new VectCartesian(0,0))));
     }
 
     @Test
     public void nonExistingNodeRemovalTest(){
-        this.graphe.createRidges();
-        this.graphe.removeNode(new Node(new VectCartesian(123,123)));
-        Assert.assertEquals(21, this.graphe.getRidges().size());
+        this.graph.createRidges();
+        this.graph.removeNode(new Node(new VectCartesian(123,123)));
+        Assert.assertEquals(21, this.graph.getRidges().size());
     }
 
     @Test
     public void addAlreadyExistingNode(){
         Node addedNode = new Node(new VectCartesian(0,0));
-        this.graphe.addNode(new Node(new VectCartesian(0,0)));
-        this.graphe.addNode(addedNode);
-        this.graphe.createRidges();
-        Assert.assertEquals(21, this.graphe.getRidges().size());
+        this.graph.addNode(new Node(new VectCartesian(0,0)));
+        this.graph.addNode(addedNode);
+        this.graph.createRidges();
+        Assert.assertEquals(21, this.graph.getRidges().size());
     }
 
     @Test
     public void workingUpdateRidgesWithoutObstacles(){
-        this.graphe.createRidges();
-        this.graphe.updateRidges();
+        this.graph.createRidges();
+        this.graph.updateRidges();
         boolean isOneRidgeUnusable=false;
-        for (Ridge ridge : this.graphe.getRidges()){
+        for (Ridge ridge : this.graph.getRidges()){
             if (!ridge.isUsable()){
                 isOneRidgeUnusable=true;
                 break;
@@ -110,23 +108,23 @@ public class Test_Graph {
 
     @Test
     public void workingUpdateRidgesWithFixedCircularObstacles(){
-        this.graphe=new Graph(this.table);
-        this.graphe.addNode(new Node(new VectCartesian(0,0)));
-        this.graphe.addNode(new Node(new VectCartesian(1000,0)));
-        this.graphe.addNode(new Node(new VectCartesian(1000,1000)));
-        this.graphe.createRidges();
-        this.graphe.updateRidges();
+        this.graph =new Graph(this.table);
+        this.graph.addNode(new Node(new VectCartesian(0,0)));
+        this.graph.addNode(new Node(new VectCartesian(1000,0)));
+        this.graph.addNode(new Node(new VectCartesian(1000,1000)));
+        this.graph.createRidges();
+        this.graph.updateRidges();
         int nbRidgesUsable=0;
-        for (Ridge ridge : this.graphe.getRidges()){
+        for (Ridge ridge : this.graph.getRidges()){
             if (ridge.isUsable()){
                 nbRidgesUsable++;
             }
         }
         this.table.addFixedObstacle(new CircularObstacle(new Circle(new VectCartesian(500,500),50),false));
-        this.graphe.updateRidges();
+        this.graph.updateRidges();
 
         int nbRidgesUsableAfter=0;
-        for (Ridge ridge : this.graphe.getRidges()){
+        for (Ridge ridge : this.graph.getRidges()){
             if (ridge.isUsable()){
                 nbRidgesUsableAfter++;
             }
@@ -137,23 +135,23 @@ public class Test_Graph {
 
     @Test
     public void workingUpdateRidgesWithFixedRectangularObstacles(){
-        this.graphe=new Graph(this.table);
-        this.graphe.addNode(new Node(new VectCartesian(0,0)));
-        this.graphe.addNode(new Node(new VectCartesian(1000,0)));
-        this.graphe.addNode(new Node(new VectCartesian(1000,1000)));
-        this.graphe.createRidges();
-        this.graphe.updateRidges();
+        this.graph =new Graph(this.table);
+        this.graph.addNode(new Node(new VectCartesian(0,0)));
+        this.graph.addNode(new Node(new VectCartesian(1000,0)));
+        this.graph.addNode(new Node(new VectCartesian(1000,1000)));
+        this.graph.createRidges();
+        this.graph.updateRidges();
         int nbRidgesUsable=0;
-        for (Ridge ridge : this.graphe.getRidges()){
+        for (Ridge ridge : this.graph.getRidges()){
             if (ridge.isUsable()){
                 nbRidgesUsable++;
             }
         }
         this.table.addFixedObstacle(new RectangularObstacle(new Rectangle(new VectCartesian(500,500),50,50),false));
-        this.graphe.updateRidges();
+        this.graph.updateRidges();
 
         int nbRidgesUsableAfter=0;
-        for (Ridge ridge : this.graphe.getRidges()){
+        for (Ridge ridge : this.graph.getRidges()){
             if (ridge.isUsable()){
                 nbRidgesUsableAfter++;
             }
@@ -164,23 +162,23 @@ public class Test_Graph {
 
     @Test
     public void workingUpdateRidgesWithMobileCircularObstacles(){
-        this.graphe=new Graph(this.table);
-        this.graphe.addNode(new Node(new VectCartesian(0,0)));
-        this.graphe.addNode(new Node(new VectCartesian(1000,0)));
-        this.graphe.addNode(new Node(new VectCartesian(1000,1000)));
-        this.graphe.createRidges();
-        this.graphe.updateRidges();
+        this.graph =new Graph(this.table);
+        this.graph.addNode(new Node(new VectCartesian(0,0)));
+        this.graph.addNode(new Node(new VectCartesian(1000,0)));
+        this.graph.addNode(new Node(new VectCartesian(1000,1000)));
+        this.graph.createRidges();
+        this.graph.updateRidges();
         int nbRidgesUsable=0;
-        for (Ridge ridge : this.graphe.getRidges()){
+        for (Ridge ridge : this.graph.getRidges()){
             if (ridge.isUsable()){
                 nbRidgesUsable++;
             }
         }
         this.table.addMobileObstacle(new CircularObstacle(new Circle(new VectCartesian(500,500),50),false));
-        this.graphe.updateRidges();
+        this.graph.updateRidges();
 
         int nbRidgesUsableAfter=0;
-        for (Ridge ridge : this.graphe.getRidges()){
+        for (Ridge ridge : this.graph.getRidges()){
             if (ridge.isUsable()){
                 nbRidgesUsableAfter++;
             }
@@ -191,23 +189,23 @@ public class Test_Graph {
 
     @Test
     public void workingUpdateRidgesWithMobileRectangularObstacles(){
-        this.graphe=new Graph(this.table);
-        this.graphe.addNode(new Node(new VectCartesian(0,0)));
-        this.graphe.addNode(new Node(new VectCartesian(1000,0)));
-        this.graphe.addNode(new Node(new VectCartesian(1000,1000)));
-        this.graphe.createRidges();
-        this.graphe.updateRidges();
+        this.graph =new Graph(this.table);
+        this.graph.addNode(new Node(new VectCartesian(0,0)));
+        this.graph.addNode(new Node(new VectCartesian(1000,0)));
+        this.graph.addNode(new Node(new VectCartesian(1000,1000)));
+        this.graph.createRidges();
+        this.graph.updateRidges();
         int nbRidgesUsable=0;
-        for (Ridge ridge : this.graphe.getRidges()){
+        for (Ridge ridge : this.graph.getRidges()){
             if (ridge.isUsable()){
                 nbRidgesUsable++;
             }
         }
         this.table.addMobileObstacle(new RectangularObstacle(new Rectangle(new VectCartesian(500,500),50,50),false));
-        this.graphe.updateRidges();
+        this.graph.updateRidges();
 
         int nbRidgesUsableAfter=0;
-        for (Ridge ridge : this.graphe.getRidges()){
+        for (Ridge ridge : this.graph.getRidges()){
             if (ridge.isUsable()){
                 nbRidgesUsableAfter++;
             }
@@ -218,9 +216,9 @@ public class Test_Graph {
 
     @Test
     public void createRidgesWithoutAnyNode(){
-        this.graphe=new Graph(this.table);
-        this.graphe.createRidges();
-        Assert.assertEquals(0, this.graphe.getRidges().size());
-        Assert.assertEquals(0, this.graphe.getNodes().size());
+        this.graph =new Graph(this.table);
+        this.graph.createRidges();
+        Assert.assertEquals(0, this.graph.getRidges().size());
+        Assert.assertEquals(0, this.graph.getNodes().size());
     }
 }

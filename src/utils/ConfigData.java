@@ -81,7 +81,7 @@ public enum ConfigData implements ConfigInfo
     DISTANCE_TO_DISENGAGE(50),
     MAX_RETRIES_IF_BLOCKED(1),
 
-    /** Paramètres Pathfinding */
+    /** Paramètres pathfinding */
     COUT_FIXE(10),
 
     /** Paramètre simulation */

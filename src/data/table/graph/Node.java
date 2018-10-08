@@ -3,7 +3,6 @@ package data.table.graph;
 import utils.math.Vec2;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /** Point dans le graphe */
 public class Node {
@@ -30,18 +29,18 @@ public class Node {
     }
 
     /** Renvoie les voisins de la node*/
-    public HashMap<Ridge,Node> getNeighbours(){
-        return this.neighbours;
+    public HashMap<Ridge,Node> getNeighboursCopy(){
+        return (HashMap<Ridge,Node>)this.neighbours.clone();
     }
 
-
     /** Ajoute un voisin à cette node */
-    public void addNeighbour(Node neighbour, Ridge ridge){
-        this.neighbours.putIfAbsent(ridge, neighbour);
+    Node addNeighbour(Node neighbour, Ridge ridge){
+        return this.neighbours.putIfAbsent(ridge, neighbour);
     }
 
     /** Supprime un voisin de cette node à partir du ridge le composant*/
-    public void removeNeighbour(Ridge ridge){
+    void removeNeighbour(Ridge ridge){
+        this.neighbours.get(ridge).getNeighboursCopy().remove(ridge);
         this.neighbours.remove(ridge);
     }
 

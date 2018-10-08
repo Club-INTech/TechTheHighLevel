@@ -7,7 +7,6 @@ import utils.math.VectCartesian;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Set;
 
 /** Graphe regroupant les nodes et les arêtes pour le pathfinding */
 public class Graph {
@@ -30,7 +29,7 @@ public class Graph {
 
     /** Ajoute une node au graph */
     public void addNode(Node node){
-        if (!this.nodes.contains(node)) {
+        if (!this.nodes.contains(node)){
             this.nodes.add(node);
         }
     }
@@ -45,9 +44,8 @@ public class Graph {
                 break;
             }
         }
-
-        if (nodeToRemove!=null) {
-            for (Map.Entry<Ridge,Node> entry : nodeToRemove.getNeighbours().entrySet()){
+        if (nodeToRemove!=null){
+            for (Map.Entry<Ridge,Node> entry : nodeToRemove.getNeighboursCopy().entrySet()){
                 entry.getValue().removeNeighbour(entry.getKey());
                 this.ridges.remove(entry.getKey());
             }
@@ -93,29 +91,27 @@ public class Graph {
     /** Définit quels ridges sont utilisables */
     public void updateRidges(){
         boolean isIntersecting = false;
-        for (Node node : this.nodes){
-            for (Ridge ridge : node.getNeighbours().keySet()) {
-                isIntersecting = false;
-                for (Obstacle obstacle : this.table.getFixedObstacles()) {
+        for (Ridge ridge : this.ridges) {
+            isIntersecting = false;
+            for (Obstacle obstacle : this.table.getFixedObstacles()) {
+                if (obstacle.intersect(ridge.getSegment())) {
+                    isIntersecting = true;
+                    break;
+                }
+            }
+            if (!isIntersecting) {
+                for (Obstacle obstacle : this.table.getMobileObstacles()) {
                     if (obstacle.intersect(ridge.getSegment())) {
                         isIntersecting = true;
                         break;
                     }
                 }
-                if (!isIntersecting) {
-                    for (Obstacle obstacle : this.table.getMobileObstacles()) {
-                        if (obstacle.intersect(ridge.getSegment())) {
-                            isIntersecting = true;
-                            break;
-                        }
-                    }
-                }
-                if (isIntersecting) {
-                    ridge.setUsable(false);
-                }
-                else{
-                    ridge.setUsable(true);
-                }
+            }
+            if (isIntersecting) {
+                ridge.setUsable(false);
+            }
+            else{
+                ridge.setUsable(true);
             }
         }
     }
