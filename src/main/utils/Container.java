@@ -46,7 +46,7 @@ public class Container implements Service
     /**
      * Instancie le gestionnaire de dépendances ainsi que la config
      */
-    private Container()
+    private Container(String configProfile)
     {
         /* Affichage du message de bienvenue */
         printMessage("intro.txt");
@@ -86,8 +86,8 @@ public class Container implements Service
         /* Instanciation des attributs & de la config */
         instanciedServices = new HashMap<>();
         instanciedThreads = new HashMap<>();
-        config = new Config(ConfigData.values(), true, "config/config.txt", "Basic, Simple");
-        Log.init();
+        config = new Config(ConfigData.values(), true, "config/config.txt", "Common", configProfile);
+        Log.init(config);
 
         /* Le container est un service ! */
         instanciedServices.put(getClass().getSimpleName(), this);
@@ -112,12 +112,16 @@ public class Container implements Service
 
     /**
      * Getter pour instanciation du singleton
+     * @param profile   profile de config à charger : peut-être "Master" ou "Slave"
      */
-    public static Container getInstance()
+    public static Container getInstance(String profile)
     {
         if (instance == null)
         {
-            instance = new Container();
+            if (!profile.equals("Master") && !profile.equals("Slave")) {
+                throw new IllegalStateException("Profile doit être Slave ou Master !");
+            }
+            instance = new Container(profile);
         }
         return instance;
     }

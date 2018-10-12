@@ -1,4 +1,5 @@
 # Directories to ignore
 .idea/
 out/
+logs/
 *.iml

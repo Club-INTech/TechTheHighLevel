@@ -4,6 +4,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import pfg.config.Config;
+import utils.ConfigData;
 import utils.Log;
 
 import java.io.BufferedReader;
@@ -30,7 +32,7 @@ public class Test_Log
         standartOutput = System.out;
         System.setOut(output);
         Log.activeAllChannels();
-        Log.init();
+        Log.init(new Config(ConfigData.values(), false));
     }
 
     @After
@@ -54,6 +56,8 @@ public class Test_Log
         Log.STRATEGY.critical("TS");
         output.flush();
 
+        Assert.assertTrue(input.readLine().endsWith("DEMARRAGE DU SERVICE DE LOG"));
+        Assert.assertTrue(input.readLine().endsWith(""));
         Assert.assertTrue(input.readLine().endsWith("TC"));
         Assert.assertTrue(input.readLine().endsWith("TL"));
         Assert.assertTrue(input.readLine().endsWith("TD"));
@@ -72,6 +76,8 @@ public class Test_Log
         Log.STRATEGY.critical("TS");
         output.flush();
 
+        Assert.assertTrue(input.readLine().endsWith("DEMARRAGE DU SERVICE DE LOG"));
+        Assert.assertTrue(input.readLine().endsWith(""));
         Assert.assertTrue(input.readLine().endsWith("TL"));
         Assert.assertTrue(input.readLine().endsWith("TS"));
     }
@@ -85,6 +91,8 @@ public class Test_Log
         Log.COMMUNICATION.critical("SUUS");
         Log.LOCOMOTION.critical("SU");
 
+        Assert.assertTrue(input.readLine().endsWith("DEMARRAGE DU SERVICE DE LOG"));
+        Assert.assertTrue(input.readLine().endsWith(""));
         Assert.assertTrue(input.readLine().endsWith("SUUS"));
         Assert.assertTrue(input.readLine().endsWith("SU"));
     }

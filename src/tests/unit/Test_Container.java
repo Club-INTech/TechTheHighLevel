@@ -25,7 +25,7 @@ public class Test_Container
     @Before
     public void setUp()
     {
-        container = Container.getInstance();
+        container = Container.getInstance("Master");
         Assert.assertNotNull(container.getConfig());
     }
 
@@ -33,6 +33,7 @@ public class Test_Container
     public void tearDown()
     {
         container = null;
+        Container.resetInstance();
     }
 
     @Test(expected = ContainerException.class)

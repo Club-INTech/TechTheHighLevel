@@ -22,7 +22,7 @@ bg=gray</panel_attributes>
       <w>270</w>
       <h>50</h>
     </coordinates>
-    <panel_attributes>locomotion
+    <panel_attributes>main.locomotion
 --
 bg=gray</panel_attributes>
     <additional_attributes/>

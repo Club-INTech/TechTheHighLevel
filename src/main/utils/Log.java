@@ -1,5 +1,7 @@
 package utils;
 
+import pfg.config.Config;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -7,6 +9,9 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+/**
+ * Service de Log par canaux
+ */
 public enum Log
 {
     COMMUNICATION(true),
@@ -21,7 +26,8 @@ public enum Log
     private static final String DEBUG       = "\u001B[32m";
     private static final String WARNING     = "\u001B[33m";
     private static final String CRITICAL    = "\u001B[31m";
-    private static final String LOG_INFO    = "\u001B[36m";
+    private static final String LOG_INFO    = "\u001B[34m";
+    private static final String RESET       = "\u001B[0m";
 
     /**
      * Instance permettant d'avoir la date et l'heure
@@ -35,8 +41,15 @@ public enum Log
 
     /**
      * True pour sauvegarder les logs
+     * override par la config
      */
-    private static boolean saveLogs = true;
+    private static boolean saveLogs     = true;
+
+    /**
+     * True pour afficher les logs
+     * override par la config
+     */
+    private static boolean printLogs    = true;
 
     /**
      * Nom du fichier de sauvegarde des logs
@@ -94,14 +107,14 @@ public enum Log
      * @param color     le préfixe pour la couleur en sortie standart
      * @param message   message à affiché
      */
-    private void writeToLog(String color, String message, boolean active)
+    private synchronized void writeToLog(String color, String message, boolean active)
     {
         String hour = calendar.get(Calendar.HOUR_OF_DAY) + "h" +
                 calendar.get(Calendar.MINUTE) + ":" +
                 calendar.get(Calendar.SECOND) + "," +
                 calendar.get(Calendar.MILLISECOND);
 
-        if(active)
+        if(active & printLogs)
         {
             StackTraceElement elem = Thread.currentThread().getStackTrace()[3];
             System.out.println(color + hour + " " + this.name() + " " +
@@ -119,7 +132,7 @@ public enum Log
      *
      * @param message le message a logguer
      */
-    private void writeToFile(String message)
+    private synchronized void writeToFile(String message)
     {
         // chaque message sur sa propre ligne
         message += "\n";
@@ -137,7 +150,7 @@ public enum Log
     /**
      * Initialise les flux d'entrée/sortie
      */
-    public static void init()
+    public static void init(Config config)
     {
         try {
             calendar = new GregorianCalendar();
@@ -149,6 +162,10 @@ public enum Log
             if (!testFinalRepertoire.exists())
                 testFinalRepertoire.mkdir();
             writer = new BufferedWriter(new FileWriter(finalSaveFile, true));
+            saveLogs = config.getBoolean(ConfigData.SAVE_LOG);
+            printLogs = config.getBoolean(ConfigData.PRINT_LOG);
+            System.out.println(LOG_INFO + "DEMARRAGE DU SERVICE DE LOG");
+            System.out.println(RESET);
         } catch (IOException e)
         {
             e.printStackTrace();
@@ -164,8 +181,11 @@ public enum Log
         if(saveLogs)
             try {
                 System.out.println(LOG_INFO + "SAUVEGARDE DES FICHIERS DE LOG");
-                if(writer != null)
-                    writer.close();
+                System.out.println(RESET);
+                synchronized (values()) {
+                    if (writer != null)
+                        writer.close();
+                }
             }
             catch(Exception e)
             {
@@ -201,7 +221,6 @@ public enum Log
     public boolean isActive() {
         return active;
     }
-
     public void setActive(boolean active) {
         this.active = active;
     }

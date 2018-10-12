@@ -1,0 +1,23 @@
+[Common]
+# PARAMETRES POUR LOG
+PRINT_LOG                           = true
+SAVE_LOG                            = true
+
+# DIMENSIONS DE L'ADVERSAIRE
+ENNEMY_RAY                          = 220
+
+
+[Master]
+MASTER                              = true
+
+# DIMENSIONS DES ROBOTS
+ROBOT_RAY                           = 240
+BUDDY_RAY                           = 150
+
+
+[Slave]
+MASTER                              = false
+
+# DIMENSIONS DES ROBOTS
+ROBOT_RAY                           = 150
+BUDDY_RAY                           = 240
