@@ -6,15 +6,15 @@ public enum Connections {
 
     LOCALHOST_CLIENT(new TCPIPClient("localhost",20000)),
     LOCALHOST_SERVER(new TCPIPServer(20000)),
-    LIDAR_SOCKET(new TCPIPClient("localhost", 17685));
-
+    LIDAR_SOCKET(new TCPIPClient("localhost", 17685)),
+    TEENSY(new TCPIPClient("192.168.0.1",23500));
 
     AbstractConnection connection;
     Connections(AbstractConnection connection){
         this.connection=connection;
     }
 
-    public void establishConnection(){
+    private void establishConnection(){
         this.connection.connect();
     }
 

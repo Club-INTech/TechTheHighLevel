@@ -20,6 +20,8 @@ public enum Order {
     Montlhery("montlhery"),
     Avance("av"),
     Recule("rc"),
+    Left("tg"),
+    Right("td"),
     Stop("sstop"),
 
     ;
