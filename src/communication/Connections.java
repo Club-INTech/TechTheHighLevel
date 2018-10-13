@@ -14,7 +14,7 @@ public enum Connections {
         this.connection=connection;
     }
 
-    private void establishConnection(){
+    public void establishConnection(){
         this.connection.connect();
     }
 
