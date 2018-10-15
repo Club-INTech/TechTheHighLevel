@@ -92,19 +92,10 @@ public class Graph {
     public void updateRidges(){
         boolean isIntersecting = false;
         for (Ridge ridge : this.ridges) {
-            isIntersecting = false;
-            for (Obstacle obstacle : this.table.getFixedObstacles()) {
+            for (Obstacle obstacle : this.table.getMobileObstacles()) {
                 if (obstacle.intersect(ridge.getSegment())) {
                     isIntersecting = true;
                     break;
-                }
-            }
-            if (!isIntersecting) {
-                for (Obstacle obstacle : this.table.getMobileObstacles()) {
-                    if (obstacle.intersect(ridge.getSegment())) {
-                        isIntersecting = true;
-                        break;
-                    }
                 }
             }
             if (isIntersecting) {

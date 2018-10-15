@@ -14,11 +14,7 @@ public enum Connections {
         this.connection=connection;
     }
 
-<<<<<<< HEAD:src/communication/Connections.java
     public void establishConnection(){
-=======
-    void establishConnection(){
->>>>>>> 27075620ec5f771f34daab99689cff4c2ab74804:src/main/utils/communication/Connections.java
         this.connection.connect();
     }
 
