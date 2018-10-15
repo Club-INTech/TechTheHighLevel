@@ -1,6 +1,7 @@
 package utils.communication;
 
 import utils.Log;
+
 import java.util.ArrayList;
 
 /** Wrapper s'occupant de gérer l'établissement des connexions et le traitement des messages reçus
@@ -8,23 +9,9 @@ import java.util.ArrayList;
  */
 public class CommunicationWrapper {
 
-    protected ArrayList<AbstractConnection> communicationInterfaces; //Liste des connexions instanciées (connectées ou non)
+    private ArrayList<AbstractConnection> communicationInterfaces; //Liste des connexions instanciées (connectées ou non)
     private String lastMessage; //Dernier message reçu
     private Thread readingThread;
-
-    /** Permet d'initier toutes les connexions quand override */
-    protected void startAllConnections() {
-        Log.COMMUNICATION.critical("OVERRIDE CETTE PUTAIN DE METHODE : openAllConnections");
-    }
-
-    /** Permet de démarrer l'établissement d'une connexion et de l'ajouter à la liste des connexions ouvertes */
-    protected void startConnection(Connections connection){
-        //On démarre l'établissement d'une connexion
-        connection.establishConnection();
-
-        //On ajoute la connexion à la liste des connexions dont l'établissmenet a été lancé
-        this.addCommunicationInterface(connection.getConnection());
-    }
 
     /** S'occupe de gérer les messages reçus et de les distribuer aux thread de traitement, peut être override*/
     protected void handleMessage(String header, String message){
@@ -32,10 +19,26 @@ public class CommunicationWrapper {
         System.out.println(message);
     }
 
+    /** Fonction qui peut être override par les JUnits pour démarrer les connexions */
+    protected void secureStartAllConnections(){
+        startAllConnections(); //Mettre ici en argument les connexions à lancer
+    }
+
     /** Permet de démarrer et de finir l'établissement de toutes les connexions,
      * avec un aspect bloquant tant que toutes les connexions ne sont pas établies*/
-    private void secureSetupAllConnections(){
-        startAllConnections(); //On démarre les connexions
+    protected void startAllConnections(Connections... connections){
+        if (connections!=null) {
+            for (Connections connection : connections) {
+                //On démarre l'établissement d'une connexion
+                connection.establishConnection();
+
+                //On ajoute la connexion à la liste des connexions dont l'établissmenet a été lancé
+                this.communicationInterfaces.add(connection.getConnection());
+            }
+        }
+        else{
+            Log.COMMUNICATION.critical("Aucune communications démarrées lors de l'instanciation du CommunicationWrapper");
+        }
 
         //On attent que les connexions soient établies
         while (!areAllConnectionsUp()){
@@ -45,11 +48,6 @@ public class CommunicationWrapper {
                 e.printStackTrace();
             }
         }
-    }
-
-    /** Permet d'ajouter une interface à la liste des interfaces */
-    private void addCommunicationInterface(AbstractConnection interfaceToAdd){
-        this.communicationInterfaces.add(interfaceToAdd);
     }
 
     /** Permet de lancer le listener de toutes les interfaces*/
@@ -102,7 +100,7 @@ public class CommunicationWrapper {
         this.lastMessage=null;
 
         //On démarre les connexions
-        secureSetupAllConnections();
+        secureStartAllConnections();
 
         //On attend que toutes les connexions soient établies
         while (!areAllConnectionsUp()){

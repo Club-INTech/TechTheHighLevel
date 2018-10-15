@@ -8,8 +8,8 @@ public class MainRaspi {
     public static void main(String[] args){
         CommunicationWrapper commWrapper = new CommunicationWrapper(){
             @Override
-            protected void startAllConnections() {
-                startConnection(Connections.TEENSY);
+            public void secureStartAllConnections(){
+                startAllConnections(Connections.TEENSY);
             }
         };
         Connections.TEENSY.send(Order.Montlhery);

@@ -27,9 +27,8 @@ public class Test_Communication {
         this.commWrapper = new CommunicationWrapper(){
             @Override
             /* On setup les connexions en localhost */
-            protected void startAllConnections() {
-                startConnection(Connections.LOCALHOST_CLIENT);
-                startConnection(Connections.LOCALHOST_SERVER);
+            protected void secureStartAllConnections() {
+                startAllConnections(Connections.LOCALHOST_CLIENT, Connections.LOCALHOST_SERVER);
             }
 
             @Override
@@ -86,8 +85,8 @@ public class Test_Communication {
         this.commWrapper = new CommunicationWrapper(){
             @Override
             /* On setup les connexions en localhost */
-            protected void startAllConnections() {
-                startConnection(Connections.LIDAR_SOCKET);
+            protected void secureStartAllConnections() {
+                startAllConnections(Connections.LIDAR_SOCKET);
             }
 
             @Override
@@ -169,9 +168,8 @@ public class Test_Communication {
         this.commWrapper = new CommunicationWrapper(){
             @Override
             /* On setup les connexions en localhost*/
-            protected void startAllConnections() {
-                startConnection(Connections.LOCALHOST_CLIENT);
-                startConnection(Connections.LOCALHOST_SERVER);
+            protected void secureStartAllConnections() {
+                startAllConnections(Connections.LOCALHOST_CLIENT,Connections.LOCALHOST_SERVER);
             }
 
             @Override
