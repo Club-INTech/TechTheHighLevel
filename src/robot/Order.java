@@ -15,6 +15,12 @@ public enum Order {
     NewHook("nh"),
     CXYO("cxyo"),
     XYO("?xyo"),
+    OuvrePorteAvant("olpAv"),
+    FermePorteAvant("flpAv"),
+    OuvrePorteArriere("olpAr"),
+    FermePorteArriere("flpAr"),
+    ActiveLaPompe("alp"),
+    DesactiveLaPompe("dlp"),
 
 
     Montlhery("montlhery"),
