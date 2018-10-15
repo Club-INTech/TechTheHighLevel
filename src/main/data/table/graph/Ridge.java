@@ -7,19 +7,21 @@ import utils.math.Vec2;
 public class Ridge {
 
     private Segment segment;
-    private int cost = 0; //Cout de l'arête (utile et mis à jour lors de l'exécution du pathfinding)
+    private int cost; //Cout de l'arête (utile et mis à jour lors de l'exécution du pathfinding)
     private int staticCost = 0; //Cout statique de l'arête
     private boolean usable; //Si on peut emprunter cette arête
 
     /** Constructeur */
     public Ridge(Segment segment){
         this.segment=segment;
+        this.cost=(int)Math.round(segment.getLength());
         this.usable=false;
     }
 
     /** Constructeur avec Vec2 */
     public Ridge(Vec2 firstPoint, Vec2 secondPoint){
         this.segment=new Segment(firstPoint,secondPoint);
+        this.cost=(int)Math.round(segment.getLength());
         this.usable=false;
     }
 

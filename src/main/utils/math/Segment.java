@@ -22,6 +22,16 @@ public class Segment {
         this.pointB = pointB;
     }
 
+    /** Cette méthode permet d'avoir la longueur du segment */
+    public double getLength(){
+        return Math.sqrt(
+                (this.getPointA().getX()-this.getPointB().getX())*
+                (this.getPointA().getX()-this.getPointB().getX())+
+                (this.getPointA().getY()-this.getPointB().getY())*
+                (this.getPointA().getY()-this.getPointB().getY())
+        );
+    }
+
     /**cette méthode détermine si deux droites sont parallèles ou non
      * @param segment segment*/
     public boolean intersectsWithSegment(Segment segment){
