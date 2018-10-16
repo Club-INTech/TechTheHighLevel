@@ -57,11 +57,11 @@ public class Ridge {
         if (obj instanceof Ridge){
             Vec2 pointA = ((Ridge) obj).getSegment().getPointA();
             Vec2 pointB = ((Ridge) obj).getSegment().getPointB();
-            if (this.segment.getPointA() == pointA){
-                return (this.segment.getPointB() == pointB);
+            if (this.segment.getPointA().equals(pointA)){
+                return (this.segment.getPointB().equals(pointB));
             }
-            else if (this.segment.getPointA() == pointB){
-                return (this.segment.getPointB() == pointA);
+            else if (this.segment.getPointA().equals(pointB)){
+                return (this.segment.getPointB().equals(pointA));
             }
             else{
                 return false;
