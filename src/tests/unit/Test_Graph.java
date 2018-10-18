@@ -1,14 +1,14 @@
-package tests.unit;
+package unit;
 
-import main.data.table.Table;
-import main.data.table.graph.Graph;
-import main.data.table.graph.Node;
-import main.data.table.graph.Ridge;
-import main.data.table.obstacle.CircularObstacle;
-import main.data.table.obstacle.RectangularObstacle;
-import main.utils.math.Circle;
-import main.utils.math.Rectangle;
-import main.utils.math.VectCartesian;
+import data.table.Table;
+import data.table.graph.Graph;
+import data.table.graph.Node;
+import data.table.graph.Ridge;
+import data.table.obstacle.CircularObstacle;
+import data.table.obstacle.RectangularObstacle;
+import utils.math.Circle;
+import utils.math.Rectangle;
+import utils.math.VectCartesian;
 
 import org.junit.After;
 import org.junit.Assert;

@@ -1,7 +1,7 @@
-package main.data.table.graph;
+package data.table.graph;
 
-import main.utils.math.Segment;
-import main.utils.math.Vec2;
+import utils.math.Segment;
+import utils.math.Vec2;
 
 /** Arête composant le graphe */
 public class Ridge {

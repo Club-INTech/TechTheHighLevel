@@ -1,9 +1,9 @@
-package main.data.table.graph;
+package data.table.graph;
 
-import main.data.table.Table;
-import main.data.table.obstacle.Obstacle;
-import main.utils.math.Segment;
-import main.utils.math.VectCartesian;
+import data.table.Table;
+import data.table.obstacle.Obstacle;
+import utils.math.Segment;
+import utils.math.VectCartesian;
 
 import java.util.ArrayList;
 import java.util.Map;

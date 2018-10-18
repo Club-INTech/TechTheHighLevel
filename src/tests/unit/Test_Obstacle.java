@@ -1,9 +1,9 @@
-package tests.unit;
+package unit;
 
-import main.data.table.obstacle.CircularObstacle;
-import main.data.table.obstacle.RectangularObstacle;
+import data.table.obstacle.CircularObstacle;
+import data.table.obstacle.RectangularObstacle;
 import org.junit.*;
-import main.utils.math.*;
+import utils.math.*;
 
 public class Test_Obstacle {
 

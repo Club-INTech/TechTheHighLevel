@@ -1,4 +1,4 @@
-package main.utils.math;
+package utils.math;
 
 /**
  * Il s'agit d"une classe définissant des méthodes de calculs spécifiques pour les vecteurs, le constructeur de cette classe est protected

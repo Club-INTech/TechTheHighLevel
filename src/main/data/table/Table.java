@@ -1,8 +1,8 @@
-package main.data.table;
+package data.table;
 
-import main.data.table.obstacle.Obstacle;
-import main.utils.math.Vec2;
-import main.utils.math.VectCartesian;
+import data.table.obstacle.Obstacle;
+import utils.math.Vec2;
+import utils.math.VectCartesian;
 
 import java.util.ArrayList;
 

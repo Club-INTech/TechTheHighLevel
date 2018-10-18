@@ -1,4 +1,4 @@
-package main.utils.math;
+package utils.math;
 
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
@@ -12,10 +12,10 @@ public class Circle extends Shape {
     private float radius;
 
     /**angle où l'arc de cercle commence*/
-    private float angleStart;
+    private double angleStart;
 
     /**angle où l'arc de cercle se termine*/
-    private float angleEnd;
+    private double angleEnd;
 
     /**Constructeur d'un cercle
      * @see Shape
@@ -31,7 +31,7 @@ public class Circle extends Shape {
      * @param radius rayon du cercle
      * @param angleStart angle de début
      * @param angleEnd angle de fin*/
-    public Circle(Vec2 centre,float radius,float angleStart, float angleEnd) {
+    public Circle(Vec2 centre,float radius,double angleStart, double angleEnd) {
         super(centre);
         this.radius=radius;
         this.angleStart=angleStart;
@@ -155,7 +155,7 @@ public class Circle extends Shape {
      * getter de l'angle de début
      * @return
      */
-    public float getAngleStart() {
+    public double getAngleStart() {
         return angleStart;
     }
 
@@ -163,7 +163,7 @@ public class Circle extends Shape {
      * getter de l'angle de fin
      * @return
      */
-    public float getAngleEnd() {
+    public double getAngleEnd() {
         return angleEnd;
     }
 

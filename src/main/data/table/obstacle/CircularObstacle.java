@@ -1,8 +1,8 @@
-package main.data.table.obstacle;
+package data.table.obstacle;
 
-import main.utils.math.Circle;
-import main.utils.math.Segment;
-import main.utils.math.Vec2;
+import utils.math.Circle;
+import utils.math.Segment;
+import utils.math.Vec2;
 
 public class CircularObstacle extends Obstacle {
 

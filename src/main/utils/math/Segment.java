@@ -1,4 +1,4 @@
-package main.utils.math;
+package utils.math;
 
 import java.awt.geom.Line2D;
 
@@ -97,6 +97,8 @@ public class Segment {
             }
         }
     }
+
+
 
     public Vec2 getPointA() {
         return pointA;

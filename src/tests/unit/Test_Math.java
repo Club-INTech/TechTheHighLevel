@@ -1,8 +1,8 @@
-package tests.unit;
+package unit;
 
 import org.junit.Assert;
 import org.junit.Test;
-import main.utils.math.*;
+import utils.math.*;
 
 public class Test_Math {
 

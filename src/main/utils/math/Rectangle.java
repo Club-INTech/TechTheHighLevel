@@ -1,4 +1,4 @@
-package main.utils.math;
+package utils.math;
 
 /**
  * @see Shape
@@ -76,6 +76,15 @@ public class Rectangle extends Shape {
 
     /**
      * Cette méthode retourne les segments d'un rectangle
+     *           A______0______B
+     *           |             |
+     *           |             |
+     *          3|             |
+     *           |             |1
+     *           |             |
+     *           |             |
+     *           |_____________|
+     *           D      2       C
      * @return
      */
     public Segment[] getSegments(){
@@ -89,6 +98,28 @@ public class Rectangle extends Shape {
         segments[2]=new Segment(pointC,pointD);
         segments[3]=new Segment(pointD,pointA);
         return segments;
+    }
+
+    /**
+     * Cette méthode retourne les segments d'un rectangle
+     *       (0) A______________B (1)
+     *           |             |
+     *           |             |
+     *           |             |
+     *           |             |
+     *           |             |
+     *           |             |
+     *           |_____________|
+     *        (3) D              C (2)
+     * @return
+     */
+    public Vec2[] getPoints(){
+        Vec2[] vec2=new Vec2[4];
+        vec2[0] = new VectCartesian(Math.round(this.getCenter().getX() - width/2), Math.round(this.getCenter().getY() + length/2));
+        vec2[1] =new VectCartesian(Math.round(this.getCenter().getX() + width/2),Math.round(this.getCenter().getY() + length/2));
+        vec2[2] =new VectCartesian(Math.round(this.getCenter().getX() + width/2), Math.round(this.getCenter().getY() - length/2));
+        vec2[3] =new VectCartesian(Math.round(this.getCenter().getX() - width/2), Math.round(this.getCenter().getY() - length/2 ));
+        return vec2;
     }
 
     /**

@@ -1,7 +1,7 @@
-package main.locomotion;
+package locomotion;
 
-import main.data.table.Table;
-import main.utils.math.Vec2;
+import data.table.Table;
+import utils.math.Vec2;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Pathfinding {
