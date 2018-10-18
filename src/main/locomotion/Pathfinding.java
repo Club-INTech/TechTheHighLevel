@@ -16,7 +16,7 @@ public class Pathfinding {
 
     /** Permet de trouver ue chemin vers une position donnée */
     ConcurrentLinkedQueue<Vec2> findPath(Vec2 targetPosition){
-        //C'est aux 1AS de faire ça !
+        //TODO C'est aux 1AS de faire ça !
         return null;
     }
 

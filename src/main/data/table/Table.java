@@ -9,9 +9,19 @@ import java.util.ArrayList;
 /** SINGLETON stockant les données sur la table */
 public class Table {
 
-    private Vec2 entryPosition=new VectCartesian(0,0);
-    private int sizeX=3000;
-    private int sizeY=2000;
+    /** Position d'entrée du robot */
+    private Vec2 entryPosition = new VectCartesian(0,0); // A set dans la config
+
+    /** Dimension de la table */
+    private int sizeX = 3000;
+    private int sizeY = 2000;
+
+    /** Rayons des robots */
+    private int mainRobotRay = 26; // A set dans la config
+    private int secondaryRobotRay = 20; // A set dans la config
+    private int ennemyRobotRay = 10; // A set dans la config
+
+    /** Liste des obstacles */
     private ArrayList<Obstacle> fixedObstacles;
     private ArrayList<Obstacle> mobileObstacles;
 
@@ -21,6 +31,11 @@ public class Table {
         this.mobileObstacles=new ArrayList<>();
     }
 
+    /** Méthode pour mettre à la liste d'obstacle mobile */
+
+    public void updateObstacle(){
+
+    }
 
     /** Ajoute un obstacle fixe */
     public void addFixedObstacle(Obstacle fixedObstacle){
