@@ -1,4 +1,4 @@
-package utils.math;
+package main.utils.math;
 
 /**
  * On fait des calculs à l'aide des méthodes de cette classe

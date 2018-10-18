@@ -1,8 +1,8 @@
-package data.table.obstacle;
+package main.data.table.obstacle;
 
-import utils.math.Rectangle;
-import utils.math.Segment;
-import utils.math.Vec2;
+import main.utils.math.Rectangle;
+import main.utils.math.Segment;
+import main.utils.math.Vec2;
 
 public class RectangularObstacle extends Obstacle {
 

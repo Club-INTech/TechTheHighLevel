@@ -1,4 +1,4 @@
-package utils.math;
+package main.utils.math;
 
 /**
  * @see VectCartesian

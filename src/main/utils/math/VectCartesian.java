@@ -1,4 +1,4 @@
-package utils.math;
+package main.utils.math;
 
 /**
  * Classe héritante de Vec2 dont la fonction est de différencier son constructeur de Vec2

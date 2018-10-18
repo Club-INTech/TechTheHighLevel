@@ -1,4 +1,4 @@
-package utils.math;
+package main.utils.math;
 
 /**
  * Il s'agit d'une classe abstraite définissant un cadre pour créer des formes

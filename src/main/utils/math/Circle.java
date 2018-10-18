@@ -1,4 +1,4 @@
-package utils.math;
+package main.utils.math;
 
 import java.awt.geom.Line2D;
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
-package data;
+package main.data;
 
-import utils.math.Vec2;
-import utils.math.VectCartesian;
+import main.utils.math.Vec2;
+import main.utils.math.VectCartesian;
 
 /** SINGLETON qui stocke la position et l'orientation HAUT NIVEAU du main.robot */
 public class XYO {

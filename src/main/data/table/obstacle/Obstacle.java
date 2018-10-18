@@ -1,7 +1,7 @@
-package data.table.obstacle;
+package main.data.table.obstacle;
 
-import utils.math.Segment;
-import utils.math.Vec2;
+import main.utils.math.Segment;
+import main.utils.math.Vec2;
 
 public abstract class Obstacle {
 

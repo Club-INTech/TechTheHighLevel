@@ -1,16 +1,16 @@
-package unit;
+package tests.unit;
 
-import data.table.Table;
-import data.table.obstacle.CircularObstacle;
-import data.table.obstacle.Obstacle;
-import data.table.obstacle.RectangularObstacle;
+import main.data.table.Table;
+import main.data.table.obstacle.CircularObstacle;
+import main.data.table.obstacle.Obstacle;
+import main.data.table.obstacle.RectangularObstacle;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import utils.math.Circle;
-import utils.math.Rectangle;
-import utils.math.VectCartesian;
+import main.utils.math.Circle;
+import main.utils.math.Rectangle;
+import main.utils.math.VectCartesian;
 
 import java.util.ArrayList;
 

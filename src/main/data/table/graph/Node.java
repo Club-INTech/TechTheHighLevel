@@ -1,6 +1,6 @@
-package data.table.graph;
+package main.data.table.graph;
 
-import utils.math.Vec2;
+import main.utils.math.Vec2;
 import java.util.HashMap;
 
 /** Point dans le graphe */
