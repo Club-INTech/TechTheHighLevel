@@ -28,5 +28,7 @@ public class MainRaspi {
         else{
             connManager.startAllConnections(Connections.TO_MASTER);
         }
+
+        System.out.println("Connections estalished !");
     }
 }
