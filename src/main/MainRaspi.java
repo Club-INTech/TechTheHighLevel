@@ -26,14 +26,14 @@ public class MainRaspi {
             connManager.startAllConnections(Connections.MASTER_SERVER);
             System.out.println("Connections estalished !");
             for (int i=0; i<100; i++) {
-                Connections.MASTER_SERVER.send(Integer.toString(i));
+                Connections.MASTER_SERVER.send("From server: "+Integer.toString(i));
             }
         }
         else{
             connManager.startAllConnections(Connections.TO_MASTER);
             System.out.println("Connections estalished !");
             for (int i=100; i<200; i++) {
-                Connections.TO_MASTER.send(Integer.toString(i));
+                Connections.TO_MASTER.send("From client: "+Integer.toString(i));
             }
         }
 
