@@ -24,11 +24,18 @@ public class MainRaspi {
 
         if (isMaster) {
             connManager.startAllConnections(Connections.MASTER_SERVER);
+            System.out.println("Connections estalished !");
+            for (int i=0; i<100; i++) {
+                Connections.MASTER_SERVER.send(Integer.toString(i));
+            }
         }
         else{
             connManager.startAllConnections(Connections.TO_MASTER);
+            System.out.println("Connections estalished !");
+            for (int i=100; i<200; i++) {
+                Connections.TO_MASTER.send(Integer.toString(i));
+            }
         }
 
-        System.out.println("Connections estalished !");
     }
 }
