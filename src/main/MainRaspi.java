@@ -12,7 +12,7 @@ public class MainRaspi {
         Container container;
         String hierarchy;
         try {
-            hierarchy = new String(Files.readAllBytes(Paths.get("config/hierarchy.txt")));
+            hierarchy = Files.readAllLines(Paths.get("config/hierarchy.txt")).get(0);
         } catch (IOException e) {
             hierarchy=null;
             e.printStackTrace();
