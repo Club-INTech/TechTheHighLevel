@@ -1,83 +1,32 @@
-import utils.communication.CommunicationWrapper;
+import utils.ConfigData;
+import utils.Container;
 import utils.communication.Connections;
-import utils.keyboard.KeyboardHandler;
-import robot.Order;
+import utils.communication.ConnectionsManager;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class MainRaspi {
     public static void main(String[] args){
-        CommunicationWrapper commWrapper = new CommunicationWrapper(){
-            @Override
-            public void secureStartAllConnections(){
-                startAllConnections(Connections.TEENSY);
-            }
-        };
-        Connections.TEENSY.send(Order.Montlhery);
-        KeyboardHandler keyboard = new KeyboardHandler();
-        boolean porteAvantOuverte=false;
-        boolean porteArriereOuverte=false;
-        boolean pompeAllumee=false;
+        Container container;
+        String hierarchy;
+        try {
+            hierarchy = new String(Files.readAllBytes(Paths.get("config/hierarchy.txt")));
+        } catch (IOException e) {
+            hierarchy=null;
+            e.printStackTrace();
+        }
+        container = Container.getInstance(hierarchy);
 
-        while (true){
-            if (keyboard.isUpPressed()){
-                Connections.TEENSY.send(Order.Avance);
-            }
-            else if (keyboard.isDownPressed()){
-                Connections.TEENSY.send(Order.Recule);
-            }
-            else if (keyboard.isLeftPressed()){
-                Connections.TEENSY.send(Order.Left);
-            }
-            else if (keyboard.isRightPressed()){
-                Connections.TEENSY.send(Order.Right);
-            }
-            else if (keyboard.isVPressed()){
-                if (porteAvantOuverte) {
-                    Connections.TEENSY.send(Order.FermePorteAvant);
-                    porteAvantOuverte=false;
-                }
-                else{
-                    Connections.TEENSY.send(Order.OuvrePorteAvant);
-                    porteAvantOuverte=true;
-                }
-            }
-            else if (keyboard.isWPressed()){
+        boolean isMaster = container.getConfig().getBoolean(ConfigData.MASTER);
+        ConnectionsManager connManager = new ConnectionsManager();
 
-            }
-            else if (keyboard.isXPressed()){
-
-            }
-            else if (keyboard.isPPressed()){
-
-            }
-            else if (keyboard.isSpacePressed()){
-                if (porteArriereOuverte) {
-                    Connections.TEENSY.send(Order.FermePorteArriere);
-                    porteArriereOuverte=false;
-                }
-                else{
-                    Connections.TEENSY.send(Order.OuvrePorteArriere);
-                    porteArriereOuverte=true;
-                }
-            }
-            else if (keyboard.isCPressed()){
-                if (pompeAllumee) {
-                    Connections.TEENSY.send(Order.DesactiveLaPompe);
-                    pompeAllumee=false;
-                }
-                else{
-                    Connections.TEENSY.send(Order.ActiveLaPompe);
-                    pompeAllumee=true;
-                }
-            }
-            else{
-                Connections.TEENSY.send(Order.Stop);
-            }
-            try {
-                Thread.sleep(5);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        if (isMaster) {
+            connManager.startAllConnections(Connections.MASTER_SERVER);
+        }
+        else{
+            connManager.startAllConnections(Connections.TO_MASTER);
         }
     }
 }

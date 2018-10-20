@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /** Wrapper s'occupant de gérer l'établissement des connexions et le traitement des messages reçus
  * @author nayht
  */
-public class CommunicationWrapper {
+public class ConnectionsManager {
 
     private ArrayList<AbstractConnection> communicationInterfaces; //Liste des connexions instanciées (connectées ou non)
     private String lastMessage; //Dernier message reçu
@@ -20,14 +20,8 @@ public class CommunicationWrapper {
     }
 
     /** Fonction qui peut être override par les JUnits pour démarrer les connexions */
-    protected void secureStartAllConnections(){
-        startAllConnections(); //Mettre ici en argument les connexions à lancer
-    }
-
-    /** Permet de démarrer et de finir l'établissement de toutes les connexions,
-     * avec un aspect bloquant tant que toutes les connexions ne sont pas établies*/
-    protected void startAllConnections(Connections... connections){
-        if (connections!=null) {
+    public void startAllConnections(Connections... connections){
+        if (connections.length>0) {
             for (Connections connection : connections) {
                 //On démarre l'établissement d'une connexion
                 connection.establishConnection();
@@ -47,6 +41,11 @@ public class CommunicationWrapper {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
+
+        //On lance le thread de réception des messages
+        if (this.readingThread==null) {
+            listenThread();
         }
     }
 
@@ -95,23 +94,8 @@ public class CommunicationWrapper {
     }
 
     /** Constructeur */
-    public CommunicationWrapper(){
+    public ConnectionsManager(){
         this.communicationInterfaces=new ArrayList<>();
         this.lastMessage=null;
-
-        //On démarre les connexions
-        secureStartAllConnections();
-
-        //On attend que toutes les connexions soient établies
-        while (!areAllConnectionsUp()){
-            try {
-                Thread.sleep(5);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        //On lance le thread de réception des messages
-        listenThread();
     }
 }

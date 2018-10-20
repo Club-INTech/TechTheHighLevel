@@ -16,6 +16,7 @@ public enum ConfigData implements ConfigInfo
     TABLE_Y(2000),
     TEMPS_MATCH(100),
     ETHERNET_DEFAULT_TIME(1),
+    MASTER(true),
 
     /** Paramètres log */
     PRINT_LOG(true),
@@ -35,8 +36,9 @@ public enum ConfigData implements ConfigInfo
     /** Dimensions du main.robot */
     ROBOT_LENGTH(300),
     ROBOT_WIDTH(300),
-    ROBOT_RADIUS(212),
-    ENNEMY_RADIUS(400),
+    ROBOT_RAY(212),
+    BUDDY_RAY(150),
+    ENNEMY_RAY(400),
 
     /** Vitesses du main.robot */
     ROBOT_LINEAR_SPEED(840),        // mm/s

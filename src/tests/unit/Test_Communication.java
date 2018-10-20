@@ -1,6 +1,6 @@
 package unit;
 
-import utils.communication.CommunicationWrapper;
+import utils.communication.ConnectionsManager;
 import utils.communication.Connections;
 import data.controller.LidarHandlerRunnable;
 import org.junit.After;
@@ -11,7 +11,7 @@ import org.junit.Test;
 public class Test_Communication {
 
     private int nbMessages=100; //Nombre de message à envoyer pour tester la connexion
-    private CommunicationWrapper commWrapper;
+    private ConnectionsManager commWrapper;
 
     @After
     public void after(){
@@ -24,13 +24,7 @@ public class Test_Communication {
     public void visualCommunicationTest(){
 
         //On crée le wrapper de main.utils.communication en localhost
-        this.commWrapper = new CommunicationWrapper(){
-            @Override
-            /* On setup les connexions en localhost */
-            protected void secureStartAllConnections() {
-                startAllConnections(Connections.LOCALHOST_CLIENT, Connections.LOCALHOST_SERVER);
-            }
-
+        this.commWrapper = new ConnectionsManager(){
             @Override
             /* On traite les messages selon leurs headers */
             protected void handleMessage(String header, String message) {
@@ -38,14 +32,16 @@ public class Test_Communication {
             }
         };
 
+        this.commWrapper.startAllConnections(Connections.TO_LOCALHOST_TEST, Connections.LOCALHOST_TEST_SERVER);
+
         //On envoie les messages du client vers le serveur
         for (int i=0; i<this.nbMessages; i++){
-            Connections.LOCALHOST_CLIENT.send("From client : "+i);
+            Connections.TO_LOCALHOST_TEST.send("From client : "+i);
         }
 
         //On envoie les messages du serveur vers le client
         for (int i=0; i<this.nbMessages; i++){
-            Connections.LOCALHOST_SERVER.send("From server : "+i);
+            Connections.LOCALHOST_TEST_SERVER.send("From server : "+i);
         }
 
         //On attend 1 seconde pour que les sockets affichent tous les messages
@@ -56,8 +52,8 @@ public class Test_Communication {
         }
 
         //Close connections.
-        Connections.LOCALHOST_CLIENT.close();
-        Connections.LOCALHOST_SERVER.close();
+        Connections.TO_LOCALHOST_TEST.close();
+        Connections.LOCALHOST_TEST_SERVER.close();
     }
 
 
@@ -82,13 +78,7 @@ public class Test_Communication {
         System.out.println("Thread launched.");
 
         // On crée le wrapper de main.utils.communication en localhost.
-        this.commWrapper = new CommunicationWrapper(){
-            @Override
-            /* On setup les connexions en localhost */
-            protected void secureStartAllConnections() {
-                startAllConnections(Connections.LIDAR_SOCKET);
-            }
-
+        this.commWrapper = new ConnectionsManager(){
             @Override
             /* On traite les messages selon leurs headers */
             protected void handleMessage(String header, String message) {
@@ -112,8 +102,9 @@ public class Test_Communication {
             }
         };
 
-        System.out.println("Wait...");
+        this.commWrapper.startAllConnections(Connections.TO_LIDAR_SOCKET);
 
+        System.out.println("Wait...");
 
         // Waits.
         try {
@@ -136,7 +127,7 @@ public class Test_Communication {
         lidarHandlerRunnable.clearLidarQueue();
 
         // Close connections.
-        Connections.LIDAR_SOCKET.close();
+        Connections.TO_LIDAR_SOCKET.close();
 
     }
 
@@ -165,13 +156,7 @@ public class Test_Communication {
         StringBuilder serverReceivedBuilder = new StringBuilder();
 
         //On crée le wrapper de main.utils.communication en localhost
-        this.commWrapper = new CommunicationWrapper(){
-            @Override
-            /* On setup les connexions en localhost*/
-            protected void secureStartAllConnections() {
-                startAllConnections(Connections.LOCALHOST_CLIENT,Connections.LOCALHOST_SERVER);
-            }
-
+        this.commWrapper = new ConnectionsManager(){
             @Override
             /* On traite les messages selon leurs headers*/
             protected void handleMessage(String header, String message) {
@@ -186,14 +171,16 @@ public class Test_Communication {
             }
         };
 
+        this.commWrapper.startAllConnections(Connections.TO_LOCALHOST_TEST,Connections.LOCALHOST_TEST_SERVER);
+
         //On envoie les messages du client vers le serveur
         for (int i=0; i<this.nbMessages; i++){
-            Connections.LOCALHOST_CLIENT.send("CL"+i);
+            Connections.TO_LOCALHOST_TEST.send("CL"+i);
         }
 
         //On envoie les messages du serveur vers le client
         for (int i=0; i<this.nbMessages; i++){
-            Connections.LOCALHOST_SERVER.send("SE"+i);
+            Connections.LOCALHOST_TEST_SERVER.send("SE"+i);
         }
 
         //On attend 1 seconde pour que les sockets affichent tous les messages
@@ -251,8 +238,8 @@ public class Test_Communication {
         }
 
         //Close connections.
-        Connections.LOCALHOST_CLIENT.close();
-        Connections.LOCALHOST_SERVER.close();
+        Connections.TO_LOCALHOST_TEST.close();
+        Connections.LOCALHOST_TEST_SERVER.close();
     }
     
 }
