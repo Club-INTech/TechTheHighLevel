@@ -20,20 +20,25 @@ public class MainRaspi {
         container = Container.getInstance(hierarchy);
 
         boolean isMaster = container.getConfig().getBoolean(ConfigData.MASTER);
-        ConnectionsManager connManager = new ConnectionsManager();
+        ConnectionsManager connManager = new ConnectionsManager(){
+            @Override
+            protected void handleMessage(String header, String message) {
+                System.out.println(message);
+            }
+        };
 
         if (isMaster) {
             connManager.startAllConnections(Connections.MASTER_SERVER);
             System.out.println("Connections estalished !");
             for (int i=0; i<100; i++) {
-                Connections.MASTER_SERVER.send("From server: "+Integer.toString(i));
+                Connections.MASTER_SERVER.send("SE"+Integer.toString(i));
             }
         }
         else{
             connManager.startAllConnections(Connections.TO_MASTER);
             System.out.println("Connections estalished !");
             for (int i=100; i<200; i++) {
-                Connections.TO_MASTER.send("From client: "+Integer.toString(i));
+                Connections.TO_MASTER.send("CL"+Integer.toString(i));
             }
         }
 
