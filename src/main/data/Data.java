@@ -1,19 +1,19 @@
 package data;
 
-class Data<T> {
+class Data{
 
     /** Valeur stockée dans l'objet */
-    private T value;
+    private Object value;
 
-    Data (T value){
+    Data (Object value){
         this.value=value;
     }
 
     /** Permet de définir la valeur stockée dans cet objet */
-    void setValue(T value){
+    void setValue(Object value){
         this.value=value;
     }
 
     /** Permet de récupérer la valeur stockée dans cet objet */
-    T getValue(){ return this.value; }
+    Object getValue(){ return this.value; }
 }

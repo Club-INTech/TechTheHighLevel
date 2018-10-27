@@ -4,22 +4,22 @@ package data;
 public enum RobotState {
 
     //Exemples
-    BRAS_AVANT_DEPLOYE(new Data<Boolean>(true)),
-    BRAS_ARRIERE_DEPLOYE(new Data<Boolean>(true)),
+    BRAS_AVANT_DEPLOYE(true),
+    BRAS_ARRIERE_DEPLOYE(true),
 
     ;
-    private Data dataObject;
-    RobotState(Data dataObject){
-        this.dataObject=dataObject;
+    private Object valueObject;
+    RobotState(Object valueObject){
+        this.valueObject=valueObject;
     }
 
     /** Renvoie la valeur de la variable */
-    public synchronized <T> T getData(){
-        return (T)this.dataObject.getValue();
+    public synchronized Object getData(){
+        return this.valueObject;
     }
 
     /** Affecte une valeur à la variable */
-    public synchronized <T> void setData(T value){
-        this.dataObject.setValue(value);
+    public synchronized void setData(Object value){
+        this.valueObject=value;
     }
 }

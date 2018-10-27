@@ -2,27 +2,26 @@ package data;
 
 public enum SensorsData {
 
-    TELEMETRE_AVANT_DROIT(new Data<Integer>(0)),
-    TELEMETRE_AVANT_GAUCHE(new Data<Integer>(0)),
-    TELEMETRE_COTE_DROIT(new Data<Integer>(0)),
-    TELEMETRE_COTE_GAUCHE(new Data<Integer>(0)),
-    TELEMETRE_ARRIERE_DROIT(new Data<Integer>(0)),
-    TELEMETRE_ARRIERE_GAUCHE(new Data<Integer>(0)),
+    TELEMETRE_AVANT_GAUCHE(0),
+    TELEMETRE_AVANT_DROIT(0),
+    TELEMETRE_ARRIERE_GAUCHE(0),
+    TELEMETRE_ARRIERE_DROIT(0),
+    TELEMETRE_COTE_GAUCHE(0),
+    TELEMETRE_COTE_DROIT(0),
 
     ;
-    private Data dataObject;
-    SensorsData(Data dataObject){
-        this.dataObject=dataObject;
+    private Object valueObject;
+    SensorsData(Object valueObject){
+        this.valueObject=valueObject;
     }
 
-
     /** Renvoie la valeur de la variable */
-    public synchronized <T> T getData(){
-        return (T)this.dataObject.getValue();
+    public synchronized Object getData(){
+        return this.valueObject;
     }
 
     /** Affecte une valeur à la variable */
-    public synchronized <T> void setData(T value){
-        this.dataObject.setValue(value);
+    public synchronized void setData(Object value){
+        this.valueObject=value;
     }
 }
