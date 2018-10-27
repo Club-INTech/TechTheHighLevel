@@ -1,17 +1,20 @@
 package data;
 
-/** Correspond à une base de données des variables à propos du main.robot */
-public enum RobotState {
+public enum SensorsData {
 
-    //Exemples
-    BRAS_AVANT_DEPLOYE(new Data<Boolean>(true)),
-    BRAS_ARRIERE_DEPLOYE(new Data<Boolean>(true)),
+    TELEMETRE_AVANT_DROIT(new Data<Integer>(0)),
+    TELEMETRE_AVANT_GAUCHE(new Data<Integer>(0)),
+    TELEMETRE_COTE_DROIT(new Data<Integer>(0)),
+    TELEMETRE_COTE_GAUCHE(new Data<Integer>(0)),
+    TELEMETRE_ARRIERE_DROIT(new Data<Integer>(0)),
+    TELEMETRE_ARRIERE_GAUCHE(new Data<Integer>(0)),
 
     ;
     private Data dataObject;
-    RobotState(Data dataObject){
+    SensorsData(Data dataObject){
         this.dataObject=dataObject;
     }
+
 
     /** Renvoie la valeur de la variable */
     public synchronized <T> T getData(){
