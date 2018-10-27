@@ -50,12 +50,12 @@ public class ConnectionsManager {
 
         //On lance le thread de réception des messages
         if (this.readingThread==null) {
-            listenThread();
+            startReadingThread();
         }
     }
 
     /** Permet de lancer le listener de toutes les interfaces*/
-    private void listenThread() {
+    private void startReadingThread() {
         //On crée un thread de réceptions de données
         this.readingThread = new Thread(() -> {
             //On boucle indéfiniment
@@ -94,7 +94,7 @@ public class ConnectionsManager {
     }
 
     /** Permet d'interrompre le thread d'écoute */
-    public void stopListeningThread(){
+    public void stopReadingThread(){
         this.readingThread.interrupt();
     }
 

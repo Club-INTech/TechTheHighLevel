@@ -15,7 +15,7 @@ public class Test_Communication {
 
     @After
     public void after(){
-        this.commWrapper.stopListeningThread(); //On ferme le thread du comm wrapper qui écoute les messages reçus
+        this.commWrapper.stopReadingThread(); //On ferme le thread du comm wrapper qui écoute les messages reçus
     }
 
     @SuppressWarnings("Duplicates")
