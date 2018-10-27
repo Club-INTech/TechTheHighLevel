@@ -15,8 +15,13 @@ public class ConnectionsManager {
 
     /** S'occupe de gérer les messages reçus et de les distribuer aux thread de traitement, peut être override*/
     protected void handleMessage(String header, String message){
-        System.out.println(header);
-        System.out.println(message);
+        switch(header){
+            case "DB": //Debug
+                break;
+            default:
+                System.out.println(header);
+                System.out.println(message);
+        }
     }
 
     /** Fonction qui peut être override par les JUnits pour démarrer les connexions */
