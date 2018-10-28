@@ -1,7 +1,9 @@
+
 import utils.ConfigData;
 import utils.Container;
 import utils.communication.Connections;
 import utils.communication.ConnectionsManager;
+
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -27,6 +29,7 @@ public class MainRaspi {
             }
         };
 
+
         if (isMaster) {
             connManager.startAllConnections(Connections.MASTER_SERVER);
             System.out.println("Connections estalished !");
@@ -39,6 +42,7 @@ public class MainRaspi {
             System.out.println("Connections estalished !");
             for (int i=100; i<200; i++) {
                 Connections.TO_MASTER.send("CL"+Integer.toString(i));
+
             }
         }
 
