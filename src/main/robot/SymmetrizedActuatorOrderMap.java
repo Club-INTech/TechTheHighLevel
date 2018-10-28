@@ -6,6 +6,10 @@ import robot.OrdersEnums.Order;
 
 import java.util.HashMap;
 import java.util.Map;
+
+/**
+ * Classe qui permet de symétriser tous les ordres
+ */
 public class SymmetrizedActuatorOrderMap {
 
     /** Map contenant un actionneur pour clé, et son symétrique pour valeur */
