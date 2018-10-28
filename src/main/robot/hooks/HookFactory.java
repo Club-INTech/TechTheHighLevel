@@ -15,14 +15,14 @@ import java.util.ArrayList;
 
 /**
  * Classe permettant de gérer les hooks via une enum : pour créer un hook, il suffit de l'ajouter dans l'enum HookNames
- * Les hooks sont configurés (=envoyés au LL) via la méthode configureHook, a appelé en début de match ou de script
+ * Les hooks sont configurés (=envoyés au LL) via la méthode configureHook, à appeler en début de match ou de script
  */
 public class HookFactory implements Service {
 
     /** Log */
     private Log log;
 
-    /** Wrapper */
+    /** OrderWrapper */
     private OrderWrapper orderWrapper;
 
 
@@ -42,7 +42,7 @@ public class HookFactory implements Service {
     }
 
     /**
-     * Configure les hooks en paramètres (envoie toute les infos au LL)
+     * Configure les hooks en paramètre (envoie toutes les infos au LL)
      */
     public void configureHook(HookNames... hooks) {
 
