@@ -146,6 +146,11 @@ public abstract class Vec2 {
         return (int) (r * r);
     }
 
+    public VectCartesian symetrize(){
+        this.x=-x;
+        return new VectCartesian(x,y);
+    }
+
 
     /** Renvoie la position X du vecteur */
 
@@ -194,6 +199,16 @@ public abstract class Vec2 {
     public String toString() {
         return String.format("(%s,%s)",this.x,this.y);
     }
+
+
+
+    /**
+     * Lorsque l'on discute avec le LL, on signifie que c'est un vecteur comme ceci
+     */
+    public String toStringEth(){
+        return x + " " + y;
+    }
+
 
 
 
