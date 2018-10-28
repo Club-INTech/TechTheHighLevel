@@ -1,6 +1,6 @@
 package utils.communication;
 
-import robot.Order;
+import robot.OrdersEnums.*;
 
 /** Enum qui regroupe les différentes connexions */
 public enum Connections {
@@ -36,7 +36,7 @@ public enum Connections {
 
     /** Permet d'envoyer un message en fonction d'un des ordres disponibles, avec des éventuels arguments */
     public void send(Order order, String... arguments){
-        if (arguments!= null){
+        if (arguments.length !=0){
             StringBuilder message = new StringBuilder();
             message.append(order.getOrderStr());
             for (String argument : arguments) {
@@ -47,6 +47,7 @@ public enum Connections {
         }
         else {
             this.connection.send(order.getOrderStr());
+
         }
     }
 
