@@ -9,66 +9,119 @@ import utils.math.Vec2;
 
 import java.util.Locale;
 
+/**
+ * Classe qui permet d'envoyer tous les ordres
+ */
 public class OrderWrapper implements Service {
 
-
+    /**On utitise comme connexion par défaut le bas niveau*/
     private Connections llConnection=Connections.TO_TEENSY;
 
+    /**
+     * Permet d'envoyer un ordre au bas niveau
+     * @param order ordre quelconque
+     */
     public void useActuator(Order order)
     {
         llConnection.send(order.getOrderStr());
     }
 
+    /**
+     * On envoit au bas niveau comme ordre d'avancer d'une certaine distance
+     * @param distance distance dont on avance
+     */
     public void moveLenghtwise(double distance){
         int d = (int)Math.round(distance);
         llConnection.send(MotionOrder.MOVE_LENTGHWISE,String.format(Locale.US,"%d", d));
     }
 
+    /**
+     * On envoit au bas niveau comme ordre de tourner
+     * @param angle  angle aveclequel on veut tourner
+     */
     public void turn(double angle)
     {
         llConnection.send(MotionOrder.TURN, String.format(Locale.US,"%.3f",angle));
     }
 
+    /**
+     * On envoit au bas niveau comme ordre de s'arrêter
+     */
     public void immobilise(){
         llConnection.send(MotionOrder.STOP);
     }
 
-
+    /**
+     * On dit au bas niveau la vitesse de translation qu'on veut
+     * @param speed la vitesse qu'on veut
+     */
     public void setTranslationnalSpeed(float speed)
     {
-        llConnection.send(SpeedOrder.SET_TRANSLATION_SPEED);
+        llConnection.send(SpeedOrder.SET_TRANSLATION_SPEED,String.format(Locale.US,"%.3f",speed));
     }
 
-
+    /**
+     * On dit au abs niveau la vitesse de rotation qu'on veut
+     * @param rotationSpeed la vitesse de rotation qu'on veut
+     */
     public void setRotationnalSpeed(double rotationSpeed)
     {
         llConnection.send(SpeedOrder.SET_ROTATIONNAL_SPEED, String.format(Locale.US, "%.3f", (float)rotationSpeed));
     }
 
-    public void setPositionAndOrientation(int x, int y, double orientation)
-    {
-        llConnection.send(PositionAndOrientationOrder.SET_POSITION , String.format("%d",x), String.format("%d",y), String.format("%.3f",orientation));
+    /**
+     * Modifie les vitesses de translation et de rotation du robot
+     * @param speed enum qui contient les deux vitesses
+     */
+    public void setBothSpeed(Speed speed){
+        this.setTranslationnalSpeed(speed.getTranslationSpeed());
+        this.setRotationnalSpeed(speed.getRotationSpeed());
     }
 
-    public void setOrientation(float orientation)
+    /**
+     * On dit au bas niveau dans quelle position on est et quelle orientation on adopte
+     * @param pos position du robot
+     * @param orientation orientation du robot
+     */
+    public void setPositionAndOrientation(Vec2 pos, double orientation)
+    {
+        int x=pos.getX();
+        int y=pos.getY();
+        llConnection.send(PositionAndOrientationOrder.SET_POSITION_AND_ORIENTATION , String.format("%d",x), String.format("%d",y), String.format(Locale.US,"%.3f",orientation));
+    }
+
+    /**
+     * On dit au bas niveau quelle orientation le robot a
+     * @param orientation orientation du robot
+     */
+    public void setOrientation(double orientation)
     {
         llConnection.send( PositionAndOrientationOrder.SET_ORIENTATION,String.format(Locale.US,"%.3f",orientation));
     }
 
+    /**
+     * Permet de configurer un hook
+     * @param id id du hook
+     * @param posTrigger position où on active le hook
+     * @param tolerency tolérance qu'on veut sur la position
+     * @param orientation l'orientation du robot où on active le hook
+     * @param tolerencyAngle l'angle de tolérance sur l'orientation
+     * @param order l'ordre à exécuter pendant que le robot bouge
+     */
     public void configureHook(int id, Vec2 posTrigger, int tolerency, double orientation, double tolerencyAngle, String order){
-        llConnection.send(HooksOrder.INITIALISE_HOOK, String.format("%d", id), posTrigger.toStringEth(), String.format("%d", tolerency),String.format("%f",orientation), String.format("%f",tolerencyAngle),order);
+        llConnection.send(HooksOrder.INITIALISE_HOOK, String.format("%d", id), posTrigger.toStringEth(), String.format("%d", tolerency),String.format(Locale.US,"%.3f",orientation), String.format(Locale.US,"%.3f",tolerencyAngle),order);
     }
 
     /**
      * Active un hook
-     * @param hook
+     * @param hook hook à activer
      */
     public void enableHook(HookNames hook){
         llConnection.send( HooksOrder.ENABLE_HOOK, String.format("%d", hook.getId()));
     }
 
     /**
-     * Desactive le hook
+     * Desactive un hook
      * @param hook
      */
     public void disableHook(HookNames hook){
@@ -88,4 +141,6 @@ public class OrderWrapper implements Service {
     public void setConnection(Connections connection) {
         this.llConnection = connection;
     }
+
+
 }
