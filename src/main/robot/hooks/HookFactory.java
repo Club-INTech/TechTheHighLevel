@@ -4,10 +4,12 @@ package robot.hooks;
 
 
 import robot.OrdersEnums.ActionsOrder;
+import robot.OrdersEnums.Order;
 import robot.OrdersEnums.Speed;
 import robot.SymmetrizedActuatorOrderMap;
 import pfg.config.Config;
 import robot.OrderWrapper;
+import utils.ConfigData;
 import utils.Log;
 import utils.container.Service;
 
@@ -19,26 +21,20 @@ import java.util.ArrayList;
  */
 public class HookFactory implements Service {
 
-    /** Log */
-    private Log log;
-
     /** OrderWrapper */
     private OrderWrapper orderWrapper;
 
 
-    /**symetry*/
-    private boolean symetry;
-
     /** Liste des Hooks */
     private ArrayList<HookNames> configuredHook = new ArrayList<HookNames>();
 
-    /** Map pour la symétrie des actionneurs */
-    private SymmetrizedActuatorOrderMap mActuatorCorrespondenceMap = new SymmetrizedActuatorOrderMap();
 
-    /** Constructeur */
-    public HookFactory (OrderWrapper orderWrapper, Config config, Log log){
+
+     /**
+     *Constructeur en privé car déjà instancié par le container
+     */
+    private HookFactory (OrderWrapper orderWrapper){
         this.orderWrapper=orderWrapper;
-        updateConfig(config);
     }
 
     /**
@@ -46,35 +42,17 @@ public class HookFactory implements Service {
      */
     public void configureHook(HookNames... hooks) {
 
-        String sentOrder;
+        Order sentOrder;
         for(HookNames hook:hooks){
 
-
-            if (hook.getOrder() instanceof Speed){
-                sentOrder = "ctrv " + ((Speed) hook.getOrder()).translationSpeed + " " + (float) ((Speed) hook.getOrder()).rotationSpeed;
-            }
-            else if (hook.getOrder() instanceof ActionsOrder){
-                if (symetry) {
-                    sentOrder = mActuatorCorrespondenceMap.getSymmetrizedActuatorOrder((ActionsOrder) hook.getOrder()).getOrderStr();
-                }
-                else {
-                    sentOrder = hook.getOrder().getOrderStr();
-                }
-            }else{
-                log.critical("Mauvaise enum, la méthode doit implémenter Order");
-                break;
-            }
+            sentOrder=hook.getOrder();
 
             if (configuredHook.contains(hook)){
-                log.warning("Hook déjà configuré : on ne fait rien");
+                Log.HOOK.warning("Hook déjà configuré : on ne fait rien");
                 break;
             }
-            if(symetry){
-                hook.setPosition(hook.getPosition().symetrize());
-                log.debug("la position envoyée au bas niveau pour le hook"+hook.getPosition());
-            }
             orderWrapper.configureHook(hook.getId(), hook.getPosition(), hook.getTolerency(), hook.getOrientation(),hook.getTolerencyAngle(),sentOrder);
-            log.debug("Hook " + hook.getDeclaringClass() + " : Configuré");
+            Log.HOOK.debug("Hook " + hook.getDeclaringClass() + " : Configuré");
             configuredHook.add(hook);
         }
     }
@@ -86,11 +64,11 @@ public class HookFactory implements Service {
     public void enableHook(HookNames... hooks){
         for(HookNames hook:hooks){
             if (!configuredHook.contains(hook)){
-                log.warning("Hook " + hook.getDeclaringClass().getName() + " : Non configuré ! Ne peut etre activé");
+                Log.HOOK.warning("Hook " + hook.getDeclaringClass().getName() + " : Non configuré ! Ne peut etre activé");
                 break;
             }
             orderWrapper.enableHook(hook);
-            log.debug("Hook " + hook.getDeclaringClass().getName() + " : Activé");
+            Log.HOOK.debug("Hook " + hook.getDeclaringClass().getName() + " : Activé");
         }
     }
 
@@ -101,11 +79,11 @@ public class HookFactory implements Service {
     public void disableHook(HookNames... hooks){
         for(HookNames hook:hooks){
             if(!configuredHook.contains(hook)){
-                log.warning("Hook " + hook.getDeclaringClass().getName() + " : Non configuré ! Ne peut etre désactivé");
+                Log.HOOK.warning("Hook " + hook.getDeclaringClass().getName() + " : Non configuré ! Ne peut etre désactivé");
                 break;
             }
             orderWrapper.disableHook(hook);
-            log.debug("Hook " + hook.getDeclaringClass().getName() + " : Désactivé");
+            Log.HOOK.debug("Hook " + hook.getDeclaringClass().getName() + " : Désactivé");
         }
     }
 
@@ -115,7 +93,7 @@ public class HookFactory implements Service {
     public void enableConfiguredHook(){
         for(HookNames hook:configuredHook){
             orderWrapper.enableHook(hook);
-            log.debug("Hook " + hook.getDeclaringClass().getName() + " : Activé");
+            Log.HOOK.debug("Hook " + hook.getDeclaringClass().getName() + " : Activé");
         }
     }
 
@@ -125,12 +103,13 @@ public class HookFactory implements Service {
     public void disableConfiguredHook(){
         for(HookNames hook:configuredHook){
             orderWrapper.disableHook(hook);
-            log.debug("Hook " + hook.getDeclaringClass().getName() + " : Désactivé");
+            Log.HOOK.debug("Hook " + hook.getDeclaringClass().getName() + " : Désactivé");
         }
     }
 
     @Override
     public void updateConfig(Config config) {
+
     }
 }
 
