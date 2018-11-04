@@ -12,6 +12,8 @@ public enum ActionsOrder implements Order {
     FermePorteArriere("flpAr"),
     ActiveLaPompe("alp"),
     DesactiveLaPompe("dlp"),
+    FermePorteDroite("flpd"),
+    FermePorteGauche("flpg"),
 
 
     ;
