@@ -17,7 +17,8 @@ public enum Log
     COMMUNICATION(true),
     DATA_HANDLER(true),
     LOCOMOTION(true),
-    STRATEGY(true)
+    STRATEGY(true),
+    HOOK(true),
     ;
 
     /**
