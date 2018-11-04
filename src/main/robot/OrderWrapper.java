@@ -3,6 +3,8 @@ package robot;
 import pfg.config.Config;
 import robot.OrdersEnums.*;
 import robot.hooks.HookNames;
+import utils.ConfigData;
+import utils.Log;
 import utils.communication.Connections;
 import utils.container.Service;
 import utils.math.Vec2;
@@ -14,8 +16,23 @@ import java.util.Locale;
  */
 public class OrderWrapper implements Service {
 
+    /**
+     * Symétrie
+     */
+    private boolean symetry;
+
     /**On utitise comme connexion par défaut le bas niveau*/
     private Connections llConnection=Connections.TO_TEENSY;
+
+    private SymmetrizedActuatorOrderMap symmetrizedActuatorOrderMap;
+
+    /**
+     * Conctructeur en privé car déjà instancié par le container, pour éviter que qqn l'instancie
+     */
+    private OrderWrapper(SymmetrizedActuatorOrderMap symmetrizedActuatorOrderMap){
+        this.symmetrizedActuatorOrderMap=symmetrizedActuatorOrderMap;
+
+    }
 
     /**
      * Permet d'envoyer un ordre au bas niveau
@@ -23,6 +40,13 @@ public class OrderWrapper implements Service {
      */
     public void useActuator(Order order)
     {
+        Order symetrisedOrder;
+        if(symetry && order instanceof ActionsOrder){
+            symetrisedOrder=this.symmetrizedActuatorOrderMap.getSymmetrizedActuatorOrder((ActionsOrder) order);
+            if(symetrisedOrder != null){
+                order=symetrisedOrder;
+            }
+        }
         llConnection.send(order.getOrderStr());
     }
 
@@ -41,6 +65,9 @@ public class OrderWrapper implements Service {
      */
     public void turn(double angle)
     {
+        if(symetry){
+            angle=(Math.PI - angle)%(2*Math.PI);
+        }
         llConnection.send(MotionOrder.TURN, String.format(Locale.US,"%.3f",angle));
     }
 
@@ -87,6 +114,10 @@ public class OrderWrapper implements Service {
     {
         int x=pos.getX();
         int y=pos.getY();
+        if(symetry){
+            x=-x;
+            orientation=(Math.PI - orientation)%(2*Math.PI);
+        }
         llConnection.send(PositionAndOrientationOrder.SET_POSITION_AND_ORIENTATION , String.format("%d",x), String.format("%d",y), String.format(Locale.US,"%.3f",orientation));
     }
 
@@ -96,6 +127,9 @@ public class OrderWrapper implements Service {
      */
     public void setOrientation(double orientation)
     {
+        if(symetry){
+            orientation=(Math.PI - orientation)%(2*Math.PI);
+        }
         llConnection.send( PositionAndOrientationOrder.SET_ORIENTATION,String.format(Locale.US,"%.3f",orientation));
     }
 
@@ -108,8 +142,22 @@ public class OrderWrapper implements Service {
      * @param tolerencyAngle l'angle de tolérance sur l'orientation
      * @param order l'ordre à exécuter pendant que le robot bouge
      */
-    public void configureHook(int id, Vec2 posTrigger, int tolerency, double orientation, double tolerencyAngle, String order){
-        llConnection.send(HooksOrder.INITIALISE_HOOK, String.format("%d", id), posTrigger.toStringEth(), String.format("%d", tolerency),String.format(Locale.US,"%.3f",orientation), String.format(Locale.US,"%.3f",tolerencyAngle),order);
+    public void configureHook(int id, Vec2 posTrigger, int tolerency, double orientation, double tolerencyAngle, Order order){
+        Order symetrisedOrder;
+        if(symetry){
+            posTrigger=posTrigger.symetrize();
+            Log.HOOK.debug("la position envoyée au bas niveau pour le hook"+posTrigger.toString());
+            orientation=(Math.PI - orientation)%(2*Math.PI);
+            Log.HOOK.debug("l'orientation envoyée au bas niveau pour le hook"+orientation);
+            if( order instanceof ActionsOrder) {
+                symetrisedOrder = symmetrizedActuatorOrderMap.getSymmetrizedActuatorOrder((ActionsOrder) order);
+                if(symetrisedOrder !=null){
+                    order=symetrisedOrder;
+                }
+            }
+
+        }
+        llConnection.send(HooksOrder.INITIALISE_HOOK, String.format("%d", id), posTrigger.toStringEth(), String.format("%d", tolerency),String.format(Locale.US,"%.3f",orientation), String.format(Locale.US,"%.3f",tolerencyAngle),order.getOrderStr());
     }
 
     /**
@@ -131,7 +179,8 @@ public class OrderWrapper implements Service {
 
     @Override
     public void updateConfig(Config config) {
-
+        //On est du côté violet par défaut , le HL pense en violet
+        symetry=config.getString(ConfigData.COULEUR).equals("jaune");
     }
 
     /**
