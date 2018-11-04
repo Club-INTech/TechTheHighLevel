@@ -23,17 +23,11 @@ public enum ConfigData implements ConfigInfo
     SAVE_LOG(true),
 
     /** Paramètres match !*/
-    COULEUR("vert"),
-    C_DES_FOUS_EN_FACE(false),
-    TAS_BASE_PRIS(false),
-    TAS_CHATEAU_PRIS(false),
-    TAS_STATION_EPURATION_PRIS(false),
-    TAS_BASE_ENNEMI_PRIS(false),
-    TAS_CHATEAU_ENNEMI_PRIS(false),
-    TAS_STATION_EPURATION_ENNEMI_PRIS(false),
-    INDICE_PATTERN_SIMULATION(0),
+    COULEUR("violet"),
+
 
     /** Dimensions du main.robot */
+    //TODO : adapter
     ROBOT_LENGTH(300),
     ROBOT_WIDTH(300),
     ROBOT_RAY(212),
@@ -44,15 +38,12 @@ public enum ConfigData implements ConfigInfo
     ROBOT_LINEAR_SPEED(840),        // mm/s
     ROBOT_ANGULAR_SPEED(Math.PI),   // rad/s
 
-    /**Les cubes*/
-    LONGUEUR_CUBE(58),
 
     /**Longueur bras*/
+    //TODO : adapter
     LONGUEUR_BRAS_AVANT(317),
     LONGUEUR_BRAS_ARRIERE(333),
 
-    /**Dimension portes*/
-    DIMENSION_PORTES(87),
 
     /** Paramètres obstacles */
     PEREMP_OBST(2000),
@@ -83,50 +74,16 @@ public enum ConfigData implements ConfigInfo
     DISTANCE_TO_DISENGAGE(50),
     MAX_RETRIES_IF_BLOCKED(1),
 
-    /** Paramètres pathfinding */
-    COUT_FIXE(10),
-
     /** Paramètre simulation */
     SIMULATION(false),
 
     /** Paramètre d'attente du jumper */
     ATTENTE_JUMPER(true),
 
-    /** Paramètre permettant de savoir quel matchscript on exception */
-    MATCHSCRIPT_TO_EXECUTE(0),
-
-    /** Paramètres reconnaissance de couleurs */
-    LOCALIZATION_AUTOMATED(true),
-    FIRST_COLOR("null"),
-    SECOND_COLOR("null"),
-    THIRD_COLOR("null"),
-    IMAGE_WIDTH(1280),
-    IMAGE_HEIGHT(720),
-
-    /**Paramètres couleurs*/
-    rorange(183),
-    gorange(107),
-    borange(71),
-    rjaune(184),
-    gjaune(177),
-    bjaune(37),
-    rbleu(50),
-    gbleu(84),
-    bbleu(112),
-    rnoir(13),
-    gnoir(24),
-    bnoir(20),
-    rvert(43),
-    gvert(120),
-    bvert(68),
-    saturationPreModifier(1.8),
-    brightnessPreModifier(1.3),
-    saturationModifierLightingUp(1.3),
-    brightnessModifierLightingUp(1.1),
 
     /**Paramètres scripts*/
-    DISTANCE_INTERRUPTEUR(50),
-    DISTANCE_PENETRATION_ZONE_DEPOSE_CUBES(70),
+    //TODO : Compléter
+    // Exemple : DISTANCE_INTERRUPTEUR(50),
 
     ;
     private Object defaultValue;

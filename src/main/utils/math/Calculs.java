@@ -7,7 +7,7 @@ public class Calculs {
 
     /**Cette méthode retourne le nombre congru à un nombre modulo un module
      * @param number nombre dont on veut calculer le nombre qui lui est congru
-     * @param module le modole*/
+     * @param module le module*/
 
     public static double modulo(double number, double module){
         number = number%(2*module);

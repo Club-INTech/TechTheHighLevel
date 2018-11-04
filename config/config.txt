@@ -1,4 +1,5 @@
 [Common]
+
 # PARAMETRES POUR LOG
 PRINT_LOG                           = true
 SAVE_LOG                            = true
@@ -6,6 +7,10 @@ SAVE_LOG                            = true
 # DIMENSIONS DE L'ADVERSAIRE
 ENNEMY_RAY                          = 220
 
+#Couleur
+COULEUR                             =violet
+
+#________________________________________________________________________________________________________________________
 
 [Master]
 MASTER                              = true
@@ -14,6 +19,7 @@ MASTER                              = true
 ROBOT_RAY                           = 240
 BUDDY_RAY                           = 150
 
+#________________________________________________________________________________________________________________________
 
 [Slave]
 MASTER                              = false
@@ -21,3 +27,5 @@ MASTER                              = false
 # DIMENSIONS DES ROBOTS
 ROBOT_RAY                           = 150
 BUDDY_RAY                           = 240
+
+
