@@ -31,7 +31,9 @@ public class Circle extends Shape {
      */
     public Circle(Vec2 centre,float radius) {
         super(centre);
-        this.radius=radius;
+        this.radius = radius;
+        this.angleStart = -Math.PI;
+        this.angleEnd = Math.PI - 0.00001;
     }
 
     /**
@@ -43,9 +45,9 @@ public class Circle extends Shape {
      */
     public Circle(Vec2 centre,float radius,double angleStart, double angleEnd) {
         super(centre);
-        this.radius=radius;
-        this.angleStart=angleStart;
-        this.angleEnd=angleEnd;
+        this.radius = radius;
+        this.angleStart = Calculs.modulo(angleStart, 2*Math.PI);
+        this.angleEnd = Calculs.modulo(angleEnd, 2*Math.PI);
     }
 
     /**
@@ -83,11 +85,11 @@ public class Circle extends Shape {
      * @return  true si les cercles s'intersectent
      */
     public boolean intersectsWithCircle(Circle circle){
-        float r1=this.radius;
-        float r2=circle.getRadius();
+        float r1 = this.radius;
+        float r2 = circle.getRadius();
         //distance entre les deux centres
-        double d=this.getCenter().distanceTo(circle.getCenter());
-        return d>=Math.abs(r2-r1) && d<=Math.abs(r2+r1);
+        double d = this.getCenter().distanceTo(circle.getCenter());
+        return d >= Math.abs(r2-r1) && d <= Math.abs(r2+r1);
     }
 
     /**
@@ -98,14 +100,10 @@ public class Circle extends Shape {
      * @return  le point du cercle (ou de l'arc) le plus proche du point donné en paramètre
      */
     public Vec2 closestPointToCircle(Vec2 point){
-        if (this.isInShape(point)) {
-            return point;
-        }
         Vec2 vec = point.minusVector(this.getCenter());
 
         // Si la direction donnée par le vecteur point qui est hors du cercle intersecte l'arc de cercle, on a le point avec les coordonnées polaires
-        if (vec.getA() >= this.getAngleStart() && vec.getA() <= this.getAngleEnd())
-        {
+        if (vec.getA() >= this.getAngleStart() && vec.getA() <= this.getAngleEnd()) {
             vec.setR(this.getRadius());
             return this.getCenter().plusVector(vec);
         }
@@ -117,8 +115,7 @@ public class Circle extends Shape {
 
             if (this.getCenter().plusVector(circleCenterStart).distanceTo(point) >= this.getCenter().plusVector(circleCenterEnd).distanceTo(point)){
                 return circleCenterEnd.plusVector(this.getCenter());
-            }
-            else{
+            } else {
                 return circleCenterStart.plusVector(this.getCenter());
             }
         }

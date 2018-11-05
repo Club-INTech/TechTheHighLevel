@@ -1,6 +1,6 @@
 TODO actuel du HL
 
-1. Maths : Changer l'implémentation des arcs de cercle, en stockant les intervalles d'angles (angles en -pi et pi)
+1. Maths : Corriger                                                                 OK
 2. Communication & Connection : Séparer Connection/Communicaton/Listener
 3. Data : implémenter les méthodes Lidar dans la table et Graphe
 4. Data : implémenter les controlers sur le Listener

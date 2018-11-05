@@ -6,20 +6,6 @@ import utils.math.*;
 
 public class Test_Math {
 
-    private Circle circle;
-
-    private Rectangle rectangle;
-
-    private Segment segment;
-
-    private Shape shape;
-
-    private Vec2 vec2;
-
-    private VectCartesian vectCartesian;
-
-    private VectPolar vectPolar;
-
     @Test
     public void vec2Init() {
         Vec2 vectCartesian = new VectCartesian(50, 50);
@@ -109,20 +95,20 @@ public class Test_Math {
 
     @Test
     public void segmentDistanceTo() {
-        segment = new Segment(new VectCartesian(-157, 42), new VectCartesian(68, 87));
+        Segment segment = new Segment(new VectCartesian(-157, 42), new VectCartesian(68, 87));
         Vec2 vec = new VectCartesian(58, -12);
         Assert.assertEquals(95, segment.distanceTo(vec), 0.5);
     }
 
     @Test
     public void segmentVecteurDirecteur() {
-        segment = new Segment(new VectCartesian(12, 58), new VectCartesian(98, -47));
+        Segment segment = new Segment(new VectCartesian(12, 58), new VectCartesian(98, -47));
         Assert.assertEquals(new VectCartesian(-86, 105), segment.vecteurDirecteur());
     }
 
     @Test
     public void segmentEquals() {
-        segment = new Segment(new VectCartesian(89, -457), new VectCartesian(-42, 584));
+        Segment segment = new Segment(new VectCartesian(89, -457), new VectCartesian(-42, 584));
         Segment segment1 = new Segment(new VectCartesian(-42, 584), new VectCartesian(89, -457));
         Segment segment2 = new Segment(new VectCartesian(-42, 547), new VectCartesian(98, 512));
 
@@ -133,14 +119,14 @@ public class Test_Math {
 
     @Test
     public void circleIntersect() {
-        circle = new Circle(new VectCartesian(2,5),10);
-        segment = new Segment(new VectCartesian(5,10), new VectCartesian(4,5));
+        Circle circle = new Circle(new VectCartesian(2,5),10);
+        Segment segment = new Segment(new VectCartesian(5,10), new VectCartesian(4,5));
         Assert.assertTrue(circle.intersect(segment));
     }
 
     @Test
     public void circleIsInShape() {
-        circle = new Circle(new VectCartesian(58, -14),14);
+        Circle circle = new Circle(new VectCartesian(58, -14),14);
         Vec2 vec1 = new VectCartesian(54, -8);
         Vec2 vec2 = new VectCartesian(58, 0);
         Vec2 vec3 = new VectCartesian(52, 145);
@@ -152,14 +138,14 @@ public class Test_Math {
 
     @Test
     public void circleIntersectsWithCircle() {
-        circle = new Circle(new VectCartesian(0,0),5);
+        Circle circle = new Circle(new VectCartesian(0,0),5);
         Circle circle2 = new Circle(new VectCartesian(0,0),5);
         Assert.assertTrue(circle2.intersectsWithCircle(circle));
     }
 
     @Test
     public void circleClosestPointAroundCircle() {
-        circle = new Circle(new VectCartesian(50, 20), 50);
+        Circle circle = new Circle(new VectCartesian(50, 20), 50);
         Vec2 vec1 = new VectCartesian(150, 120);
         Vec2 vec2 = new VectCartesian(55, 25);
 
@@ -176,7 +162,7 @@ public class Test_Math {
 
     @Test
     public void circleEquals() {
-        circle = new Circle(new VectCartesian(58, -58), 64);
+        Circle circle = new Circle(new VectCartesian(58, -58), 64);
         Circle circle1 = new Circle(new VectPolar(Math.sqrt(58 * 58 * 2), -Math.PI/4), 64);
         Circle circle2 = new Circle(new VectPolar(Math.sqrt(58 * 58 * 2), -Math.PI/4), 24);
 
@@ -187,8 +173,8 @@ public class Test_Math {
 
     @Test
     public void rectangleIntersect() {
-        rectangle = new Rectangle(new VectCartesian(0,0),50,30);
-        segment = new Segment(new VectCartesian(11,0), new VectCartesian(72,91));
+        Rectangle rectangle = new Rectangle(new VectCartesian(0,0),50,30);
+        Segment segment = new Segment(new VectCartesian(11,0), new VectCartesian(72,91));
         Segment segment1 = new Segment(new VectCartesian(21, 16), new VectCartesian(58, 97));
 
         Assert.assertTrue(rectangle.intersect(segment));
@@ -197,7 +183,7 @@ public class Test_Math {
 
     @Test
     public void rectangleIsInShape() {
-        rectangle = new Rectangle(new VectCartesian(20, 80), 40, 60);
+        Rectangle rectangle = new Rectangle(new VectCartesian(20, 80), 40, 60);
         Vec2 vec1 = new VectCartesian(32, 68);
         Vec2 vec2 = new VectCartesian(28, 124);
 
@@ -207,7 +193,7 @@ public class Test_Math {
 
     @Test
     public void rectangleGetDiagonalsAndPoints() {
-        rectangle = new Rectangle(new VectCartesian(40, 60), 60, 30);
+        Rectangle rectangle = new Rectangle(new VectCartesian(40, 60), 60, 30);
 
         Assert.assertEquals(new Segment(new VectCartesian(10, 75), new VectCartesian(70, 45)), rectangle.getDiagonals().get(0));
         Assert.assertEquals(new Segment(new VectCartesian(70, 75), new VectCartesian(10, 45)), rectangle.getDiagonals().get(1));
@@ -219,7 +205,7 @@ public class Test_Math {
 
     @Test
     public void rectangleEquals() {
-        rectangle = new Rectangle(new VectCartesian(92, 57), 54, 69);
+        Rectangle rectangle = new Rectangle(new VectCartesian(92, 57), 54, 69);
         Rectangle rectangle1 = new Rectangle(new VectCartesian(92, 57), 54, 69);
         Rectangle rectangle2 = new Rectangle(new VectCartesian(92, 57), 52, 71);
 
