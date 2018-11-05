@@ -34,11 +34,6 @@ public class Test_OrderWrapper {
     private static String  m;
     /**config*/
     private Config config;
-    /**Symetry*/
-    private boolean symetry=true;
-    /**
-     * Etablir ce dont on a besoin pour faire les tests
-     */
     @Before
     public void setUp(){
         container=Container.getInstance("Master");
@@ -61,10 +56,6 @@ public class Test_OrderWrapper {
                 m=header+message;
             }
         };
-        if(symetry) {
-            config.override(ConfigData.COULEUR, "jaune");
-            orderWrapper.updateConfig(config);
-        }
         this.connectionsManager.startAllConnections(Connections.TO_LOCALHOST_TEST,Connections.LOCALHOST_TEST_SERVER);
         orderWrapper.setConnection(Connections.TO_LOCALHOST_TEST);
     }
@@ -78,7 +69,7 @@ public class Test_OrderWrapper {
         orderWrapper.immobilise();
         String a =MotionOrder.STOP.getOrderStr();
         Thread.sleep(1000);
-        Assert.assertTrue(a.equals(m));
+        Assert.assertEquals(a,m);
     }
 
     /**
@@ -90,7 +81,7 @@ public class Test_OrderWrapper {
         orderWrapper.useActuator(ActionsOrder.DesactiveLaPompe);
         String a =ActionsOrder.DesactiveLaPompe.getOrderStr();
         Thread.sleep(1000);
-        Assert.assertTrue(a.equals(m));
+        Assert.assertEquals(a,m);
 
     }
 
@@ -103,7 +94,7 @@ public class Test_OrderWrapper {
         orderWrapper.moveLenghtwise(15);
         String a = MotionOrder.MOVE_LENTGHWISE.getOrderStr() + " " + 15;
         Thread.sleep(1000);
-        Assert.assertTrue(a.equals(m));
+        Assert.assertEquals(a,m);
 
     }
 
@@ -115,29 +106,12 @@ public class Test_OrderWrapper {
     @Test
     public void turnTest() throws Exception
     {
-        if(!symetry) {
             orderWrapper.turn(Math.PI);
             String a = MotionOrder.TURN.getOrderStr() + " " + new StringBuilder(String.format(Locale.US, "%.3f", Math.PI));
             Thread.sleep(1000);
-            Assert.assertTrue(a.equals(m));
-        }
+            Assert.assertEquals(a,m);
     }
 
-    /**
-     * Test pour tester le turn avec la symétrie
-     * @throws Exception
-     */
-    @Test
-    public void turnTestWithSymetry() throws Exception {
-        if(symetry) {
-            orderWrapper.turn(Math.PI / 3);
-            String a = String.format(Locale.US, "%s %.3f", MotionOrder.TURN.getOrderStr(), 2 * Math.PI / 3);
-            Thread.sleep(1000);
-            Assert.assertEquals(a, m);
-        }
-
-
-    }
 
     /**
      * test pour set les translations et les rotations
@@ -148,7 +122,7 @@ public class Test_OrderWrapper {
         orderWrapper.setTranslationnalSpeed(2);
         String a= SpeedOrder.SET_TRANSLATION_SPEED.getOrderStr() +" "+ new StringBuilder(String.format(Locale.US,"%.3f",2.0));
         Thread.sleep(1000);
-        Assert.assertTrue(a.equals(m));
+        Assert.assertEquals(a,m);
     }
 
     /**
@@ -160,7 +134,7 @@ public class Test_OrderWrapper {
         orderWrapper.setRotationnalSpeed(3);
         String a =SpeedOrder.SET_ROTATIONNAL_SPEED.getOrderStr()+" "+ new StringBuilder(String.format(Locale.US,"%.3f",3.0));
         Thread.sleep(1000);
-        Assert.assertTrue(a.equals(m));
+        Assert.assertEquals(a,m);
     }
 
     /**
@@ -169,39 +143,24 @@ public class Test_OrderWrapper {
      */
     @Test
     public void setPositionAndOrientationTest() throws Exception {
-        if(!symetry) {
             orderWrapper.setPositionAndOrientation(new VectCartesian(2, 3), Math.PI / 2);
             String a = PositionAndOrientationOrder.SET_POSITION_AND_ORIENTATION.getOrderStr() + " " + new StringBuilder(String.format(Locale.US, "%d", 2)) + " " + new StringBuilder(String.format(Locale.US, "%d", 3)) + " " + new StringBuilder(String.format(Locale.US, "%.3f", Math.PI / 2));
             Thread.sleep(1000);
-            Assert.assertTrue(a.equals(m));
-        }
-    }
-
-    /**
-     * test pour set la position et l'orientation avec la symétrie
-     */
-    @Test
-    public void setPositionAndOrientationTestWithSymetry() throws Exception {
-        if(symetry) {
-            orderWrapper.setPositionAndOrientation(new VectCartesian(2, 3), Math.PI / 3);
-            String a = PositionAndOrientationOrder.SET_POSITION_AND_ORIENTATION.getOrderStr() + " " + new StringBuilder(String.format(Locale.US, "%d", -2)) + " " + new StringBuilder(String.format(Locale.US, "%d", 3)) + " " + new StringBuilder(String.format(Locale.US, "%.3f", 2 * Math.PI / 3));
-            Thread.sleep(1000);
-            Assert.assertEquals(a, m);
-        }
+            Assert.assertEquals(a,m);
 
     }
+
     /**
      * test pour set l'orientation
      * @throws Exception
      */
     @Test
     public void setOrientationTest() throws Exception {
-        if(!symetry) {
             orderWrapper.setOrientation(Math.PI);
             String a = PositionAndOrientationOrder.SET_ORIENTATION.getOrderStr() + " " + new StringBuilder(String.format(Locale.US, "%.3f", Math.PI));
             Thread.sleep(1000);
             Assert.assertEquals(a, m);
-        }
+
     }
 
 
@@ -211,27 +170,14 @@ public class Test_OrderWrapper {
      */
     @Test
     public void configureHookTest() throws Exception {
-        if(!symetry) {
             orderWrapper.configureHook(0, new VectCartesian(2, 3), 2, Math.PI, 2, ActionsOrder.FermePorteAvant);
             String a = HooksOrder.INITIALISE_HOOK.getOrderStr() + " " + 0 + " " + new StringBuilder(String.format(Locale.US, "%d", 2)) + " " + new StringBuilder(String.format(Locale.US, "%d", 3)) + " " + new StringBuilder(String.format(Locale.US, "%d", 2)) + " " + new StringBuilder(String.format(Locale.US, "%.3f", Math.PI)) + " " + new StringBuilder(String.format(Locale.US, "%.3f", 2.0) + " " + ActionsOrder.FermePorteAvant.getOrderStr());
             Thread.sleep(1000);
-            Assert.assertTrue(a.equals(m));
-        }
+            Assert.assertEquals(a,m);
+
     }
 
 
-    /**
-     * Test pour configurer les hooks en symétrie
-     */
-    @Test
-    public void configureHookTestWithSymetry() throws Exception {
-        if(symetry) {
-            orderWrapper.configureHook(0, new VectCartesian(2, 3), 2, Math.PI / 3, 2, ActionsOrder.FermePorteDroite);
-            String a = HooksOrder.INITIALISE_HOOK.getOrderStr() + " " + 0 + " " + new StringBuilder(String.format(Locale.US, "%d", -2)) + " " + new StringBuilder(String.format(Locale.US, "%d", 3)) + " " + new StringBuilder(String.format(Locale.US, "%d", 2)) + " " + new StringBuilder(String.format(Locale.US, "%.3f", 2 * Math.PI / 3)) + " " + new StringBuilder(String.format(Locale.US, "%.3f", 2.0) + " " + ActionsOrder.FermePorteGauche.getOrderStr());
-            Thread.sleep(1000);
-            Assert.assertEquals(a, m);
-        }
-    }
     /**
      *Test pour activer les hooks
      * @throws Exception
@@ -241,7 +187,7 @@ public class Test_OrderWrapper {
         orderWrapper.enableHook(HookNames.SPEED_DOWN);
         String a=HooksOrder.ENABLE_HOOK.getOrderStr() +" "+ HookNames.SPEED_DOWN.getId();
         Thread.sleep(1000);
-        Assert.assertTrue(a.equals(m));
+        Assert.assertEquals(a,m);
     }
 
     /**
@@ -253,7 +199,7 @@ public class Test_OrderWrapper {
         orderWrapper.disableHook(HookNames.SPEED_DOWN);
         String a=HooksOrder.DISABLE_HOOK.getOrderStr() +" "+ HookNames.SPEED_DOWN.getId();
         Thread.sleep(1000);
-        Assert.assertTrue(a.equals(m));
+        Assert.assertEquals(a,m);
     }
 
     /**
