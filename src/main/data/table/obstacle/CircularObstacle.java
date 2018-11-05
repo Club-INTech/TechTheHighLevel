@@ -9,8 +9,6 @@ public class CircularObstacle extends Obstacle {
     /** Cercle définissant l'obstacle */
     private Circle circle;
 
-
-
     /** Pour instancier un obstacle fixe
      *
      * @param circle
@@ -40,12 +38,12 @@ public class CircularObstacle extends Obstacle {
 
     @Override
     public boolean isInObstacle(Vec2 point) {
-        return this.circle.containsPoint(point);
+        return this.circle.isInShape(point);
     }
 
     @Override
     public boolean intersect(Segment segment) {
-        return this.circle.intersectsWithSegment(segment);
+        return this.circle.intersect(segment);
     }
 
     @Override

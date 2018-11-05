@@ -1,7 +1,5 @@
 package robot;
 
-
-import org.omg.PortableInterceptor.ACTIVE;
 import pfg.config.Config;
 import robot.OrdersEnums.ActionsOrder;
 import robot.OrdersEnums.Order;

@@ -22,7 +22,7 @@ public class Segment {
     /**
      * Longueur du segment
      */
-    private double lenght;
+    private double length;
 
     /**
      * Constructeur
@@ -32,7 +32,7 @@ public class Segment {
     public Segment(Vec2 pointA, Vec2 pointB) {
         this.pointA = pointA;
         this.pointB = pointB;
-        this.lenght = longueurSegment();
+        this.length = longueurSegment();
     }
 
     /**
@@ -96,11 +96,15 @@ public class Segment {
     }
     public void setPointA(Vec2 pointA) {
         this.pointA = pointA;
-        this.lenght = longueurSegment();
+        this.length = longueurSegment();
     }
     public void setPointB(Vec2 pointB) {
         this.pointB = pointB;
-        this.lenght = longueurSegment();
+        this.length = longueurSegment();
+    }
+
+    public double getLength() {
+        return length;
     }
 
     @Override

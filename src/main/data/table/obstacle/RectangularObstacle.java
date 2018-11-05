@@ -55,11 +55,13 @@ public class RectangularObstacle extends Obstacle {
     }
 
     @Override
-    public boolean isInObstacle(Vec2 point) { return rectangle.containsPoint(point);   }
+    public boolean isInObstacle(Vec2 point) {
+        return rectangle.isInShape(point);
+    }
 
     @Override
     public boolean intersect(Segment segment) {
-        return rectangle.intersectsWithSegment(segment);
+        return rectangle.intersect(segment);
     }
 
     @Override
