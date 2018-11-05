@@ -1,4 +1,4 @@
-package unit;
+package validation;
 
 import data.table.Table;
 import data.table.obstacle.CircularObstacle;

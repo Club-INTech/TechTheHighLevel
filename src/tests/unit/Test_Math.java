@@ -22,101 +22,179 @@ public class Test_Math {
 
     @Test
     public void vec2Init() {
+        Vec2 vectCartesian = new VectCartesian(50, 50);
+        Vec2 vectPolar = new VectPolar(100, -Math.PI/4);
 
+        Assert.assertEquals(Math.sqrt(5000), vectCartesian.getR(), 0.1);
+        Assert.assertEquals(Math.PI/4, vectCartesian.getA(), 0.001);
+        Assert.assertEquals(Math.round(Math.sqrt(5000)), vectPolar.getX());
+        Assert.assertEquals(-Math.round(Math.sqrt(5000)), vectPolar.getY());
     }
 
     @Test
     public void vec2PlusMinus() {
+        Vec2 vec1 = new VectCartesian(50, 60);
+        Vec2 vec2 = new VectCartesian(12, -32);
 
+        Assert.assertEquals(new VectCartesian(62, 28), vec1.plusVector(vec2));
+        Assert.assertEquals(new VectCartesian(38, 92), vec1.minusVector(vec2));
+
+        vec1.plus(vec2);
+        vec2.minus(vec1);
+
+        Assert.assertEquals(new VectCartesian(62, 28), vec1);
+        Assert.assertEquals(new VectCartesian(-50, -60), vec2);
     }
 
     @Test
     public void vec2DotCross() {
+        Vec2 vec1 = new VectCartesian(20, 20);
+        Vec2 vec2 = new VectCartesian(0, 50);
 
+        Assert.assertEquals((Math.sqrt(2)/2)*Math.sqrt(800)*50, vec1.dot(vec2), 1);
+        Assert.assertEquals((Math.sqrt(2)/2)*Math.sqrt(800)*50, vec2.dot(vec1), 1);
+        Assert.assertEquals((Math.sqrt(2)/2)*Math.sqrt(800)*50, vec1.crossProduct(vec2), 1);
+        Assert.assertEquals(-(Math.sqrt(2)/2)*Math.sqrt(800)*50, vec2.crossProduct(vec1), 1);
+
+        vec1 = new VectCartesian(23, 0);
+        Assert.assertEquals(0, vec1.dot(vec2));
+        Assert.assertEquals(0, vec2.dot(vec1));
+        Assert.assertEquals(23*50, vec1.crossProduct(vec2), 1);
+        Assert.assertEquals(-23*50, vec2.crossProduct(vec1), 1);
+
+        vec1 = new VectCartesian(0, 68);
+        Assert.assertEquals(68*50, vec1.dot(vec2));
+        Assert.assertEquals(68*50, vec2.dot(vec1));
+        Assert.assertEquals(0, vec1.crossProduct(vec2));
+        Assert.assertEquals(0, vec2.crossProduct(vec1));
     }
 
     @Test
     public void vec2DistanceTo() {
+        Vec2 vec1 = new VectCartesian(120, 100);
+        Vec2 vec2 = new VectCartesian(-58, -69);
 
+        Assert.assertEquals(Math.sqrt(178*178 + 169*169), vec1.distanceTo(vec2), 0.1);
+        Assert.assertEquals(Math.sqrt(178*178 + 169*169), vec2.distanceTo(vec1), 0.1);
     }
 
     @Test
     public void vec2Symetrize() {
+        Vec2 vec1 = new VectCartesian(157, -56);
 
+        Assert.assertEquals(new VectCartesian(-157, -56), vec1.symetrizeVector());
+        Assert.assertEquals(new VectCartesian(157, -56), vec1);
+
+        vec1.symetrize();
+        Assert.assertEquals(new VectCartesian(-157, -56), vec1);
     }
 
     @Test
     public void vec2Equals() {
+        Vec2 vec1 = new VectCartesian(67, 67);
+        Vec2 vec2 = new VectPolar(Math.sqrt(67*67*2), Math.PI/4);
+        Vec2 vec3 = new VectCartesian(-58, -1248);
 
+        Assert.assertTrue(vec1.equals(vec2));
+        Assert.assertFalse(vec1.equals(vec3));
+        Assert.assertFalse(vec2.equals(vec3));
     }
 
     @Test
     public void segmentIntersect() {
-        Segment segment1 = new Segment(new VectCartesian(0,0), new VectCartesian(0,2));
-        Segment segment2 = new Segment(new VectCartesian(0,0), new VectCartesian(0,4));
+        Segment segment1 = new Segment(new VectCartesian(40, 8), new VectCartesian(57, 247));
+        Segment segment2 = new Segment(new VectCartesian(-2, 0), new VectCartesian(140,152));
         Assert.assertTrue(segment1.intersect(segment2));
     }
 
     @Test
     public void segmentDistanceTo() {
-        segment = new Segment(new VectCartesian(0,0),new VectCartesian(0,5));
-        System.out.println(segment.distanceTo(new VectCartesian(3,3)));
+        segment = new Segment(new VectCartesian(-157, 42), new VectCartesian(68, 87));
+        Vec2 vec = new VectCartesian(58, -12);
+        Assert.assertEquals(95, segment.distanceTo(vec), 0.5);
     }
 
     @Test
     public void segmentVecteurDirecteur() {
-
+        segment = new Segment(new VectCartesian(12, 58), new VectCartesian(98, -47));
+        Assert.assertEquals(new VectCartesian(-86, 105), segment.vecteurDirecteur());
     }
 
     @Test
     public void segmentEquals() {
+        segment = new Segment(new VectCartesian(89, -457), new VectCartesian(-42, 584));
+        Segment segment1 = new Segment(new VectCartesian(-42, 584), new VectCartesian(89, -457));
+        Segment segment2 = new Segment(new VectCartesian(-42, 547), new VectCartesian(98, 512));
 
+        Assert.assertTrue(segment.equals(segment1));
+        Assert.assertFalse(segment.equals(segment2));
+        Assert.assertFalse(segment1.equals(segment2));
     }
 
     @Test
-    public void circleIntersect(){
-        circle=new Circle(new VectCartesian(2,5),10);
-        segment=new Segment(new VectCartesian(5,10), new VectCartesian(4,5));
+    public void circleIntersect() {
+        circle = new Circle(new VectCartesian(2,5),10);
+        segment = new Segment(new VectCartesian(5,10), new VectCartesian(4,5));
         Assert.assertTrue(circle.intersect(segment));
     }
 
-
     @Test
-    public void circleIsInShape(){
-        circle=new Circle(new VectCartesian(0,0),5);
-        Circle circle2=new Circle(new VectCartesian(1,0),85);
-        // Assert.assertTrue(circle2.containsCircle(circle));
+    public void circleIsInShape() {
+        circle = new Circle(new VectCartesian(58, -14),14);
+        Vec2 vec1 = new VectCartesian(54, -8);
+        Vec2 vec2 = new VectCartesian(58, 0);
+        Vec2 vec3 = new VectCartesian(52, 145);
+
+        Assert.assertTrue(circle.isInShape(vec1));
+        Assert.assertTrue(circle.isInShape(vec2));
+        Assert.assertFalse(circle.isInShape(vec3));
     }
 
     @Test
-    public void circleIntersectsWithCircle(){
-        circle=new Circle(new VectCartesian(0,0),5);
-        Circle circle2=new Circle(new VectCartesian(0,0),5);
+    public void circleIntersectsWithCircle() {
+        circle = new Circle(new VectCartesian(0,0),5);
+        Circle circle2 = new Circle(new VectCartesian(0,0),5);
         Assert.assertTrue(circle2.intersectsWithCircle(circle));
     }
 
     @Test
     public void circleClosestPointAroundCircle() {
+        circle = new Circle(new VectCartesian(50, 20), 50);
+        Vec2 vec1 = new VectCartesian(150, 120);
+        Vec2 vec2 = new VectCartesian(55, 25);
 
+        Assert.assertEquals(new VectCartesian((float) (50 + (Math.sqrt(2)/2) * 50), (float) (20 + (Math.sqrt(2)/2) * 50)), circle.closestPointToCircle(vec1));
+        Assert.assertEquals(new VectCartesian((float) (50 + (Math.sqrt(2)/2) * 50), (float) (20 + (Math.sqrt(2)/2) * 50)), circle.closestPointToCircle(vec2));
+
+        circle = new Circle(new VectCartesian(0, 50), 80, -Math.PI/4, Math.PI/2);
+        vec1 = new VectCartesian(-421, 96);
+        vec2 = new VectCartesian(-94, -214);
+
+        Assert.assertEquals(new VectCartesian(0, 130), circle.closestPointToCircle(vec1));
+        Assert.assertEquals(new VectCartesian((float) ((Math.sqrt(2)/2) * 80), 50 - (float) ((Math.sqrt(2)/2) * 80)), circle.closestPointToCircle(vec2));
     }
 
     @Test
     public void circleEquals() {
+        circle = new Circle(new VectCartesian(58, -58), 64);
+        Circle circle1 = new Circle(new VectPolar(Math.sqrt(58 * 58 * 2), -Math.PI/4), 64);
+        Circle circle2 = new Circle(new VectPolar(Math.sqrt(58 * 58 * 2), -Math.PI/4), 24);
 
+        Assert.assertTrue(circle.equals(circle1));
+        Assert.assertFalse(circle.equals(circle2));
+        Assert.assertFalse(circle1.equals(circle2));
     }
 
     @Test
-    public void rectangleIntersect(){
+    public void rectangleIntersect() {
         rectangle=new Rectangle(new VectCartesian(0,0),5,3);
         segment=new Segment(new VectCartesian(0,0),new VectCartesian(7,9));
         Assert.assertTrue(rectangle.intersect(segment));
     }
 
     @Test
-    public void rectangleIsInShape(){
-        rectangle=new Rectangle(new VectCartesian(0,0),5,3);
-        circle=new Circle(new VectCartesian(0,0),5);
-        //Assert.assertTrue(rectangle.containsCircle(circle));
+    public void rectangleIsInShape() {
+
     }
 
     @Test

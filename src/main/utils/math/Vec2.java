@@ -128,7 +128,7 @@ public abstract class Vec2 {
      * @param a facteur de multiplication
      * @return  un nouveau vecteur égale à a*this
      */
-    public Vec2 dotFloat(float a){
+    public Vec2 homothetie(float a){
         return new VectCartesian(Math.round(a*this.x), Math.round(a*this.y));
     }
 
