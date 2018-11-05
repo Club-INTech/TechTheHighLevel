@@ -2,51 +2,63 @@ package utils.math;
 
 /**
  * Il s'agit d'une classe abstraite définissant un cadre pour créer des formes
+ *
+ * @author yousra, rem
  */
-public abstract class Shape {
+public abstract class Shape implements Cloneable {
+    /**
+     * Centre de la forme
+     */
+    protected Vec2 center;
 
-    private Vec2 center;
-
-
-    /**Constructeur
-     * @param center centre */
+    /**
+     * Constructeur
+     * @param center    centre
+     */
     protected Shape(Vec2 center) {
         this.center =center;
     }
 
-
+    /**
+     * @param segment   segment
+     * @return  true s'il y'a intersection avec le segment
+     */
+    public abstract boolean intersect(Segment segment);
 
     /**
-     * Cette méthode retourne true s'il y'a intersection avec un segment
-     * @param segment
-     * @return
+     * @param point point
+     * @return  true si le point se trouve dans la forme
      */
-    public abstract boolean intersectsWithSegment(Segment segment);
+    public abstract boolean isInShape(Vec2 point);
 
     /**
-     * Cette méthode retourne true si le shape en question (cercle ou rectangle) contient un cercle
-     * @param circle
-     * @return
+     * @see Object#clone()
      */
-    public abstract boolean containsCircle(Circle circle);
+    @Override
+    public abstract Shape clone() throws CloneNotSupportedException;
 
     /**
-     * Cette méthode retourne la distance entre le centre du shape et le point en question
-     * @param vect vecteur en coordonneés
-     * @return
+     * @see Object#equals(Object)
      */
-    public double distanceToPoint(Vec2 vect){
-        return this.center.distanceTo(vect);
-    }
+    @Override
+    public abstract boolean equals(Object object);
+
+    /**
+     * @see Object#hashCode()
+     */
+    @Override
+    public abstract int hashCode();
+
+    /**
+     * @see Object#toString()
+     */
+    @Override
+    public abstract String toString();
 
     /**
      * Getter du centre
-     * @return
      */
     public Vec2 getCenter(){
         return this.center;
     }
-
-
-
 }

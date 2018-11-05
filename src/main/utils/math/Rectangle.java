@@ -1,103 +1,100 @@
 package utils.math;
 
+import java.util.ArrayList;
+
 /**
+ * Définit un rectangle
+ *
+ *           A______0______B
+ *           |             |
+ *           |             |
+ *          3|             |
+ *           |             |1
+ *   y       |             |
+ *   ^       |             |
+ *   |       |_____________|
+ *   |       D      2       C
+ *   |--> x
  * @see Shape
+ *
+ * @author yousra
  */
 public class Rectangle extends Shape {
 
-    /** longueur du rectangle*/
+    /**
+     * Longueur du rectangle (en x)
+     */
     private float length;
 
-    /**largeur du rectangle*/
+    /**
+     * Largeur du rectangle (en y)
+     */
     private float width;
 
+    /**
+     * Segments délimitant le rectangle
+     */
+    private ArrayList<Segment> segments;
 
-    /**@see Shape*/
+    /**
+     * Construit un rectangle
+     * @param centre    centre du rectangle
+     * @param length    longueur (x)
+     * @param width     largeur (y)
+     */
     public Rectangle(Vec2 centre, float length, float width) {
         super(centre);
-        this.length=length;
-        this.width=width;
+        this.length = length;
+        this.width = width;
+
+        Vec2 hg = center.plusVector(new VectCartesian(-length/2, width/2));
+        Vec2 hd = center.plusVector(new VectCartesian(length/2, width/2));
+        Vec2 bg = center.plusVector(new VectCartesian(-length/2, -width/2));
+        Vec2 bd = center.plusVector(new VectCartesian(length/2, -width/2));
+        this.segments = new ArrayList<>();
+
+        segments.add(new Segment(hd, hg));
+        segments.add(new Segment(hg, bg));
+        segments.add(new Segment(bg, bd));
+        segments.add(new Segment(bd, hd));
     }
 
-    /**Cette méthode retourne vrai s'il y'a intersection entre le segment et le rectangle:
+    /**
+     * Cette méthode retourne vrai s'il y'a intersection entre le segment et le rectangle:
      * Il y'a intersection entre un segment et un rectangle s'il y'a intersection entre ce segment
-     * et l'un des quatre segments du rectangle
-     * @see Shape*/
-    @Override
-    public boolean intersectsWithSegment(Segment segment) {
-
-        return this.getSegments()[0].intersectsWithSegment(segment)
-                || this.getSegments()[1].intersectsWithSegment(segment)
-                || this.getSegments()[2].intersectsWithSegment(segment)
-                || this.getSegments()[3].intersectsWithSegment(segment) ;
-    }
-
-    /**Cette méthode retourne vrai si le rectangle contient le cercle
-     * @param circle cercle*/
-    @Override
-    public boolean containsCircle(Circle circle) {
-        return circle.getRadius()<= width || circle.getRadius()<=length;
-    }
-
-
-    /**
-     * Cette méthode retroune true si notre rectange contient un point
-     * @param point
-     * @return
+     * et l'un des quatre segments du rectangle ou si le segment est dans le rectangle
+     * @see Shape
      */
-    public boolean containsPoint(Vec2 point){
-        return this.containsCircle(new Circle(new VectCartesian(point.getX(), point.getY()), 0));
+    @Override
+    public boolean intersect(Segment segment) {
+        for (Segment seg : segments) {
+            if (seg.intersect(segment)) {
+                return true;
+            }
+        }
+        return isInShape(segment.getPointA()) && isInShape(segment.getPointB());
     }
 
     /**
-     * Cette méthode retourne true s'il y'a intersection entre deux rectangles
-     * @param rectangle rectangle
-     * @return
+     * Cette méthode retourne true si notre rectangle contient un point
+     * @param point point
+     * @return      true si le rectangle contient un point
      */
-    public boolean intersectsWithRectangle(Rectangle rectangle){
-
-        return this.intersectsWithSegment(rectangle.getSegments()[0]) || this.intersectsWithSegment(rectangle.getSegments()[1]) || this.intersectsWithSegment(rectangle.getSegments()[2]) || this.intersectsWithSegment(rectangle.getSegments()[3]);
+    @Override
+    public boolean isInShape(Vec2 point){
+        return Math.abs(point.getX() - center.getX()) < this.length/2 &&
+                Math.abs(point.getY() - center.getY()) < this.width/2;
     }
 
     /**
      * Cette méthode retourne les diagonales d'un rectangle
-     * @return
+     * @return  les diagonales du rectangle
      */
-    public Segment[] getDiagonals(){
-        Vec2 pointA= new VectCartesian(Math.round(this.getCenter().getX() - width/2), Math.round(this.getCenter().getY() + length/2));
-        Vec2 pointB=new VectCartesian(Math.round(pointA.getX()+width),pointA.getY());
-        Vec2 pointC=new VectCartesian(pointB.getX(), Math.round(pointB.getY() - length));
-        Vec2 pointD=new VectCartesian(pointA.getX(), Math.round(pointA.getY() - length));
-        Segment[] segments=new Segment[2];
-        segments[0]=new Segment(pointA,pointC);
-        segments[1]=new Segment(pointB,pointD);
-        return segments;
-    }
-
-    /**
-     * Cette méthode retourne les segments d'un rectangle
-     *           A______0______B
-     *           |             |
-     *           |             |
-     *          3|             |
-     *           |             |1
-     *           |             |
-     *           |             |
-     *           |_____________|
-     *           D      2       C
-     * @return
-     */
-    public Segment[] getSegments(){
-        Vec2 pointA= new VectCartesian(Math.round(this.getCenter().getX() - width/2), Math.round(this.getCenter().getY() + length/2));
-        Vec2 pointB=new VectCartesian(Math.round(pointA.getX()+width),pointA.getY());
-        Vec2 pointC=new VectCartesian(pointB.getX(), Math.round(pointB.getY() - length));
-        Vec2 pointD=new VectCartesian(pointA.getX(), Math.round(pointA.getY() - length));
-        Segment[] segments=new Segment[4];
-        segments[0]= new Segment(pointA,pointB);
-        segments[1]=new Segment(pointB,pointC);
-        segments[2]=new Segment(pointC,pointD);
-        segments[3]=new Segment(pointD,pointA);
-        return segments;
+    public ArrayList<Segment> getDiagonals(){
+        ArrayList<Segment> diagonals = new ArrayList<>();
+        diagonals.add(new Segment(segments.get(0).getPointA(), segments.get(1).getPointB()));
+        diagonals.add(new Segment(segments.get(3).getPointA(), segments.get(0).getPointB()));
+        return diagonals;
     }
 
     /**
@@ -111,45 +108,15 @@ public class Rectangle extends Shape {
      *           |             |
      *           |_____________|
      *        (3) D              C (2)
-     * @return
+     * @return A B C D
      */
-    public Vec2[] getPoints(){
-        Vec2[] vec2=new Vec2[4];
-        vec2[0] = new VectCartesian(Math.round(this.getCenter().getX() - width/2), Math.round(this.getCenter().getY() + length/2));
-        vec2[1] =new VectCartesian(Math.round(this.getCenter().getX() + width/2),Math.round(this.getCenter().getY() + length/2));
-        vec2[2] =new VectCartesian(Math.round(this.getCenter().getX() + width/2), Math.round(this.getCenter().getY() - length/2));
-        vec2[3] =new VectCartesian(Math.round(this.getCenter().getX() - width/2), Math.round(this.getCenter().getY() - length/2 ));
-        return vec2;
-    }
-
-    /**
-     * Cette méthode change les dimensions du rectangle
-     * @param length : longueur du rectangle
-     * @param width: largeur du rectangle
-     */
-    public void changeDimensions(float length, float width){
-        this.length=length;
-        this.width=width;
-    }
-
-    /**getter de la longueur*/
-    public float getLength() {
-        return length;
-    }
-
-    /**getter de la largeur*/
-    public float getWidth() {
-        return width;
-    }
-
-    /**setter de la longueur*/
-    public void setLength(float length) {
-        this.length = length;
-    }
-
-    /**setter de la largeur*/
-    public void setWidth(float width) {
-        this.width = width;
+    public ArrayList<Vec2> getPoints(){
+        ArrayList<Vec2> points = new ArrayList<>();
+        points.add(segments.get(0).getPointA());
+        points.add(segments.get(1).getPointA());
+        points.add(segments.get(2).getPointA());
+        points.add(segments.get(3).getPointA());
+        return points;
     }
 
     @Override
@@ -159,5 +126,30 @@ public class Rectangle extends Shape {
             return ((Rectangle) obj).getCenter().equals(this.getCenter()) && ((Rectangle) obj).getLength()==this.getLength() && ((Rectangle) obj).getWidth()==this.getWidth();
         }
         return false;
+    }
+
+    @Override
+    public Shape clone() throws CloneNotSupportedException {
+        return new Rectangle(this.center.clone(), this.length, this.width);
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (this.center.hashCode() + this.length + this.width*1000);
+    }
+
+    @Override
+    public String toString() {
+        return "rectangle [center : " + center.toString() + ", length (x) : " + this.length + ", width (y) : " + this.width + "]";
+    }
+
+    /**
+     * Getters
+     */
+    public float getLength() {
+        return length;
+    }
+    public float getWidth() {
+        return width;
     }
 }

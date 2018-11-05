@@ -1,5 +1,7 @@
 package utils.math;
 
+import java.util.ArrayList;
+
 /**
  * Il s'agit d'une classe pour modéliser les obstacles rectangulaires en respectant notre modélisation du robot : On modélise le robot par un point et on grossit
  * tous les obstacles du rayon du robot
@@ -23,23 +25,45 @@ package utils.math;
  */
 public class CircularRectangle extends Shape {
 
+    /**
+     * Rayon des angles
+     */
     private float radius;
-    private Rectangle mainRectangle;
-    private Circle[] arcsDeCercle;
-    private Rectangle[] smallRectangles;
 
+    /**
+     * Rectangle interieur
+     */
+    private Rectangle mainRectangle;
+
+    /**
+     * Arc de cercles repésentant les angles
+     */
+    private ArrayList<Circle> arcsDeCercle;
+
+    /**
+     * Les 4 rectangles entourant le principal
+     */
+    private ArrayList<Rectangle> smallRectangles;
+
+    /**
+     * Construit un rectangle à angles arrondis
+     * @param centre    le centre du rectangle
+     * @param length    longueur (en x) du rectangle principal
+     * @param width     largeur (en y) du rectangle principal
+     * @param radius    rayon des angles
+     */
     public CircularRectangle(Vec2 centre, float length, float width, float radius) {
         super(centre);
-        this.mainRectangle=new Rectangle(centre,length,width);
-        this.radius=radius;
-        this.arcsDeCercle=new Circle[4];
+        this.mainRectangle = new Rectangle(centre, length, width);
+        this.radius = radius;
+        this.arcsDeCercle = new ArrayList<>();
         //Pour la numérotation des arcs de cercles (voir le schéma ci dessus)
         for(int i =0; i<4; i++){
-            arcsDeCercle[i]=new Circle(this.mainRectangle.getPoints()[i],this.radius,0,Math.PI/2);
+            arcsDeCercle.add(new Circle(this.mainRectangle.getPoints().get(i),this.radius,0,Math.PI/2));
         }
-        this.smallRectangles=new Rectangle[4];
-        int mainRectangleX=mainRectangle.getCenter().getX();
-        int mainRectangleY=mainRectangle.getCenter().getY();
+        this.smallRectangles = new ArrayList<>();
+        int mainRectangleX = mainRectangle.getCenter().getX();
+        int mainRectangleY = mainRectangle.getCenter().getY();
         float mainRectangleL=mainRectangle.getLength();
         float mainRectanglel=mainRectangle.getWidth();
         //Pour la numérotation des petits rectangles : voir schéma ci-dessus
@@ -47,31 +71,39 @@ public class CircularRectangle extends Shape {
         Vec2 smallRectanglecenter1=new VectCartesian(mainRectangleX + mainRectanglel/2 + this.radius/2,mainRectangleY);
         Vec2 smallRectanglecenter2=new VectCartesian(mainRectangleX ,mainRectangleY - mainRectangleL/2 - this.radius/2);
         Vec2 smallRectanglecenter3=new VectCartesian(mainRectangleX -mainRectanglel/2 - this.radius/2  ,mainRectangleY);
-        smallRectangles[0]=new Rectangle(smallRectanglecenter0,mainRectanglel,this.radius);
-        smallRectangles[1]=new Rectangle(smallRectanglecenter1,mainRectangleL,this.radius);
-        smallRectangles[2]=new Rectangle(smallRectanglecenter2,mainRectanglel,this.radius);
-        smallRectangles[3]=new Rectangle(smallRectanglecenter3,mainRectangleL,this.radius);
+        smallRectangles.add(new Rectangle(smallRectanglecenter0,mainRectanglel,this.radius));
+        smallRectangles.add(new Rectangle(smallRectanglecenter1,mainRectangleL,this.radius));
+        smallRectangles.add(new Rectangle(smallRectanglecenter2,mainRectanglel,this.radius));
+        smallRectangles.add(new Rectangle(smallRectanglecenter3,mainRectangleL,this.radius));
     }
 
     @Override
-    public boolean intersectsWithSegment(Segment segment) {
+    public boolean intersect(Segment segment) {
         return false;
     }
 
     @Override
-    public boolean containsCircle(Circle circle) {
+    public boolean isInShape(Vec2 point) {
         return false;
     }
 
     @Override
-    public double distanceToPoint(Vec2 vect) {
-        return super.distanceToPoint(vect);
+    public Shape clone() throws CloneNotSupportedException {
+        return null;
     }
 
     @Override
-    public Vec2 getCenter() {
-        return super.getCenter();
+    public boolean equals(Object object) {
+        return false;
     }
 
+    @Override
+    public int hashCode() {
+        return 0;
+    }
 
+    @Override
+    public String toString() {
+        return null;
+    }
 }

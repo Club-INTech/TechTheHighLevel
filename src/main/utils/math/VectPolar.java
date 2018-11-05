@@ -2,6 +2,7 @@ package utils.math;
 
 /**
  * @see VectCartesian
+ * @see Vec2
  */
 public class VectPolar extends Vec2 {
 
