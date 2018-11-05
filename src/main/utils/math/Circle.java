@@ -141,11 +141,17 @@ public class Circle extends Shape {
         return l;
     }
 
+    /**
+     * @see Cloneable
+     */
     @Override
     public Circle clone() {
         return new Circle(this.center, this.radius, this.angleStart, this.angleEnd);
     }
 
+    /**
+     * @see Object#equals(Object)
+     */
     @Override
     public boolean equals(Object o) {
         if(o instanceof Circle){
@@ -154,11 +160,17 @@ public class Circle extends Shape {
         return false;
     }
 
+    /**
+     * @see Object#hashCode()
+     */
     @Override
     public int hashCode() {
         return (int) (this.center.hashCode() + 1000*this.radius);
     }
 
+    /**
+     * @see Object#toString()
+     */
     @Override
     public String toString() {
         return "Circle [center: " + this.center + ", ray :" + this.radius + ", angleStart : " + this.angleStart + ", angleEnd : " + this.angleEnd;

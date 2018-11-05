@@ -38,12 +38,12 @@ public class CircularRectangle extends Shape {
     /**
      * Arc de cercles repésentant les angles
      */
-    private ArrayList<Circle> arcsDeCercle;
+    private ArrayList<Circle> circleArcs;
 
     /**
      * Les 4 rectangles entourant le principal
      */
-    private ArrayList<Rectangle> smallRectangles;
+    private ArrayList<Rectangle> sideRectangles;
 
     /**
      * Construit un rectangle à angles arrondis
@@ -56,54 +56,102 @@ public class CircularRectangle extends Shape {
         super(centre);
         this.mainRectangle = new Rectangle(centre, length, width);
         this.radius = radius;
-        this.arcsDeCercle = new ArrayList<>();
-        //Pour la numérotation des arcs de cercles (voir le schéma ci dessus)
-        for(int i =0; i<4; i++){
-            arcsDeCercle.add(new Circle(this.mainRectangle.getPoints().get(i),this.radius,0,Math.PI/2));
+        this.circleArcs = new ArrayList<>();
+        this.sideRectangles = new ArrayList<>();
+
+        // Pour la numérotation des arcs de cercles, voir le schéma ci-dessus
+        for (int i =0; i<4; i++){
+            circleArcs.add(new Circle(this.mainRectangle.getPoints().get(i), this.radius, (1 - i)*Math.PI/2, Math.PI - i*Math.PI/2));
         }
-        this.smallRectangles = new ArrayList<>();
-        int mainRectangleX = mainRectangle.getCenter().getX();
-        int mainRectangleY = mainRectangle.getCenter().getY();
-        float mainRectangleL=mainRectangle.getLength();
-        float mainRectanglel=mainRectangle.getWidth();
-        //Pour la numérotation des petits rectangles : voir schéma ci-dessus
-        Vec2 smallRectanglecenter0=new VectCartesian(mainRectangleX,mainRectangleY + mainRectangleL/2 + this.radius);
-        Vec2 smallRectanglecenter1=new VectCartesian(mainRectangleX + mainRectanglel/2 + this.radius/2,mainRectangleY);
-        Vec2 smallRectanglecenter2=new VectCartesian(mainRectangleX ,mainRectangleY - mainRectangleL/2 - this.radius/2);
-        Vec2 smallRectanglecenter3=new VectCartesian(mainRectangleX -mainRectanglel/2 - this.radius/2  ,mainRectangleY);
-        smallRectangles.add(new Rectangle(smallRectanglecenter0,mainRectanglel,this.radius));
-        smallRectangles.add(new Rectangle(smallRectanglecenter1,mainRectangleL,this.radius));
-        smallRectangles.add(new Rectangle(smallRectanglecenter2,mainRectanglel,this.radius));
-        smallRectangles.add(new Rectangle(smallRectanglecenter3,mainRectangleL,this.radius));
+
+        // Pour la numéroation des rectangles, voir schema ci-dessus
+        sideRectangles.add(new Rectangle(mainRectangle.getCenter().plusVector(new VectCartesian(0, mainRectangle.getWidth()/2 + radius/2)),
+                mainRectangle.getLength(), radius));
+        sideRectangles.add(new Rectangle(mainRectangle.getCenter().plusVector(new VectCartesian(0, mainRectangle.getLength()/2 + radius/2)),
+                radius, mainRectangle.getWidth()));
+        sideRectangles.add(new Rectangle(mainRectangle.getCenter().plusVector(new VectCartesian(0, -mainRectangle.getWidth()/2 - radius/2)),
+                mainRectangle.getLength(), radius));
+        sideRectangles.add(new Rectangle(mainRectangle.getCenter().plusVector(new VectCartesian(0, -mainRectangle.getLength()/2 - radius/2)),
+                radius, mainRectangle.getWidth()));
     }
 
+    /**
+     * @see Shape#intersect(Segment)
+     */
     @Override
     public boolean intersect(Segment segment) {
-        return false;
+        for (Rectangle rectangle : sideRectangles) {
+            if (rectangle.intersect(segment)) {
+                return true;
+            }
+        }
+        for (Circle circle : circleArcs) {
+            if (circle.intersect(segment)) {
+                return true;
+            }
+        }
+        if (mainRectangle.intersect(segment)) {
+            return true;
+        }
+        return mainRectangle.isInShape(segment.getPointA()) && mainRectangle.isInShape(segment.getPointB());
     }
 
+    /**
+     * @see Shape#isInShape(Vec2)
+     */
     @Override
     public boolean isInShape(Vec2 point) {
-        return false;
+        for (Rectangle rectangle : sideRectangles) {
+            if (rectangle.isInShape(point)) {
+                return true;
+            }
+        }
+        for (Circle circle : circleArcs) {
+            if (circle.isInShape(point)) {
+                return true;
+            }
+        }
+        return mainRectangle.isInShape(point);
     }
 
+    /**
+     * @see Cloneable#clone()
+     */
     @Override
     public Shape clone() throws CloneNotSupportedException {
-        return null;
+        return new CircularRectangle(this.center.clone(), this.mainRectangle.getLength(), this.mainRectangle.getWidth(), this.radius);
     }
 
+    /**
+     * @see Object#equals(Object)
+     */
     @Override
     public boolean equals(Object object) {
+        if (object instanceof CircularRectangle) {
+            return this.mainRectangle.equals(((CircularRectangle) object).mainRectangle) &&
+                    this.circleArcs.equals(((CircularRectangle) object).circleArcs) &&
+                    this.sideRectangles.equals(((CircularRectangle) object).sideRectangles);
+        }
         return false;
     }
 
+    /**
+     * @see Object#hashCode()
+     */
     @Override
     public int hashCode() {
-        return 0;
+        return this.mainRectangle.hashCode() +
+                10*circleArcs.get(0).hashCode() +
+                100*sideRectangles.get(0).hashCode();
     }
 
+    /**
+     * @see Object#toString()
+     */
     @Override
     public String toString() {
-        return null;
+        return "Circular Rectangle [mainRectangle :" + this.mainRectangle +
+                ", circle arcs 0 : " + circleArcs.get(0) +
+                ", side rectangle 1 & 2 : " + sideRectangles.get(0) + " & " + sideRectangles.get(1) + "]";
     }
 }

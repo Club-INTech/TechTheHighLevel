@@ -119,8 +119,11 @@ public class Rectangle extends Shape {
         return points;
     }
 
+    /**
+     * On vérifie si le rectangle a le même centre, la même largeur et la même longueur
+     * @see Object#equals(Object)
+     */
     @Override
-    /** On vérifie si le rectangle a le même centre, la même largeur et la même longueur */
     public boolean equals(Object obj) {
         if (obj instanceof Rectangle){
             return ((Rectangle) obj).getCenter().equals(this.getCenter()) && ((Rectangle) obj).getLength()==this.getLength() && ((Rectangle) obj).getWidth()==this.getWidth();
@@ -128,16 +131,25 @@ public class Rectangle extends Shape {
         return false;
     }
 
+    /**
+     * @see Cloneable
+     */
     @Override
     public Shape clone() throws CloneNotSupportedException {
         return new Rectangle(this.center.clone(), this.length, this.width);
     }
 
+    /**
+     * @see Object#hashCode()
+     */
     @Override
     public int hashCode() {
         return (int) (this.center.hashCode() + this.length + this.width*1000);
     }
 
+    /**
+     * @see Object#toString()
+     */
     @Override
     public String toString() {
         return "rectangle [center : " + center.toString() + ", length (x) : " + this.length + ", width (y) : " + this.width + "]";
