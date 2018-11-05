@@ -24,7 +24,11 @@ public class Graph {
 
     /** Initialise le graph */
     public void initGraph(){
-        createRidges();
+        try {
+            createRidges();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
     }
 
     /** Ajoute une node au graph */
@@ -64,7 +68,7 @@ public class Graph {
     }
 
     /** Définit les ridges */
-    public void createRidges(){
+    public void createRidges() throws CloneNotSupportedException {
         Segment segment = new Segment(new VectCartesian(0,0), new VectCartesian(0,0));
         boolean isIntersectingWithFixedObstacles=false;
         for (int i = 0; i<this.nodes.size()-1; i++){

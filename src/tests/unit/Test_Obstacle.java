@@ -11,8 +11,7 @@ public class Test_Obstacle {
     private RectangularObstacle rectangularObstacle;
 
     @Before
-    public void setUp()
-    {
+    public void setUp() {
         circularObstacle = new CircularObstacle(new Circle( new VectCartesian(0, 0), 42), 42, true);
         rectangularObstacle = new RectangularObstacle(new Rectangle(new VectCartesian(0,0),50, 42), 42, true);
 
@@ -21,8 +20,7 @@ public class Test_Obstacle {
     }
 
     @Test
-    public void testCircularObstacleisInObstacle()
-    {
+    public void testCircularObstacleisInObstacle() throws Exception {
         VectCartesian in = new VectCartesian(12, 12);
         VectCartesian out = new VectCartesian(666, 666);
 
@@ -31,8 +29,7 @@ public class Test_Obstacle {
     }
 
     @Test
-    public void testCircularObstacleintersect()
-    {
+    public void testCircularObstacleintersect() throws Exception {
         Segment in = new Segment(new VectCartesian(0, 0), new VectCartesian(12, 12));
         Segment out = new Segment(new VectCartesian(600, 600), new VectCartesian(612, 612));
 
@@ -41,8 +38,7 @@ public class Test_Obstacle {
     }
 
     @Test
-    public void testCircularObstacleequale()
-    {
+    public void testCircularObstacleequale() throws Exception {
         CircularObstacle circularObstacletrue = new CircularObstacle(new Circle(new VectCartesian(0, 0), 42), 42, true);
         CircularObstacle circularObstaclefalse = new CircularObstacle(new Circle(new VectCartesian(666, 666), 42), 42, true);
         CircularObstacle circularObstaclefalse2 = new CircularObstacle(new Circle(new VectCartesian(0, 0), 12), 42, true);
@@ -54,8 +50,7 @@ public class Test_Obstacle {
 
     @Ignore
     @Test
-    public void testRectangularObstacleisInObstacle()
-    {
+    public void testRectangularObstacleisInObstacle() throws Exception {
         VectCartesian in = new VectCartesian(12, 12);
         VectCartesian out = new VectCartesian(666, 666);
 
@@ -64,8 +59,7 @@ public class Test_Obstacle {
     }
 
     @Test
-    public void testRectangularObstacleintersect()
-    {
+    public void testRectangularObstacleintersect() throws Exception {
         Segment in = new Segment(new VectCartesian(0, 0), new VectCartesian(12, 666));
         Segment out = new Segment(new VectCartesian(600, 600), new VectCartesian(612, 612));
 
@@ -74,8 +68,7 @@ public class Test_Obstacle {
     }
 
     @After
-    public void tearDown()
-    {
+    public void tearDown() {
         circularObstacle = null;
         rectangularObstacle = null;
     }

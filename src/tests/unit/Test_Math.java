@@ -6,7 +6,6 @@ import utils.math.*;
 
 public class Test_Math {
 
-
     private Circle circle;
 
     private Rectangle rectangle;
@@ -21,9 +20,61 @@ public class Test_Math {
 
     private VectPolar vectPolar;
 
+    @Test
+    public void vec2Init() {
+
+    }
 
     @Test
-    public void circleIntersectsWithSegment(){
+    public void vec2PlusMinus() {
+
+    }
+
+    @Test
+    public void vec2DotCross() {
+
+    }
+
+    @Test
+    public void vec2DistanceTo() {
+
+    }
+
+    @Test
+    public void vec2Symetrize() {
+
+    }
+
+    @Test
+    public void vec2Equals() {
+
+    }
+
+    @Test
+    public void segmentIntersect() {
+        Segment segment1 = new Segment(new VectCartesian(0,0), new VectCartesian(0,2));
+        Segment segment2 = new Segment(new VectCartesian(0,0), new VectCartesian(0,4));
+        Assert.assertTrue(segment1.intersect(segment2));
+    }
+
+    @Test
+    public void segmentDistanceTo() {
+        segment = new Segment(new VectCartesian(0,0),new VectCartesian(0,5));
+        System.out.println(segment.distanceTo(new VectCartesian(3,3)));
+    }
+
+    @Test
+    public void segmentVecteurDirecteur() {
+
+    }
+
+    @Test
+    public void segmentEquals() {
+
+    }
+
+    @Test
+    public void circleIntersect(){
         circle=new Circle(new VectCartesian(2,5),10);
         segment=new Segment(new VectCartesian(5,10), new VectCartesian(4,5));
         Assert.assertTrue(circle.intersect(segment));
@@ -31,7 +82,7 @@ public class Test_Math {
 
 
     @Test
-    public void circleContainsCircle(){
+    public void circleIsInShape(){
         circle=new Circle(new VectCartesian(0,0),5);
         Circle circle2=new Circle(new VectCartesian(1,0),85);
         // Assert.assertTrue(circle2.containsCircle(circle));
@@ -45,46 +96,51 @@ public class Test_Math {
     }
 
     @Test
-    public void circleContainsPoint(){
-        circle=new Circle(new VectCartesian(0,0),5);
-        VectCartesian vecteur=new VectCartesian(0,5);
-        Assert.assertTrue(circle.isInShape(vecteur));
+    public void circleClosestPointAroundCircle() {
+
     }
 
     @Test
-    public void closestPointToCircle(){
-        circle=new Circle(new VectCartesian(5,0),5);
-        Vec2 closestPoint=circle.closestPointToCircle(new VectCartesian(5,6));
-        System.out.println(closestPoint);
+    public void circleEquals() {
+
     }
 
     @Test
-    public void rectangleIntersectsWithSegment(){
+    public void rectangleIntersect(){
         rectangle=new Rectangle(new VectCartesian(0,0),5,3);
         segment=new Segment(new VectCartesian(0,0),new VectCartesian(7,9));
         Assert.assertTrue(rectangle.intersect(segment));
     }
 
     @Test
-    public void rectangleContainsCircle(){
+    public void rectangleIsInShape(){
         rectangle=new Rectangle(new VectCartesian(0,0),5,3);
         circle=new Circle(new VectCartesian(0,0),5);
         //Assert.assertTrue(rectangle.containsCircle(circle));
     }
 
     @Test
-    public void segmentIntersectsWithSegment(){
-        Segment segment1=new Segment(new VectCartesian(0,0), new VectCartesian(0,2));
-        Segment segment2=new Segment(new VectCartesian(0,0), new VectCartesian(0,4));
-        Assert.assertTrue(segment1.intersect(segment2));
+    public void rectangleGetDiagonalsAndPoints() {
+
     }
 
     @Test
-    public void segmentDistanceTopoint(){
-        segment=new Segment(new VectCartesian(0,0),new VectCartesian(0,5));
-        System.out.println(segment.distanceToPoint(new VectCartesian(3,3)));
+    public void rectangleEquals() {
+
     }
 
+    @Test
+    public void circularRectangleIsInShape() {
 
+    }
 
+    @Test
+    public void circularRectangleIntersect() {
+
+    }
+
+    @Test
+    public void circularRectangleEquals() {
+
+    }
 }

@@ -23,34 +23,29 @@ public class Test_Container
     private Container container;
 
     @Before
-    public void setUp()
-    {
+    public void setUp() {
         container = Container.getInstance("Master");
         Assert.assertNotNull(container.getConfig());
     }
 
     @After
-    public void tearDown()
-    {
+    public void tearDown() {
         container = null;
         Container.resetInstance();
     }
 
     @Test(expected = ContainerException.class)
-    public void testCircularDependencies() throws Exception
-    {
+    public void testCircularDependencies() throws Exception {
         container.getService(A.class);
     }
 
     @Test(expected = ContainerException.class)
-    public void testMultipleConstructors() throws Exception
-    {
+    public void testMultipleConstructors() throws Exception {
         container.getService(C.class);
     }
 
     @Test
-    public void testSimple() throws Exception
-    {
+    public void testSimple() throws Exception {
         D d = container.getService(D.class);
         Assert.assertTrue(container.getInstanciedServices().containsKey(E.class.getSimpleName()));
         Assert.assertTrue(container.getInstanciedServices().containsKey(D.class.getSimpleName()));

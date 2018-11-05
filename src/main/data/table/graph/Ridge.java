@@ -4,7 +4,7 @@ import utils.math.Segment;
 import utils.math.Vec2;
 
 /** Arête composant le graphe */
-public class Ridge {
+public class Ridge implements Cloneable {
 
     private Segment segment;
     private int cost; //Cout de l'arête (utile et mis à jour lors de l'exécution du pathfinding)
@@ -74,7 +74,7 @@ public class Ridge {
 
     @Override
     /** Clone le ridge */
-    protected Ridge clone(){
+    protected Ridge clone() throws CloneNotSupportedException {
         return new Ridge(this.segment.clone());
     }
 

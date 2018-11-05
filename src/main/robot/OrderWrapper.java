@@ -145,7 +145,7 @@ public class OrderWrapper implements Service {
     public void configureHook(int id, Vec2 posTrigger, int tolerency, double orientation, double tolerencyAngle, Order order){
         Order symetrisedOrder;
         if(symetry){
-            posTrigger=posTrigger.symetrize();
+            posTrigger = posTrigger.symetrizeVector();
             Log.HOOK.debug("la position envoyée au bas niveau pour le hook"+posTrigger.toString());
             orientation=(Math.PI - orientation)%(2*Math.PI);
             Log.HOOK.debug("l'orientation envoyée au bas niveau pour le hook"+orientation);

@@ -7,7 +7,7 @@ import java.awt.geom.Line2D;
  *
  * @author yousra
  */
-public class Segment {
+public class Segment implements Cloneable {
 
     /**
      * Premier point du segment
@@ -56,7 +56,7 @@ public class Segment {
      * @param point point
      * @return  la distance entre le point et la droite qui porte le segment
      */
-    public double distanceToPoint(Vec2 point){
+    public double distanceTo(Vec2 point){
         if(pointA.getX()==pointB.getX()){
             return Math.abs(point.getX() - pointA.getX() );
         }
@@ -86,6 +86,42 @@ public class Segment {
     }
 
     /**
+     * @see Cloneable#clone()
+     */
+    @Override
+    public Segment clone() throws CloneNotSupportedException {
+        return new Segment(this.pointA.clone(),this.pointB.clone());
+    }
+
+    /**
+     * @see Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return this.getPointA().hashCode() + getPointB().hashCode();
+    }
+
+    /**
+     * @see Object#equals(Object)
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Segment) {
+            return (pointA.equals(((Segment) o).pointA) && pointB.equals(((Segment) o).pointB)) ||
+                    (pointA.equals(((Segment) o).pointB)) && pointB.equals(((Segment) o).pointA);
+        }
+        return false;
+    }
+
+    /**
+     * @see Object#toString()
+     */
+    @Override
+    public String toString() {
+        return String.format("[%s:%s]", this.pointA.toString(), this.pointB.toString());
+    }
+
+    /**
      * Getters & Setters
      */
     public Vec2 getPointA() {
@@ -105,15 +141,5 @@ public class Segment {
 
     public double getLength() {
         return length;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("[%s:%s]", this.pointA.toString(), this.pointB.toString());
-    }
-
-    @Override
-    public Segment clone() {
-        return new Segment(this.pointA.clone(),this.pointB.clone());
     }
 }
