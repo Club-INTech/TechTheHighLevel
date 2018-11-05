@@ -53,10 +53,10 @@ public class Rectangle extends Shape {
         Vec2 bd = center.plusVector(new VectCartesian(length/2, -width/2));
         this.segments = new ArrayList<>();
 
-        segments.add(new Segment(hd, hg));
-        segments.add(new Segment(hg, bg));
-        segments.add(new Segment(bg, bd));
-        segments.add(new Segment(bd, hd));
+        segments.add(new Segment(hg, hd));
+        segments.add(new Segment(hd, bd));
+        segments.add(new Segment(bd, bg));
+        segments.add(new Segment(bg, hg));
     }
 
     /**

@@ -60,18 +60,18 @@ public class CircularRectangle extends Shape {
         this.sideRectangles = new ArrayList<>();
 
         // Pour la numérotation des arcs de cercles, voir le schéma ci-dessus
-        for (int i =0; i<4; i++){
-            circleArcs.add(new Circle(this.mainRectangle.getPoints().get(i), this.radius, (1 - i)*Math.PI/2, Math.PI - i*Math.PI/2));
+        for (int i = 0; i<4; i++){
+            circleArcs.add(i, new Circle(this.mainRectangle.getPoints().get(i), this.radius, (1 - i)*Math.PI/2, Math.PI - i*Math.PI/2));
         }
 
         // Pour la numéroation des rectangles, voir schema ci-dessus
         sideRectangles.add(new Rectangle(mainRectangle.getCenter().plusVector(new VectCartesian(0, mainRectangle.getWidth()/2 + radius/2)),
                 mainRectangle.getLength(), radius));
-        sideRectangles.add(new Rectangle(mainRectangle.getCenter().plusVector(new VectCartesian(0, mainRectangle.getLength()/2 + radius/2)),
+        sideRectangles.add(new Rectangle(mainRectangle.getCenter().plusVector(new VectCartesian(mainRectangle.getLength()/2 + radius/2, 0)),
                 radius, mainRectangle.getWidth()));
         sideRectangles.add(new Rectangle(mainRectangle.getCenter().plusVector(new VectCartesian(0, -mainRectangle.getWidth()/2 - radius/2)),
                 mainRectangle.getLength(), radius));
-        sideRectangles.add(new Rectangle(mainRectangle.getCenter().plusVector(new VectCartesian(0, -mainRectangle.getLength()/2 - radius/2)),
+        sideRectangles.add(new Rectangle(mainRectangle.getCenter().plusVector(new VectCartesian(-mainRectangle.getLength()/2 - radius/2, 0)),
                 radius, mainRectangle.getWidth()));
     }
 
@@ -153,5 +153,21 @@ public class CircularRectangle extends Shape {
         return "Circular Rectangle [mainRectangle :" + this.mainRectangle +
                 ", circle arcs 0 : " + circleArcs.get(0) +
                 ", side rectangle 1 & 2 : " + sideRectangles.get(0) + " & " + sideRectangles.get(1) + "]";
+    }
+
+    /**
+     * Getters & Setters
+     */
+    public float getRadius() {
+        return radius;
+    }
+    public Rectangle getMainRectangle() {
+        return mainRectangle;
+    }
+    public ArrayList<Circle> getCircleArcs() {
+        return circleArcs;
+    }
+    public ArrayList<Rectangle> getSideRectangles() {
+        return sideRectangles;
     }
 }
