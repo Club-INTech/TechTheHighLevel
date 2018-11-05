@@ -1,7 +1,7 @@
-package unit;
+package validation;
 
-import data.table.Table;
-import data.table.graph.Graph;
+import data.Table;
+import data.table.Graph;
 import data.table.graph.Node;
 import data.table.graph.Ridge;
 import data.table.obstacle.CircularObstacle;

@@ -33,12 +33,12 @@ public class Node {
     }
 
     /** Ajoute un voisin à cette node */
-    Node addNeighbour(Node neighbour, Ridge ridge){
+    public Node addNeighbour(Node neighbour, Ridge ridge){
         return this.neighbours.putIfAbsent(ridge, neighbour);
     }
 
     /** Supprime un voisin de cette node à partir du ridge le composant*/
-    void removeNeighbour(Ridge ridge){
+    public void removeNeighbour(Ridge ridge){
         this.neighbours.get(ridge).getNeighboursCopy().remove(ridge);
         this.neighbours.remove(ridge);
     }

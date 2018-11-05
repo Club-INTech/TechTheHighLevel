@@ -1,6 +1,6 @@
 package validation;
 
-import data.table.Table;
+import data.Table;
 import data.table.obstacle.CircularObstacle;
 import data.table.obstacle.Obstacle;
 import data.table.obstacle.RectangularObstacle;

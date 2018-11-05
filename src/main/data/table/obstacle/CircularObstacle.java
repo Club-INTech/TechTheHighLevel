@@ -4,72 +4,53 @@ import utils.math.Circle;
 import utils.math.Segment;
 import utils.math.Vec2;
 
+/**
+ * Définit un obstacle circulaire
+ * @see Obstacle
+ */
 public class CircularObstacle extends Obstacle {
 
-    /** Cercle définissant l'obstacle */
-    private Circle circle;
-
-    /** Pour instancier un obstacle fixe
-     *
-     * @param circle
-     * @param entryObstacleAllowed autoriser ou non le main.robot à rentrer dans obstacle
+    /**
+     * Pour instancier un obstacle fixe
+     * @see Obstacle
      */
-
-    public CircularObstacle(Circle circle, boolean entryObstacleAllowed){
-        super.position = circle.getCenter();
-        this.circle = circle;
-        this.timeLife = -1;
-        this.entryObstacleAllowed = entryObstacleAllowed;
+    public CircularObstacle(Circle circle, boolean entryObstacleAllowed) {
+        super(circle, -1, entryObstacleAllowed);
     }
 
-    /** Pour instancier un obstacle mobile
-     *
-     * @param circle
-     * @param timeLife              durée de vie de l'obstacle
-     * @param entryObstacleAllowed  autoriser ou non le main.robot à rentrer dans obstacle
+    /**
+     * Pour instancier un obstacle mobile
+     * @see Obstacle
      */
-
     public CircularObstacle(Circle circle, int timeLife, boolean entryObstacleAllowed){
-        super.position = circle.getCenter();
-        this.circle = circle;
-        this.timeLife = timeLife;
-        this.entryObstacleAllowed = entryObstacleAllowed;
+        super(circle, timeLife, entryObstacleAllowed);
     }
 
-    @Override
-    public boolean isInObstacle(Vec2 point) {
-        return this.circle.isInShape(point);
-    }
-
-    @Override
-    public boolean intersect(Segment segment) {
-        return this.circle.intersect(segment);
-    }
-
+    /**
+     * @see Object#equals(Object)
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof CircularObstacle){
-            CircularObstacle circularObstacle = (CircularObstacle) obj;
-            return circularObstacle.circle.getRadius() == this.circle.getRadius() && circularObstacle.getPosition().equals(this.getPosition());
+            return this.shape.equals(((CircularObstacle) obj).shape) &&
+                    entryObstacleAllowed == ((CircularObstacle) obj).entryObstacleAllowed;
         }
         return false;
     }
 
+    /**
+     * @see Object#hashCode()
+     */
     @Override
     public int hashCode() {
         return 0;
     }
 
+    /**
+     * @see Object#toString()
+     */
     @Override
     public String toString() {
         return null;
-    }
-
-    public Vec2 getPosition() {
-        return super.position;
-    }
-
-    public Circle getCircle() {
-        return circle;
     }
 }

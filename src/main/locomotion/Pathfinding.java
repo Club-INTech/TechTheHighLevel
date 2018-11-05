@@ -1,6 +1,6 @@
 package locomotion;
 
-import data.table.Table;
+import data.Table;
 import utils.math.Vec2;
 import java.util.concurrent.ConcurrentLinkedQueue;
 

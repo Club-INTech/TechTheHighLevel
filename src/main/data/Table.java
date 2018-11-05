@@ -1,4 +1,4 @@
-package data.table;
+package data;
 
 import data.table.obstacle.Obstacle;
 import utils.math.Vec2;

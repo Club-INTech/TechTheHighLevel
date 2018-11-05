@@ -1,6 +1,8 @@
-package data.table.graph;
+package data.table;
 
-import data.table.Table;
+import data.Table;
+import data.table.graph.Node;
+import data.table.graph.Ridge;
 import data.table.obstacle.Obstacle;
 import utils.math.Segment;
 import utils.math.VectCartesian;

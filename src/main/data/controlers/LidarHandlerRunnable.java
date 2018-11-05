@@ -1,4 +1,4 @@
-package data.controller;
+package data.controlers;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 

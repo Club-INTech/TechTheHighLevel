@@ -2,7 +2,7 @@ package unit;
 
 import utils.communication.ConnectionsManager;
 import utils.communication.Connections;
-import data.controller.LidarHandlerRunnable;
+import data.controlers.LidarHandlerRunnable;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Ignore;

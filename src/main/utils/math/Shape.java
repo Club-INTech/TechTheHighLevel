@@ -56,9 +56,12 @@ public abstract class Shape implements Cloneable {
     public abstract String toString();
 
     /**
-     * Getter du centre
+     * Getter & Setter
      */
     public Vec2 getCenter(){
         return this.center;
+    }
+    public void setCenter(Vec2 newCenter) {
+        this.center = newCenter;
     }
 }

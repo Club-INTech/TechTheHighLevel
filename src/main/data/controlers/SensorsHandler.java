@@ -1,4 +1,4 @@
-package data.controller;
+package data.controlers;
 
 import data.SensorsData;
 

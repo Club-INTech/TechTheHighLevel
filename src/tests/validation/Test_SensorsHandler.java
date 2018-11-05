@@ -1,7 +1,7 @@
 package validation;
 
 import data.SensorsData;
-import data.controller.SensorsHandler;
+import data.controlers.SensorsHandler;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
