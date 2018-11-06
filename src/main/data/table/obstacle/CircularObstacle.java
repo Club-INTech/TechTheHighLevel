@@ -1,12 +1,13 @@
 package data.table.obstacle;
 
 import utils.math.Circle;
-import utils.math.Segment;
-import utils.math.Vec2;
+import java.util.Locale;
 
 /**
  * Définit un obstacle circulaire
  * @see Obstacle
+ *
+ * @author sam
  */
 public class CircularObstacle extends Obstacle {
 
@@ -27,30 +28,11 @@ public class CircularObstacle extends Obstacle {
     }
 
     /**
-     * @see Object#equals(Object)
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof CircularObstacle){
-            return this.shape.equals(((CircularObstacle) obj).shape) &&
-                    entryObstacleAllowed == ((CircularObstacle) obj).entryObstacleAllowed;
-        }
-        return false;
-    }
-
-    /**
-     * @see Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        return 0;
-    }
-
-    /**
      * @see Object#toString()
      */
     @Override
     public String toString() {
-        return null;
+        return String.format(Locale.US, "Obstacle Circular [%s, outDatedTime : %d, entryAllowed : %b]",
+                this.shape.toString(), this.outDatedTime, this.entryObstacleAllowed);
     }
 }

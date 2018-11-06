@@ -4,10 +4,8 @@ import data.Table;
 import data.table.Graph;
 import data.table.graph.Node;
 import data.table.graph.Ridge;
-import data.table.obstacle.CircularObstacle;
-import data.table.obstacle.RectangularObstacle;
-import utils.math.Circle;
-import utils.math.Rectangle;
+import utils.Container;
+import utils.container.ContainerException;
 import utils.math.VectCartesian;
 
 import org.junit.After;
@@ -21,12 +19,16 @@ import java.util.Map;
 public class Test_Graph {
 
     private Graph graph;
+
     private Table table;
 
+    private Container container;
+
     @Before
-    public void setUp() {
-        this.table=new Table();
-        this.graph =new Graph(this.table);
+    public void setUp() throws ContainerException {
+        container = Container.getInstance("Master");
+        this.table = container.getService(Table.class);
+        this.graph = new Graph(this.table);
         this.graph.addNode(new Node(new VectCartesian(0,0)));
         this.graph.addNode(new Node(new VectCartesian(500,0)));
         this.graph.addNode(new Node(new VectCartesian(1000,0)));
@@ -120,7 +122,7 @@ public class Test_Graph {
                 nbRidgesUsable++;
             }
         }
-        this.table.addMobileObstacle(new CircularObstacle(new Circle(new VectCartesian(500,500),50),false));
+        // this.table.addMobileObstacle(new CircularObstacle(new Circle(new VectCartesian(500,500),50),false));
         this.graph.updateRidges();
 
         int nbRidgesUsableAfter=0;
@@ -147,7 +149,7 @@ public class Test_Graph {
                 nbRidgesUsable++;
             }
         }
-        this.table.addMobileObstacle(new RectangularObstacle(new Rectangle(new VectCartesian(500,500),50,50),false));
+        // this.table.addMobileObstacle(new RectangularObstacle(new Rectangle(new VectCartesian(500,500),50,50),false));
         this.graph.updateRidges();
 
         int nbRidgesUsableAfter=0;

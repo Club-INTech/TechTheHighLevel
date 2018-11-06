@@ -6,6 +6,8 @@ import utils.math.Vec2;
 
 /**
  * Définit ce qu'est un obstacle
+ *
+ * @author rem, sam
  */
 public abstract class Obstacle {
 
@@ -15,9 +17,9 @@ public abstract class Obstacle {
     protected Shape shape;
 
     /**
-     * Durée de vie d'un obstacle. Un obstacle fixe à une durée de vie de -1.
+     * Durée de vie d'un obstacle. Un obstacle fixe à une durée de vie de 1200*10^3.
      */
-    protected int timeLife;
+    protected long outDatedTime;
 
     /**
      * Autorise ou non l'entrée du main.robot dans un obstacle
@@ -33,8 +35,8 @@ public abstract class Obstacle {
      */
     public Obstacle(Shape shape, int timeLife, boolean entryObstacleAllowed) {
         this.shape = shape;
-        this.timeLife = timeLife;
         this.entryObstacleAllowed = entryObstacleAllowed;
+        this.outDatedTime = timeLife + System.currentTimeMillis();
     }
 
     /**
@@ -58,14 +60,23 @@ public abstract class Obstacle {
      * @see Object#equals(Object)
      */
     @Override
-    public abstract boolean equals(Object object);
+    public boolean equals(Object object) {
+        if (object instanceof Obstacle) {
+            return this.shape.equals(((Obstacle) object).shape) &&
+                    this.outDatedTime == ((Obstacle) object).outDatedTime &&
+                    this.entryObstacleAllowed == ((Obstacle) object).entryObstacleAllowed;
+        }
+        return false;
+    }
 
     /**
      * Génére un hashCode à partir de l'obstacle. Utile pour les hashMap
      * @see Object#hashCode()
      */
     @Override
-    public abstract int hashCode();
+    public int hashCode() {
+        return this.shape.hashCode() + (int) this.outDatedTime*1000;
+    }
 
     /**
      * @see Object#toString()

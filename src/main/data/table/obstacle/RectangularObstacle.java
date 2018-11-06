@@ -1,10 +1,13 @@
 package data.table.obstacle;
 
 import utils.math.Rectangle;
+import java.util.Locale;
 
 /**
  * Définit un obstacle rectangulaire
  * @see Obstacle
+ *
+ * @author sam
  */
 public class RectangularObstacle extends Obstacle {
 
@@ -25,29 +28,11 @@ public class RectangularObstacle extends Obstacle {
     }
 
     /**
-     * @see Object#equals(Object)
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof RectangularObstacle){
-            return this.shape.equals(((RectangularObstacle) obj).shape);
-        }
-        return false;
-    }
-
-    /**
-     * @see Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        return 0;
-    }
-
-    /**
      * @see Object#toString()
      */
     @Override
     public String toString() {
-        return null;
+        return String.format(Locale.US, "Obstacle Rectangulaire [%s, outDatedTime : %d, entryAllowed : %b]",
+                this.shape.toString(), this.outDatedTime, this.entryObstacleAllowed);
     }
 }
