@@ -1,14 +1,12 @@
 package data.table;
 
 import utils.math.Circle;
-import utils.math.Segment;
 import utils.math.Vec2;
 
 /**
  * Classe implémentant les obstacles mobiles circulaires, dans notre cas les autres robots (adverse & buddy)
  */
-public class MobileCircularObstacle extends Obstacle
-{
+public class MobileCircularObstacle extends Obstacle {
     /**
      * Temps de vie de l'obstacle (en millisecondes) : sert à retirer l'obstacle lorsqu'il n'est plus détecté
      */
@@ -49,31 +47,8 @@ public class MobileCircularObstacle extends Obstacle
     }
 
     @Override
-    public boolean isInObstacle(Vec2 point) {
-        return this.shape.isInShape(point);
-    }
-
-    @Override
-    public boolean intersect(Segment segment) {
-        return this.shape.intersect(segment);
-    }
-
-    @Override
     public Obstacle clone() throws CloneNotSupportedException {
         return new MobileCircularObstacle((Circle) this.shape.clone());
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (object instanceof MobileCircularObstacle) {
-            return this.shape.equals(((MobileCircularObstacle) object).shape);
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return this.shape.hashCode();
     }
 
     @Override

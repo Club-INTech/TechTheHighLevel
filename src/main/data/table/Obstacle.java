@@ -7,8 +7,7 @@ import utils.math.Vec2;
 /**
  * Classe abstraite définissant la représentation d'un obstacle dans le code.
  */
-public abstract class Obstacle
-{
+public abstract class Obstacle {
     /**
      * Forme de l'obstacle
      */
@@ -17,8 +16,7 @@ public abstract class Obstacle
     /**
      * Construit un obstacle
      */
-    protected Obstacle(Shape shape)
-    {
+    protected Obstacle(Shape shape) {
         this.shape = shape;
     }
 
@@ -26,14 +24,18 @@ public abstract class Obstacle
      * Méthode utile pour les collision
      * @return  true si le point se trouve dans l'obstacle
      */
-    public abstract boolean isInObstacle(Vec2 point);
+    public boolean isInObstacle(Vec2 point) {
+        return this.shape.isInShape(point);
+    }
 
     /**
      * Méthode servant à construire et mettre à jour le Graphe
      * @param segment   le segment à tester
      * @return  true si le segment intersecte l'obstacle
      */
-    public abstract boolean intersect(Segment segment);
+    public boolean intersect(Segment segment) {
+        return this.shape.intersect(segment);
+    }
 
     /**
      * @see Object#clone()
@@ -45,13 +47,20 @@ public abstract class Obstacle
      * @see Object#equals(Object)
      */
     @Override
-    public abstract boolean equals(Object object);
+    public boolean equals(Object object) {
+        if (object instanceof Obstacle) {
+            return this.shape.equals(((Obstacle) object).shape);
+        }
+        return false;
+    }
 
     /**
      * @see Object#hashCode()
      */
     @Override
-    public abstract int hashCode();
+    public int hashCode() {
+        return this.shape.hashCode();
+    }
 
     /**
      * @see Object#toString()
