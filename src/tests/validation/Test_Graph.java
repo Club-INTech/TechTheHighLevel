@@ -1,9 +1,9 @@
 package validation;
 
 import data.Table;
-import data.table.Graph;
-import data.table.graph.Node;
-import data.table.graph.Ridge;
+import data.Graph;
+import data.graph.Node;
+import data.graph.Ridge;
 import utils.Container;
 import utils.container.ContainerException;
 import utils.math.VectCartesian;
@@ -97,7 +97,7 @@ public class Test_Graph {
     @Test
     public void workingUpdateRidgesWithoutObstacles() throws Exception {
         this.graph.createRidges();
-        this.graph.updateRidges();
+        // this.graph.updateRidges();
         boolean isOneRidgeUnusable=false;
         for (Ridge ridge : this.graph.getRidges()){
             if (!ridge.isUsable()){
@@ -115,7 +115,7 @@ public class Test_Graph {
         this.graph.addNode(new Node(new VectCartesian(1000,0)));
         this.graph.addNode(new Node(new VectCartesian(1000,1000)));
         this.graph.createRidges();
-        this.graph.updateRidges();
+        // this.graph.updateRidges();
         int nbRidgesUsable=0;
         for (Ridge ridge : this.graph.getRidges()){
             if (ridge.isUsable()){
@@ -123,7 +123,7 @@ public class Test_Graph {
             }
         }
         // this.table.addMobileObstacle(new CircularObstacle(new Circle(new VectCartesian(500,500),50),false));
-        this.graph.updateRidges();
+        // this.graph.updateRidges();
 
         int nbRidgesUsableAfter=0;
         for (Ridge ridge : this.graph.getRidges()){
@@ -142,7 +142,7 @@ public class Test_Graph {
         this.graph.addNode(new Node(new VectCartesian(1000,0)));
         this.graph.addNode(new Node(new VectCartesian(1000,1000)));
         this.graph.createRidges();
-        this.graph.updateRidges();
+        // this.graph.updateRidges();
         int nbRidgesUsable=0;
         for (Ridge ridge : this.graph.getRidges()){
             if (ridge.isUsable()){
@@ -150,7 +150,7 @@ public class Test_Graph {
             }
         }
         // this.table.addMobileObstacle(new RectangularObstacle(new Rectangle(new VectCartesian(500,500),50,50),false));
-        this.graph.updateRidges();
+        // this.graph.updateRidges();
 
         int nbRidgesUsableAfter=0;
         for (Ridge ridge : this.graph.getRidges()){

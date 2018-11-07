@@ -1,9 +1,9 @@
 package validation;
 
 import data.Table;
-import data.table.obstacle.CircularObstacle;
-import data.table.obstacle.Obstacle;
-import data.table.obstacle.RectangularObstacle;
+import data.table.CircularObstacle;
+import data.table.Obstacle;
+import data.table.RectangularObstacle;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

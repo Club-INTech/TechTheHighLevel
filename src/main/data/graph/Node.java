@@ -1,4 +1,4 @@
-package data.table.graph;
+package data.graph;
 
 import utils.math.Vec2;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package data.table.obstacle;
+package data.table;
 
 import utils.math.CircularRectangle;
 import java.util.Locale;

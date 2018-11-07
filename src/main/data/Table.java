@@ -1,16 +1,17 @@
 package data;
 
-import data.table.obstacle.Obstacle;
+import data.table.Obstacle;
 import pfg.config.Config;
 import utils.ConfigData;
 import utils.container.Service;
+import utils.math.Segment;
 import utils.math.Vec2;
 
-import javax.naming.ConfigurationException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
- * SINGLETON représentant la table
+ * SINGLETON représentant la table et gérant les obstacles
  *
  * @author sam, rem
  */
@@ -22,6 +23,11 @@ public class Table implements Service {
      */
     private int sizeX = 3000;
     private int sizeY = 2000;
+
+    /**
+     * Graphe
+     */
+    private Graph graphe;
 
     /**
      * Rayon du robot
@@ -51,8 +57,8 @@ public class Table implements Service {
      * Constructeur
      */
     private Table() {
-        this.fixedObstacles=new ArrayList<>();
-        this.mobileObstacles=new ArrayList<>();
+        this.fixedObstacles = new ArrayList<>();
+        this.mobileObstacles = new ArrayList<>();
         this.initObstacle();
     }
 
@@ -65,10 +71,31 @@ public class Table implements Service {
 
     /**
      * Méthode pour mettre à la liste d'obstacle mobile
-     * @param point liste des centres des obstacles
+     * @param points liste des centres des obstacles
      */
-    public void updateMobileObstacles(ArrayList<Vec2> point){
+    public void updateMobileObstacles(ArrayList<Vec2> points){
+        Iterator<Obstacle> iterator = mobileObstacles.iterator();
+        Obstacle obstacle;
+        Iterator<Vec2> it = points.iterator();
+        Vec2 point;
 
+        while (iterator.hasNext()) {
+            obstacle = iterator.next();
+            while (it.hasNext()) {
+                point = it.next();
+                if (obstacle.isInObstacle(point)) {
+                    obstacle.update(point);
+                    it.remove();
+                }
+            }
+            if (obstacle.getOutDatedTime() < System.currentTimeMillis()) {
+                iterator.remove();
+            }
+        }
+
+        // TODO : Itérer sur les points restant pour créer les nouveaux obstacles
+        // ATTENTION : Penser à prendre en compte le deuxième robot...
+        // + Mettre à jour le graphe s'il a été instancié
     }
 
     /**
@@ -94,6 +121,38 @@ public class Table implements Service {
     }
 
     /**
+     * @param point  position à tester
+     * @return  true si le point est dans l'un des obstacles fixes
+     */
+    public boolean isPositionInFixedObstacle(Vec2 point) {
+        Iterator<Obstacle> iterator = fixedObstacles.iterator();
+        Obstacle obstacle;
+        while (iterator.hasNext()) {
+            obstacle = iterator.next();
+            if (obstacle.isInObstacle(point)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param segment   segment à tester
+     * @return  true si le segment intersecte l'un des obstacles fixes
+     */
+    public boolean intersectAnyFixedObstacle(Segment segment) {
+        Iterator<Obstacle> iterator = fixedObstacles.iterator();
+        Obstacle obstacle;
+        while (iterator.hasNext()) {
+            obstacle = iterator.next();
+            if (obstacle.intersect(segment)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * @see Service#updateConfig(Config)
      */
     @Override
@@ -111,5 +170,8 @@ public class Table implements Service {
     }
     public ArrayList<Obstacle> getMobileObstacles(){
         return this.mobileObstacles;
+    }
+    public void setGraphe(Graph graphe) {
+        this.graphe = graphe;
     }
 }

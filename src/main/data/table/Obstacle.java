@@ -1,4 +1,4 @@
-package data.table.obstacle;
+package data.table;
 
 import utils.math.Segment;
 import utils.math.Shape;
@@ -27,6 +27,11 @@ public abstract class Obstacle {
     protected boolean entryObstacleAllowed;
 
     /**
+     * Temps de vie d'un obstacle mis à jour
+     */
+    public static final int UPDATED_LIFE_TIME   = 500;
+
+    /**
      * Construit un obstacle
      * @param shape     forme de l'obstacle
      * @param timeLife  durée de vie de l'obstacle
@@ -53,6 +58,15 @@ public abstract class Obstacle {
      */
     public boolean intersect(Segment segment) {
         return this.shape.intersect(segment);
+    }
+
+    /**
+     * Met à jour la position de l'obstacle et sa durée de vie
+     * @param newPosition   la nouvelle position
+     */
+    public void update(Vec2 newPosition) {
+        this.shape.setCenter(newPosition);
+        this.outDatedTime = Math.max(this.outDatedTime, System.currentTimeMillis() + UPDATED_LIFE_TIME);
     }
 
     /**
@@ -95,5 +109,11 @@ public abstract class Obstacle {
     }
     public void setPosition(Vec2 newPosition) {
         this.shape.setCenter(newPosition);
+    }
+    public long getOutDatedTime() {
+        return outDatedTime;
+    }
+    public boolean isEntryObstacleAllowed() {
+        return entryObstacleAllowed;
     }
 }

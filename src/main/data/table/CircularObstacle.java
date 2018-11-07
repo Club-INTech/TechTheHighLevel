@@ -1,4 +1,4 @@
-package data.table.obstacle;
+package data.table;
 
 import utils.math.Circle;
 import java.util.Locale;

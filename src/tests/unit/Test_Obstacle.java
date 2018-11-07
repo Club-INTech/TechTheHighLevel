@@ -1,7 +1,7 @@
 package unit;
 
-import data.table.obstacle.CircularObstacle;
-import data.table.obstacle.RectangularObstacle;
+import data.table.CircularObstacle;
+import data.table.RectangularObstacle;
 import org.junit.*;
 import utils.math.*;
 

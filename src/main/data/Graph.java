@@ -1,31 +1,53 @@
-package data.table;
+package data;
 
-import data.Table;
-import data.table.graph.Node;
-import data.table.graph.Ridge;
-import data.table.obstacle.Obstacle;
+import data.graph.Node;
+import data.graph.Ridge;
+import data.table.Obstacle;
+import pfg.config.Config;
+import utils.container.Service;
 import utils.math.Segment;
 import utils.math.VectCartesian;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-/** Graphe regroupant les nodes et les arêtes pour le pathfinding */
-public class Graph {
+/**
+ * Graphe regroupant les nodes et les arêtes pour le pathfinding
+ *
+ * @author william, rem
+ */
+public class Graph implements Service {
 
+    /**
+     * Noeuds du graph
+     */
     private ArrayList<Node> nodes;
+
+    /**
+     * Arrêtes du graph
+     */
     private ArrayList<Ridge> ridges;
+
+    /**
+     * La Table
+     */
     private Table table;
 
-    /** Constructeur */
+    /**
+     * Constructeur
+     * @param table table à donner au graph pour setUp les noeuds et arrêtes
+     */
     public Graph(Table table){
-        this.table=table;
-        this.nodes=new ArrayList<>();
-        this.ridges=new ArrayList<>();
+        this.table = table;
+        table.setGraphe(this);
+        this.nodes = new ArrayList<>();
+        this.ridges = new ArrayList<>();
     }
 
-    /** Initialise le graph */
-    public void initGraph(){
+    /**
+     * Place les noeuds et arrêtes du graph
+     */
+    private void init() {
         try {
             createRidges();
         } catch (CloneNotSupportedException e) {
@@ -95,7 +117,7 @@ public class Graph {
     }
 
     /** Définit quels ridges sont utilisables */
-    public void updateRidges(){
+    void updateRidges(){
         boolean isIntersecting = false;
         for (Ridge ridge : this.ridges) {
             isIntersecting=false;
@@ -112,5 +134,13 @@ public class Graph {
                 ridge.setUsable(true);
             }
         }
+    }
+
+    /**
+     * @see Service#updateConfig(Config)
+     */
+    @Override
+    public void updateConfig(Config config) {
+
     }
 }
