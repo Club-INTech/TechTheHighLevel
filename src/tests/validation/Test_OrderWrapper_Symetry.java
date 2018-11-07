@@ -45,6 +45,7 @@ public class Test_OrderWrapper_Symetry {
         connectionsManager.initConnections(Connection.LOCALHOST_SERVER);
         Thread.sleep(50);
         connectionsManager.initConnections(Connection.LOCALHOST_CLIENT);
+        Thread.sleep(50);
         orderWrapper.setConnection(Connection.LOCALHOST_CLIENT);
     }
 
@@ -100,9 +101,9 @@ public class Test_OrderWrapper_Symetry {
         container = null;
         config.override(ConfigData.COULEUR,"violet");
         config = null;
-        orderWrapper=null;
+        orderWrapper = null;
         connectionsManager.closeInitiatedConnections();
-        connectionsManager=null;
+        connectionsManager = null;
         Container.resetInstance();
     }
 }

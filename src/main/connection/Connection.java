@@ -69,7 +69,7 @@ public enum Connection {
         Constructor constructor = aClass.getDeclaredConstructors()[0];
         try {
             this.communicationInterface = (CommunicationInterface) constructor
-                    .newInstance(config.getString(this.ipKey), config.getInt(this.portKey), false);
+                    .newInstance(config.getString(this.ipKey), config.getInt(this.portKey));
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             throw new CommunicationException("Impossible d'instancier l'interface de comm");
         }

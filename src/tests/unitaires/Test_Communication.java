@@ -18,7 +18,7 @@ public class Test_Communication {
 
     @Before
     public void setUp() throws Exception {
-        interface1 = new SocketServerInterface("localhost", 10200, false);
+        interface1 = new SocketServerInterface("localhost", 10200);
         interface1.init();
     }
 
@@ -33,8 +33,12 @@ public class Test_Communication {
 
     @Test
     public void testBidirectionnal() throws Exception {
-        interface2 = new SocketClientInterface("localhost", 10200, false);
+        interface2 = new SocketClientInterface("localhost", 10200);
         interface2.init();
+
+        while (!interface1.isInitiate() || !interface2.isInitiate()) {
+            Thread.sleep(50);
+        }
 
         interface1.send("M1");
         interface1.send("M2");
@@ -61,20 +65,5 @@ public class Test_Communication {
         Assert.assertEquals("M2", m2.get());
         Assert.assertEquals("M3", m3.get());
         Assert.assertEquals("R1", r1.get());
-    }
-
-    @Test(expected = CommunicationException.class)
-    public void testUnidirectionnal() throws Exception {
-        interface2 = new SocketClientInterface("localhost", 10200, true);
-        interface2.init();
-
-        interface1.send("AH");
-
-        Thread.sleep(100);
-        Optional<String> m1 = interface2.read();
-
-        Assert.assertTrue(m1.isPresent());
-
-        interface2.send("HE");
     }
 }

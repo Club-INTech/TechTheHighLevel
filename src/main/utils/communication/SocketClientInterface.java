@@ -15,19 +15,31 @@ public class SocketClientInterface extends SocketInterface {
      * Construit une interface de connexion point-à-point se connectant directement à un port ouvert
      * @param ipAdress  adresse ip
      * @param port      port auquel se connecter
-     * @param readOnly  true si connexion à lire uniquement
      */
-    public SocketClientInterface(String ipAdress, int port, boolean readOnly) {
-        super(ipAdress, port, readOnly);
+    public SocketClientInterface(String ipAdress, int port) {
+        super(ipAdress, port);
     }
 
     @Override
     public synchronized void init() throws CommunicationException {
-        try {
-            this.socket = new Socket(ipAddress, port);
-            this.initBuffers();
-        } catch (IOException e) {
-            throw new CommunicationException("Initialisation impossible : vérifiez si la socket remote est up");
-        }
+        new Thread(() -> {
+            long start = System.currentTimeMillis();
+            while (System.currentTimeMillis() - start < SocketInterface.CONNECTION_TIMEOUT) {
+                synchronized (this) {
+                    try {
+                        this.socket = new Socket(ipAddress, port);
+                        this.initBuffers();
+                        break;
+                    } catch (IOException | CommunicationException e) {
+                        e.printStackTrace();
+                    }
+                }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }

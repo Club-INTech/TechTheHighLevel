@@ -42,33 +42,28 @@ public abstract class SocketInterface implements CommunicationInterface {
     private BufferedWriter output;
 
     /**
-     * Booléen décrivant si la socket est read only ou non
-     */
-    private boolean readOnly;
-
-    /**
      * True si la connexion a été initialisée
      */
     private boolean initiate;
 
     /**
+     * Timeout de connexion du server
+     */
+    public static final int CONNECTION_TIMEOUT  = 120000;
+
+    /**
      * Construit une interface de connexion socket
      * @param ipAddress     l'addresse ip sur laquelle se connecter
      * @param port          port de connexion
-     * @param readOnly      true si l'interface ne doit faire qu'écouter
      */
-    public SocketInterface(String ipAddress, int port, boolean readOnly) {
+    public SocketInterface(String ipAddress, int port) {
         this.ipAddress = ipAddress;
         this.port = port;
-        this.readOnly = readOnly;
         this.initiate = false;
     }
 
     @Override
     public synchronized void send(String message) throws CommunicationException {
-        if (readOnly || !initiate) {
-            throw new CommunicationException("Envoie du message " + message + " impossible : connexion read-only");
-        }
         try {
             this.output.write(message);
             this.output.newLine();

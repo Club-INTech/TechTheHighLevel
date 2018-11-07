@@ -84,8 +84,6 @@ public class Container implements Service
         System.out.println();
 
         System.out.println("   Remember, with great power comes great current squared times resistance !\n");
-        System.out.println("   Remember, with great power comes great current squared times resistance !");
-        System.out.println();
 
         /* Instanciation des attributs & de la config */
         instanciedServices = new HashMap<>();
