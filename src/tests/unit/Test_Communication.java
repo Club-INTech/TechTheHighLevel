@@ -1,246 +1,80 @@
 package unit;
 
-import utils.communication.ConnectionsManager;
-import utils.communication.Connections;
-import data.controlers.LidarHandlerRunnable;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.Test;
+import utils.communication.CommunicationException;
+import utils.communication.SocketClientInterface;
+import utils.communication.SocketServerInterface;
+
+import java.util.Optional;
 
 public class Test_Communication {
 
-    private int nbMessages=100; //Nombre de message à envoyer pour tester la connexion
-    private ConnectionsManager commWrapper;
+    public SocketServerInterface interface1;
+
+    public SocketClientInterface interface2;
+
+    @Before
+    public void setUp() throws Exception {
+        interface1 = new SocketServerInterface("localhost", 10200, false);
+        interface1.init();
+    }
 
     @After
-    public void after(){
-        this.commWrapper.stopReadingThread(); //On ferme le thread du comm wrapper qui écoute les messages reçus
+    public void tearDown() throws Exception {
+        interface1.close();
+        interface2.close();
+        interface1 = null;
+        interface2 = null;
+        System.gc();
     }
 
-    @SuppressWarnings("Duplicates")
     @Test
-    /* Test visuel */
-    public void visualCommunicationTest(){
+    public void testBidirectionnal() throws Exception {
+        interface2 = new SocketClientInterface("localhost", 10200, false);
+        interface2.init();
 
-        //On crée le wrapper de main.utils.communication en localhost
-        this.commWrapper = new ConnectionsManager(){
-            @Override
-            /* On traite les messages selon leurs headers */
-            protected void handleMessage(String header, String message) {
-                System.out.println(header+message);
-            }
-        };
+        interface1.send("M1");
+        interface1.send("M2");
+        interface2.send("R1");
+        interface1.send("M3");
 
-        this.commWrapper.startAllConnections(Connections.TO_LOCALHOST_TEST, Connections.LOCALHOST_TEST_SERVER);
+        Thread.sleep(100);
+        Optional<String> m1 = interface2.read();
+        Optional<String> m2 = interface2.read();
+        Optional<String> m3 = interface2.read();
+        Optional<String> m4 = interface2.read();
 
-        //On envoie les messages du client vers le serveur
-        for (int i=0; i<this.nbMessages; i++){
-            Connections.TO_LOCALHOST_TEST.send("From client : "+i);
-        }
+        Optional<String> r1 = interface1.read();
+        Optional<String> r2 = interface1.read();
 
-        //On envoie les messages du serveur vers le client
-        for (int i=0; i<this.nbMessages; i++){
-            Connections.LOCALHOST_TEST_SERVER.send("From server : "+i);
-        }
+        Assert.assertTrue(m1.isPresent());
+        Assert.assertTrue(m2.isPresent());
+        Assert.assertTrue(m3.isPresent());
+        Assert.assertFalse(m4.isPresent());
+        Assert.assertTrue(r1.isPresent());
+        Assert.assertFalse(r2.isPresent());
 
-        //On attend 1 seconde pour que les sockets affichent tous les messages
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        //Close connections.
-        Connections.TO_LOCALHOST_TEST.close();
-        Connections.LOCALHOST_TEST_SERVER.close();
+        Assert.assertEquals("M1", m1.get());
+        Assert.assertEquals("M2", m2.get());
+        Assert.assertEquals("M3", m3.get());
+        Assert.assertEquals("R1", r1.get());
     }
 
+    @Test(expected = CommunicationException.class)
+    public void testUnidirectionnal() throws Exception {
+        interface2 = new SocketClientInterface("localhost", 10200, true);
+        interface2.init();
 
-    @SuppressWarnings("Duplicates")
-    @Ignore
-    @Test
-    public void lidarCommunicationTest(){
-        System.out.println("Start test.");
+        interface1.send("AH");
 
-        // Initialisation.
-        LidarHandlerRunnable lidarHandlerRunnable = new LidarHandlerRunnable();
-        Thread lidarHandlerThread = new Thread(lidarHandlerRunnable);
-        System.out.println("Thread state : " + lidarHandlerThread.getState() + "\n");
-        lidarHandlerRunnable.showLidarQueue();
+        Thread.sleep(100);
+        Optional<String> m1 = interface2.read();
 
-        // Test queue.
-        lidarHandlerRunnable.appendToQueue("FIRST");
-        lidarHandlerRunnable.clearLidarQueue();
+        Assert.assertTrue(m1.isPresent());
 
-        // Starts the thread.
-        lidarHandlerThread.start();
-        System.out.println("Thread launched.");
-
-        // On crée le wrapper de main.utils.communication en localhost.
-        this.commWrapper = new ConnectionsManager(){
-            @Override
-            /* On traite les messages selon leurs headers */
-            protected void handleMessage(String header, String message) {
-                if (header.equals("CL")) { //"CL" pour Client
-                    System.out.print("Message received from client: ");
-                    System.out.println("CL: " + message);
-                }
-                else if (header.equals("SE")){ //"SE" pour Server
-                    System.out.print("Message received from server: ");
-                    System.out.println("SE: " + message);
-                }
-                else if (header.equals("LI")) {
-                    System.out.print("Message received from lidar: ");
-                    System.out.println("LI: " + message);
-                    lidarHandlerRunnable.appendToQueue(message);
-                }
-                else {
-                    System.out.println("LIDAR: " + message);
-                    lidarHandlerRunnable.appendToQueue(message);
-                }
-            }
-        };
-
-        this.commWrapper.startAllConnections(Connections.TO_LIDAR_SOCKET);
-
-        System.out.println("Wait...");
-
-        // Waits.
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        // Stops the threads.
-        lidarHandlerRunnable.stop();
-        System.out.println("Thread stoped.");
-        while (lidarHandlerThread.getState() != Thread.State.TERMINATED) {
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println("Thread state : " + lidarHandlerThread.getState() + "\n");
-        lidarHandlerRunnable.clearLidarQueue();
-
-        // Close connections.
-        Connections.TO_LIDAR_SOCKET.close();
-
+        interface2.send("HE");
     }
-
-
-    @SuppressWarnings("Duplicates")
-    @Test
-    /* Test utilisable pour Jenkins */
-    public void booleanCommunicationTest(){
-        //On crée des StringBuilder pour définir les messages qu'on devrait recevoir
-        StringBuilder referenceClientReceivedBuilder = new StringBuilder();
-        StringBuilder referenceServerReceivedBuilder = new StringBuilder();
-
-        //On définit les messages qu'on devrait recevoir
-        for (int i=0; i<this.nbMessages; i++){
-            referenceClientReceivedBuilder.append("CL");
-            referenceClientReceivedBuilder.append(i);
-            referenceServerReceivedBuilder.append("SE");
-            referenceServerReceivedBuilder.append(i);
-        }
-        //On récupère sous forme de String les messages qu'on devrait recevoir
-        String referenceClientReceived=referenceClientReceivedBuilder.toString();
-        String referenceServerReceived=referenceServerReceivedBuilder.toString();
-
-        //On crée les StringBuilder pour les messages qu'on reçoit
-        StringBuilder clientReceivedBuilder = new StringBuilder();
-        StringBuilder serverReceivedBuilder = new StringBuilder();
-
-        //On crée le wrapper de main.utils.communication en localhost
-        this.commWrapper = new ConnectionsManager(){
-            @Override
-            /* On traite les messages selon leurs headers*/
-            protected void handleMessage(String header, String message) {
-                if (header.equals("CL")) { //"CL" pour Client
-                    clientReceivedBuilder.append(header);
-                    clientReceivedBuilder.append(message);
-                }
-                else if (header.equals("SE")){ //"SE" pour Server
-                    serverReceivedBuilder.append(header);
-                    serverReceivedBuilder.append(message);
-                }
-            }
-        };
-
-        this.commWrapper.startAllConnections(Connections.TO_LOCALHOST_TEST,Connections.LOCALHOST_TEST_SERVER);
-
-        //On envoie les messages du client vers le serveur
-        for (int i=0; i<this.nbMessages; i++){
-            Connections.TO_LOCALHOST_TEST.send("CL"+i);
-        }
-
-        //On envoie les messages du serveur vers le client
-        for (int i=0; i<this.nbMessages; i++){
-            Connections.LOCALHOST_TEST_SERVER.send("SE"+i);
-        }
-
-        //On attend 1 seconde pour que les sockets affichent tous les messages
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        //On vérifie que les paquets arrivés correspondent bien à ce qui est attendu
-        boolean serverToClient = false;
-        boolean clientToServer = false;
-
-        if (clientReceivedBuilder.toString().equals(referenceClientReceived)){
-            serverToClient=true;
-        }
-        if (serverReceivedBuilder.toString().equals(referenceServerReceived)){
-            clientToServer=true;
-        }
-
-        //On assert pour Jenkins
-        Assert.assertTrue((clientReceivedBuilder.toString().equals(referenceClientReceived)) &&
-                (serverReceivedBuilder.toString().equals(referenceServerReceived)));
-
-        //Si tout correspond
-        if (serverToClient && clientToServer) {
-            System.out.println("Everything OK");
-        }
-        else{ //S'il y a une erreur
-            if (!serverToClient && clientToServer){
-                System.out.println("Problem serverToClient");
-                System.out.println("Server reference:");
-                System.out.println(referenceServerReceived);
-                System.out.println("Server received:");
-                System.out.println(serverReceivedBuilder.toString());
-            }
-            else if (serverToClient){
-                System.out.println("Problem clientToServer");
-                System.out.println("Server reference:");
-                System.out.println(referenceClientReceived);
-                System.out.println("Server received:");
-                System.out.println(clientReceivedBuilder.toString());
-            }
-            else{
-                System.out.println("Problem serverToClient and clientToServer");
-                System.out.println("Server reference:");
-                System.out.println(referenceServerReceived);
-                System.out.println("Server received:");
-                System.out.println(serverReceivedBuilder.toString());
-                System.out.println("Client reference:");
-                System.out.println(referenceClientReceived);
-                System.out.println("Client received:");
-                System.out.println(clientReceivedBuilder.toString());
-            }
-        }
-
-        //Close connections.
-        Connections.TO_LOCALHOST_TEST.close();
-        Connections.LOCALHOST_TEST_SERVER.close();
-    }
-    
 }
-

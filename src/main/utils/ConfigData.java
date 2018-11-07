@@ -34,22 +34,33 @@ public enum ConfigData implements ConfigInfo
     BUDDY_RAY(150),
     ENNEMY_RAY(400),
 
+    /**
+     * Ips et ports des raspis, lidar & teensy
+     */
+    MASTER_IP("192.168.0.3"),
+    MASTER_PORT(14500),
+    TEENSY_MASTER_IP("192.168.0.1"),
+    TEENSY_MASTER_PORT(13500),
+    TEENSY_SLAVE_IP("192.168.0.2"),
+    TEENSY_SLAVE_PORT(13500),
+    LIDAR_PORT(15500),
+
+    LOCALHOST("localhost"),
+    LOCALSERVER_PORT(13550),
+
     /** Vitesses du main.robot */
     ROBOT_LINEAR_SPEED(840),        // mm/s
     ROBOT_ANGULAR_SPEED(Math.PI),   // rad/s
-
 
     /**Longueur bras*/
     //TODO : adapter
     LONGUEUR_BRAS_AVANT(317),
     LONGUEUR_BRAS_ARRIERE(333),
 
-
     /** Paramètres obstacles */
     PEREMP_OBST(2000),
 
     /** Paramètres capteurs */
-
     ROBOT_EN_RADIUS(220),           //en mm
     MAX_SENSOR_RANGE(600),          //en mm
     MIN_SENSOR_RANGEAV(30),         //en mm

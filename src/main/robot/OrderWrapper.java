@@ -1,11 +1,11 @@
 package robot;
 
+import connection.Connection;
 import pfg.config.Config;
 import robot.OrdersEnums.*;
 import robot.hooks.HookNames;
 import utils.ConfigData;
 import utils.Log;
-import utils.communication.Connections;
 import utils.container.Service;
 import utils.math.Vec2;
 
@@ -22,7 +22,7 @@ public class OrderWrapper implements Service {
     private boolean symetry;
 
     /**On utitise comme connexion par défaut le bas niveau*/
-    private Connections llConnection=Connections.TO_TEENSY;
+    private Connection llConnection = Connection.TEENSY_MASTER;
 
     private SymmetrizedActuatorOrderMap symmetrizedActuatorOrderMap;
 
@@ -56,7 +56,7 @@ public class OrderWrapper implements Service {
      */
     public void moveLenghtwise(double distance){
         int d = (int)Math.round(distance);
-        llConnection.send(MotionOrder.MOVE_LENTGHWISE,String.format(Locale.US,"%d", d));
+        llConnection.send(String.format(Locale.US, "%s %d", MotionOrder.MOVE_LENTGHWISE.getOrderStr(), d));
     }
 
     /**
@@ -68,14 +68,14 @@ public class OrderWrapper implements Service {
         if(symetry){
             angle=(Math.PI - angle)%(2*Math.PI);
         }
-        llConnection.send(MotionOrder.TURN, String.format(Locale.US,"%.3f",angle));
+        llConnection.send(String.format(Locale.US, "%s %.3f", MotionOrder.TURN.getOrderStr(), angle));
     }
 
     /**
      * On envoit au bas niveau comme ordre de s'arrêter
      */
     public void immobilise(){
-        llConnection.send(MotionOrder.STOP);
+        llConnection.send(MotionOrder.STOP.getOrderStr());
     }
 
     /**
@@ -84,7 +84,7 @@ public class OrderWrapper implements Service {
      */
     public void setTranslationnalSpeed(float speed)
     {
-        llConnection.send(SpeedOrder.SET_TRANSLATION_SPEED,String.format(Locale.US,"%.3f",speed));
+        llConnection.send(String.format(Locale.US,"%s %.3f", SpeedOrder.SET_TRANSLATION_SPEED.getOrderStr(), speed));
     }
 
     /**
@@ -93,7 +93,7 @@ public class OrderWrapper implements Service {
      */
     public void setRotationnalSpeed(double rotationSpeed)
     {
-        llConnection.send(SpeedOrder.SET_ROTATIONNAL_SPEED, String.format(Locale.US, "%.3f", (float)rotationSpeed));
+        llConnection.send(String.format(Locale.US, "%s %.3f", SpeedOrder.SET_ROTATIONNAL_SPEED.getOrderStr(), (float)rotationSpeed));
     }
 
     /**
@@ -118,7 +118,7 @@ public class OrderWrapper implements Service {
             x=-x;
             orientation=(Math.PI - orientation)%(2*Math.PI);
         }
-        llConnection.send(PositionAndOrientationOrder.SET_POSITION_AND_ORIENTATION , String.format("%d",x), String.format("%d",y), String.format(Locale.US,"%.3f",orientation));
+        llConnection.send(String.format(Locale.US, "%s %d %d %.3f", PositionAndOrientationOrder.SET_POSITION_AND_ORIENTATION.getOrderStr(), pos.getX(), pos.getY(), orientation));
     }
 
     /**
@@ -130,7 +130,7 @@ public class OrderWrapper implements Service {
         if(symetry){
             orientation=(Math.PI - orientation)%(2*Math.PI);
         }
-        llConnection.send( PositionAndOrientationOrder.SET_ORIENTATION,String.format(Locale.US,"%.3f",orientation));
+        llConnection.send(String.format(Locale.US,"%s %.3f", PositionAndOrientationOrder.SET_ORIENTATION.getOrderStr(), orientation));
     }
 
     /**
@@ -157,7 +157,8 @@ public class OrderWrapper implements Service {
             }
 
         }
-        llConnection.send(HooksOrder.INITIALISE_HOOK, String.format("%d", id), posTrigger.toStringEth(), String.format("%d", tolerency),String.format(Locale.US,"%.3f",orientation), String.format(Locale.US,"%.3f",tolerencyAngle),order.getOrderStr());
+        llConnection.send(String.format(Locale.US, "%s %d %s %d %.3f %.3f %s",
+                HooksOrder.INITIALISE_HOOK.getOrderStr(), id, posTrigger.toStringEth(), tolerency, orientation, tolerencyAngle, order.getOrderStr()));
     }
 
     /**
@@ -165,7 +166,7 @@ public class OrderWrapper implements Service {
      * @param hook hook à activer
      */
     public void enableHook(HookNames hook){
-        llConnection.send( HooksOrder.ENABLE_HOOK, String.format("%d", hook.getId()));
+        llConnection.send(String.format(Locale.US, "%s %d", HooksOrder.ENABLE_HOOK.getOrderStr(), hook.getId()));
     }
 
     /**
@@ -173,9 +174,8 @@ public class OrderWrapper implements Service {
      * @param hook
      */
     public void disableHook(HookNames hook){
-        llConnection.send(HooksOrder.DISABLE_HOOK, String.format("%d", hook.getId()));
+        llConnection.send(String.format(Locale.US, "%s %d", HooksOrder.DISABLE_HOOK.getOrderStr(), hook.getId()));
     }
-
 
     @Override
     public void updateConfig(Config config) {
@@ -187,9 +187,7 @@ public class OrderWrapper implements Service {
      * On set la connection, c'est pour faire les tests en local, faire très attention quand on utilise cette méthode
      * @param connection : à qui on veut envoyer des ordres
      */
-    public void setConnection(Connections connection) {
+    public void setConnection(Connection connection) {
         this.llConnection = connection;
     }
-
-
 }

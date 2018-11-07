@@ -1,9 +1,7 @@
-
+import connection.ConnectionManager;
 import utils.ConfigData;
 import utils.Container;
-import utils.communication.Connections;
-import utils.communication.ConnectionsManager;
-
+import utils.container.ContainerException;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,28 +20,10 @@ public class MainRaspi {
         container = Container.getInstance(hierarchy);
 
         boolean isMaster = container.getConfig().getBoolean(ConfigData.MASTER);
-        ConnectionsManager connManager = new ConnectionsManager(){
-            @Override
-            protected void handleMessage(String header, String message) {
-                System.out.println(message);
-            }
-        };
-
-
-        if (isMaster) {
-            connManager.startAllConnections(Connections.MASTER_SERVER);
-            System.out.println("Connections estalished !");
-            for (int i=0; i<100; i++) {
-                Connections.MASTER_SERVER.send("SE"+Integer.toString(i));
-            }
-        }
-        else{
-            connManager.startAllConnections(Connections.TO_MASTER);
-            System.out.println("Connections estalished !");
-            for (int i=100; i<200; i++) {
-                Connections.TO_MASTER.send("CL"+Integer.toString(i));
-
-            }
+        try {
+            ConnectionManager connectionManager = container.getService(ConnectionManager.class);
+        } catch (ContainerException e) {
+            e.printStackTrace();
         }
 
     }

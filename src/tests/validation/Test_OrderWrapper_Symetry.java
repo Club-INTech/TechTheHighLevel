@@ -1,5 +1,6 @@
 package validation;
 
+import connection.ConnectionManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,8 +13,6 @@ import robot.OrdersEnums.MotionOrder;
 import robot.OrdersEnums.PositionAndOrientationOrder;
 import utils.ConfigData;
 import utils.Container;
-import utils.communication.Connections;
-import utils.communication.ConnectionsManager;
 import utils.container.ContainerException;
 import utils.math.VectCartesian;
 
@@ -26,7 +25,7 @@ public class Test_OrderWrapper_Symetry {
     /**orderWrapper*/
     private OrderWrapper orderWrapper;
     /**connectionManager pour établir et fermer les connexions en local pour run les tests*/
-    private ConnectionsManager connectionsManager;
+    private ConnectionManager connectionsManager;
     /**String ajouté pour les asserts : voir tests*/
     private static String  m;
     /**config*/
@@ -44,23 +43,7 @@ public class Test_OrderWrapper_Symetry {
         catch (ContainerException e){
             e.printStackTrace();
         }
-        this.connectionsManager=new ConnectionsManager() {
-
-            @Override
-            public void startAllConnections(Connections... connections) {
-                super.startAllConnections(connections);
-            }
-
-            @Override
-            protected void handleMessage(String header, String message) {
-                m=header+message;
-            }
-        };
-        config.override(ConfigData.COULEUR, "jaune");
-        orderWrapper.updateConfig(config);
-
-        this.connectionsManager.startAllConnections(Connections.TO_LOCALHOST_TEST,Connections.LOCALHOST_TEST_SERVER);
-        orderWrapper.setConnection(Connections.TO_LOCALHOST_TEST);
+        // TODO
     }
 
     /**
@@ -108,12 +91,7 @@ public class Test_OrderWrapper_Symetry {
      */
     @After
     public void closeConnection() {
-        m="";
-        Connections.TO_LOCALHOST_TEST.close();
-        Connections.LOCALHOST_TEST_SERVER.close();
-        config.override(ConfigData.COULEUR, "violet");
-        orderWrapper.updateConfig(config);
-
+        // TODO
     }
 
 

@@ -1,5 +1,6 @@
 package validation;
 
+import connection.ConnectionManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,14 +10,9 @@ import robot.OrderWrapper;
 import robot.OrdersEnums.*;
 
 import robot.hooks.HookNames;
-import utils.ConfigData;
 import utils.Container;
-import utils.communication.Connections;
-import utils.communication.ConnectionsManager;
-import utils.container.ContainerException;
 import utils.math.VectCartesian;
 
-import java.time.LocalDateTime;
 import java.util.Locale;
 
 /**
@@ -29,35 +25,16 @@ public class Test_OrderWrapper {
     /**orderWrapper*/
     private OrderWrapper orderWrapper;
     /**connectionManager pour établir et fermer les connexions en local pour run les tests*/
-    private ConnectionsManager connectionsManager;
+    private ConnectionManager connectionsManager;
     /**String ajouté pour les asserts : voir tests*/
     private static String  m;
     /**config*/
     private Config config;
     @Before
-    public void setUp(){
-        container=Container.getInstance("Master");
-        config=container.getConfig();
-        try{
-            this.orderWrapper= container.getService(OrderWrapper.class);
-        }
-        catch (ContainerException e){
-            e.printStackTrace();
-        }
-        this.connectionsManager=new ConnectionsManager() {
-
-            @Override
-            public void startAllConnections(Connections... connections) {
-                super.startAllConnections(connections);
-            }
-
-            @Override
-            protected void handleMessage(String header, String message) {
-                m=header+message;
-            }
-        };
-        this.connectionsManager.startAllConnections(Connections.TO_LOCALHOST_TEST,Connections.LOCALHOST_TEST_SERVER);
-        orderWrapper.setConnection(Connections.TO_LOCALHOST_TEST);
+    public void setUp() {
+        container = Container.getInstance("Master");
+        config = container.getConfig();
+        // TODO Instanciation
     }
 
     /**
@@ -207,9 +184,7 @@ public class Test_OrderWrapper {
      */
     @After
     public void closeConnection() {
-        m="";
-        Connections.TO_LOCALHOST_TEST.close();
-        Connections.LOCALHOST_TEST_SERVER.close();
+        // TODO
     }
 
 
