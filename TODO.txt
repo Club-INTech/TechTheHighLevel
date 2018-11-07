@@ -3,9 +3,13 @@ TODO actuel du HL
 1. Maths : Corriger                                                                 OK
 2. Communication & Connection : Séparer Connection/Communicaton/Listener            OK
 3. Data : implémenter les méthodes Lidar dans la table et Graphe                    OK
-4. Data : implémenter les controlers sur le Listener
-5. Locomotion : TOUT
-6. Stratégie : Systèmes d'actions et de Scripts
+4. Compléter les Tests : Test_Obstacle, créer Test_Node, Test_XYO
+
+5. Tester avec la Raspi !
+
+6. Data : implémenter les controlers sur le Listener
+7. Locomotion : TOUT
+8. Stratégie : Systèmes d'actions et de Scripts
 .
 .
 .
