@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>180</x>
+      <y>30</y>
+      <w>260</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>LocomotionService(Thread)
+Package :: Locomotion
+--
+-table : Table
+-graphe : Graphe
+-orderWrapper : OrderWrapper
+-messageQueue : Buffer
+--
+@run()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>40</x>
+      <y>230</y>
+      <w>260</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>Pathfinding
+Package :: Locomotion
+--
+-graphe : Graphe
+-table : Table
+-path : Liste
+-eventQueue : Buffer
+--
+~moveTo()
+-init()
+-findPath()
+-reconstructPath()
+-clean()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>340</x>
+      <y>310</y>
+      <w>260</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>PathFollower(Thread)
+Package :: Locomotion
+--
+-path : Liste
+-orderWrapper : OrderWrapper
+-eventQueue : Buffer
+--
+@run()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>290</x>
+      <y>350</y>
+      <w>70</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;50.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>160</x>
+      <y>150</y>
+      <w>100</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+
+1</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+</diagram>
