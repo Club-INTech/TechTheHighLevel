@@ -1,12 +1,9 @@
 package orders.order;
 
 /**
- * Définit un ordre
+ * Interface permettant que tous les ordres(MotionOrder, ActionOrder,....) soient de la classe Order
  */
 public interface Order {
 
-    /**
-     * Un ordre est un type énuméré mappant sur la String correspondante à l'ordre
-     */
-    String getStringOrder();
+    public String getOrderStr();
 }

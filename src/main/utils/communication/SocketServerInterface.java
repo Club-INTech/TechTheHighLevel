@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.net.ServerSocket;
 
 /**
+ * Définit l'interface de connexion utilisant une socket serveur
+ * @see SocketInterface
  *
+ * @author william, rem
  */
 public class SocketServerInterface extends SocketInterface {
 

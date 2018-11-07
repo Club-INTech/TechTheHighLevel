@@ -4,17 +4,18 @@ import data.Graphe;
 import data.Table;
 import data.graphe.Node;
 import data.graphe.Ridge;
-import data.table.FixedCircularObstacle;
-import data.table.FixedRectangularObstacle;
+import data.table.StillCircularObstacle;
+import data.table.StillRectangularObstacle;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import utils.Container;
-import utils.maths.Vector;
+import utils.math.Vec2;
+import utils.math.VectCartesian;
+import utils.math.VectPolar;
 
-public class Test_Graphe
-{
+public class Test_Graphe {
     /**
      * Graphe à tester
      */
@@ -35,8 +36,8 @@ public class Test_Graphe
     @Test
     public void testInstanciation() throws Exception {
         Table table = container.getService(Table.class);
-        table.addFixedObstacle(new FixedCircularObstacle(new Vector(300, 300), 200));
-        table.addFixedObstacle(new FixedRectangularObstacle(new Vector(600, 300), 300, 200));
+        table.addFixedObstacle(new StillCircularObstacle(new VectPolar(300, 300), 200));
+        table.addFixedObstacle(new StillRectangularObstacle(new VectPolar(600, 300), 300, 200));
 
         graphe = container.getService(Graphe.class);
 
@@ -54,7 +55,7 @@ public class Test_Graphe
     @Test
     public void testAddProvisoryNode1() throws Exception {
         graphe = container.getService(Graphe.class);
-        Vector nodePos = graphe.getNodes().get(8).getPosition().clone();
+        Vec2 nodePos = graphe.getNodes().get(8).getPosition().clone();
         int nbNode = graphe.getNodes().size();
 
         Node node = graphe.addProvisoryNode(nodePos);
@@ -66,7 +67,7 @@ public class Test_Graphe
     @Test
     public void testAddProvisoryNode2() throws Exception {
         graphe = container.getService(Graphe.class);
-        Vector nodePos = graphe.getNodes().get(8).getPosition().addNewVector(new Vector(-20, 12));
+        Vec2 nodePos = graphe.getNodes().get(8).getPosition().plusVector(new VectCartesian(-20, 12));
         int nbNode = graphe.getNodes().size();
 
         Node node = graphe.addProvisoryNode(nodePos);
@@ -77,7 +78,7 @@ public class Test_Graphe
     @Test
     public void testRemoveProvisoryNode1() throws Exception {
         graphe = container.getService(Graphe.class);
-        Vector nodePos = graphe.getNodes().get(8).getPosition().clone();
+        Vec2 nodePos = graphe.getNodes().get(8).getPosition().clone();
         int nbNode = graphe.getNodes().size();
 
         Node node = graphe.addProvisoryNode(nodePos);
@@ -89,7 +90,7 @@ public class Test_Graphe
     @Test
     public void testRemoveProvisoryNode2() throws Exception {
         graphe = container.getService(Graphe.class);
-        Vector nodePos = graphe.getNodes().get(8).getPosition().addNewVector(new Vector(-20, 12));
+        Vec2 nodePos = graphe.getNodes().get(8).getPosition().plusVector(new VectCartesian(-20, 12));
         int nbNode = graphe.getNodes().size();
 
         Node node = graphe.addProvisoryNode(nodePos);

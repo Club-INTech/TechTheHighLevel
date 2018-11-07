@@ -3,12 +3,12 @@ package data.controlers;
 import data.Table;
 import data.XYO;
 import pfg.config.Config;
-import pfg.config.ConfigInfo;
 import utils.ConfigData;
 import utils.Log;
 import utils.container.Service;
-import utils.maths.MathLib;
-import utils.maths.Vector;
+import utils.math.Calculs;
+import utils.math.Vec2;
+import utils.math.VectPolar;
 
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -80,8 +80,8 @@ public class LidarControler extends Thread implements Service {
         Log.LIDAR.debug("Controller opérationnel");
 
         String[] points;
-        ArrayList<Vector> vectors = new ArrayList<>();
-        Vector vector;
+        ArrayList<Vec2> Vec2s = new ArrayList<>();
+        Vec2 Vec2;
         while (!Thread.currentThread().isInterrupted()) {
             while (messageQueue.peek() == null) {
                 try {
@@ -91,18 +91,18 @@ public class LidarControler extends Thread implements Service {
                 }
             }
             points= messageQueue.poll().split(POINT_SEPARATOR);
-            vectors.clear();
+            Vec2s.clear();
             for (String point : points) {
-                vector = new Vector(Double.parseDouble(point.split(COORDONATE_SEPARATOR)[0]),
+                Vec2 = new VectPolar(Double.parseDouble(point.split(COORDONATE_SEPARATOR)[0]),
                         Double.parseDouble(point.split(COORDONATE_SEPARATOR)[1]));
-                vector.setTheta(MathLib.modulo(vector.getTheta() + XYO.getRobotInstance().getOrientation(), 2*Math.PI));
-                vector.addVector(XYO.getRobotInstance().getPosition());
+                Vec2.setA(Calculs.modulo(Vec2.getA() + XYO.getRobotInstance().getOrientation(), 2*Math.PI));
+                Vec2.plus(XYO.getRobotInstance().getPosition());
                 if (symetrie) {
-                    vector.setX(-vector.getX());
+                    Vec2.setX(-Vec2.getX());
                 }
-                vectors.add(vector);
+                Vec2s.add(Vec2);
             }
-            table.updateMobileObstacles(vectors);
+            table.updateMobileObstacles(Vec2s);
         }
     }
 

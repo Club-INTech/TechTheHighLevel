@@ -88,7 +88,11 @@ Package :: Utils
       <w>520</w>
       <h>340</h>
     </coordinates>
+<<<<<<< HEAD
     <panel_attributes>utils.communication
+=======
+    <panel_attributes>main.utils.main.utils.communication
+>>>>>>> dev
 --
 </panel_attributes>
     <additional_attributes/>
@@ -115,7 +119,11 @@ bg=white</panel_attributes>
       <h>100</h>
     </coordinates>
     <panel_attributes>/AbstractComm/
+<<<<<<< HEAD
 Package :: utils.communication
+=======
+Package :: main.utils.main.utils.communication
+>>>>>>> dev
 --
 --
 /+send(String)/

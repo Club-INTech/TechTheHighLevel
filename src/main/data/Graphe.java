@@ -2,16 +2,17 @@ package data;
 
 import data.graphe.Node;
 import data.graphe.Ridge;
-import data.table.FixedCircularObstacle;
+import data.table.StillCircularObstacle;
 import data.table.MobileCircularObstacle;
 import data.table.Obstacle;
 import pfg.config.Config;
 import utils.ConfigData;
 import utils.Log;
 import utils.container.Service;
-import utils.maths.Circle;
-import utils.maths.Segment;
-import utils.maths.Vector;
+import utils.math.Circle;
+import utils.math.Segment;
+import utils.math.Vec2;
+import utils.math.VectCartesian;
 
 import java.util.ArrayList;
 
@@ -72,7 +73,7 @@ public class Graphe implements Service
         Log.GRAPHE.debug("Initialisation du Graphe...");
         this.nodes = new ArrayList<>();
         this.ridges = new ArrayList<>();
-        Vector pos;
+        Vec2 pos;
 
         try {
             for (Obstacle obstacle : fixedObstacles) {
@@ -102,12 +103,12 @@ public class Graphe implements Service
      * @throws CloneNotSupportedException   exception qui n'arrive jamais...
      */
     private void placeNodes(Obstacle obstacle) throws CloneNotSupportedException {
-        Vector pos = new Vector();
-        if (obstacle instanceof FixedCircularObstacle) {
+        Vec2 pos = new VectCartesian(0, 0);
+        if (obstacle instanceof StillCircularObstacle) {
             for (int i = 0; i < nodeCricleNbr; i++) {
-                pos.setRay(spaceCircleParameter * ((Circle) obstacle.getShape()).getRay());
-                pos.setTheta(i * 2 * Math.PI / nodeCricleNbr);
-                pos.addVector(obstacle.getPosition());
+                pos.setR(spaceCircleParameter * ((Circle) obstacle.getShape()).getRadius());
+                pos.setA(i * 2 * Math.PI / nodeCricleNbr);
+                pos.plusVector(obstacle.getPosition());
 
                 if (!table.isPositionInFixedObstacle(pos)) {
                     nodes.add(new Node(pos.clone()));
@@ -121,7 +122,7 @@ public class Graphe implements Service
      * @throws CloneNotSupportedException   exception qui n'arrive jamais...
      */
     private void placeNodes() throws CloneNotSupportedException {
-        Vector pos = new Vector();
+        Vec2 pos = new VectCartesian(0, 0);
         int xStep = table.getLength()/nodeXNbr;
         int yStep = table.getWidth()/nodeYNbr;
 
@@ -142,13 +143,13 @@ public class Graphe implements Service
      * @throws CloneNotSupportedException   exception qui n'arrive jamais...
      */
     private void placeRidges() throws CloneNotSupportedException {
-        Segment segment = new Segment(new Vector(), new Vector());
+        Segment segment = new Segment(new VectCartesian(0, 0), new VectCartesian(0, 0));
         for (int i = 0; i < nodes.size(); i++) {
             Node node1 = nodes.get(i);
-            segment.setA(node1.getPosition());
+            segment.setPointA(node1.getPosition());
             for (int j = i + 1; j < nodes.size(); j++) {
                 Node node2 = nodes.get(j);
-                segment.setB(node2.getPosition());
+                segment.setPointB(node2.getPosition());
                 constructRidge(node1, node2, segment);
             }
         }
@@ -180,7 +181,7 @@ public class Graphe implements Service
      * @throws CloneNotSupportedException
      *                  exception qui n'arrive jamais...
      */
-    public Node addProvisoryNode(Vector position) throws CloneNotSupportedException {
+    public Node addProvisoryNode(Vec2 position) throws CloneNotSupportedException {
         Node n = null;
         for (Node node : nodes) {
             if (node.getPosition().equals(position)) {
@@ -192,9 +193,9 @@ public class Graphe implements Service
         }
         else {
             n = new Node(position, false);
-            Segment seg = new Segment(position, new Vector());
+            Segment seg = new Segment(position, new VectCartesian(0, 0));
             for (Node neighbour : nodes) {
-                seg.setB(neighbour.getPosition());
+                seg.setPointB(neighbour.getPosition());
                 constructRidge(n, neighbour, seg);
             }
             nodes.add(n);
@@ -236,7 +237,7 @@ public class Graphe implements Service
      */
     private void constructRidge(Node node1, Node node2, Segment segment) throws CloneNotSupportedException {
         if (!table.intersectAnyFixedObstacle(segment)) {
-            Ridge ridge = new Ridge(node1.getPosition().quickDistanceTo(node2.getPosition()), segment.clone());
+            Ridge ridge = new Ridge((int) node1.getPosition().distanceTo(node2.getPosition()), segment.clone());
             ridges.add(ridge);
             node1.addNeighbour(node2, ridge);
             node2.addNeighbour(node1, ridge);

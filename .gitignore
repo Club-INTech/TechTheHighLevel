@@ -1,4 +1,6 @@
-*.iml
+# Directories to ignore
 .idea/
-logs/
 out/
+logs/
+*.iml
+config/hierarchy.txt

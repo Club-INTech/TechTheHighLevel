@@ -1,9 +1,8 @@
 package data.table;
 
-import data.graphe.Ridge;
-import utils.maths.Circle;
-import utils.maths.Segment;
-import utils.maths.Vector;
+import utils.math.Circle;
+import utils.math.Segment;
+import utils.math.Vec2;
 
 /**
  * Classe implémentant les obstacles mobiles circulaires, dans notre cas les autres robots (adverse & buddy)
@@ -26,7 +25,7 @@ public class MobileCircularObstacle extends Obstacle
      * @param position  position du centre du cercle représentant l'avdversaire
      * @param ray       rayon du cercle représentant l'adversaire
      */
-    public MobileCircularObstacle(Vector position, int ray) {
+    public MobileCircularObstacle(Vec2 position, int ray) {
         super(new Circle(position, ray));
         this.outDatedTime = DEFAULT_LIFE_TIME + System.currentTimeMillis();
     }
@@ -44,13 +43,13 @@ public class MobileCircularObstacle extends Obstacle
      * Met à jour la position et le temps de vie de l'obstacle
      * @param newPosition   nouvelle position
      */
-    public void update(Vector newPosition) {
+    public void update(Vec2 newPosition) {
         this.shape.setCenter(newPosition);
         this.outDatedTime = DEFAULT_LIFE_TIME + System.currentTimeMillis();
     }
 
     @Override
-    public boolean isInObstacle(Vector point) {
+    public boolean isInObstacle(Vec2 point) {
         return this.shape.isInShape(point);
     }
 

@@ -20,7 +20,8 @@ public enum Log
     STRATEGY(true),
     LIDAR(true),
     PATHFINDING(true),
-    GRAPHE(true)
+    GRAPHE(true),
+    HOOK(true),
     ;
 
     /**
@@ -110,23 +111,23 @@ public enum Log
      * @param color     le préfixe pour la couleur en sortie standart
      * @param message   message à affiché
      */
-    private synchronized void writeToLog(String color, String message, boolean print)
+    private synchronized void writeToLog(String color, String message, boolean active)
     {
         String hour = calendar.get(Calendar.HOUR_OF_DAY) + "h" +
                 calendar.get(Calendar.MINUTE) + ":" +
                 calendar.get(Calendar.SECOND) + "," +
-                calendar.get(Calendar.MILLISECOND) + " ";
+                calendar.get(Calendar.MILLISECOND);
 
-        if(print & printLogs)
+        if(active & printLogs)
         {
             StackTraceElement elem = Thread.currentThread().getStackTrace()[3];
-            System.out.println(color + hour + this.name() + " " +
+            System.out.println(color + hour + " " + this.name() + " " +
                     elem.getClassName() + "." + elem.getMethodName() + ":" + elem.getLineNumber() + " > " + message);
         }
 
         if(saveLogs)
         {
-            writeToFile(hour + message);
+            writeToFile(hour + " " + this.name() + " > " + message);
         }
     }
 

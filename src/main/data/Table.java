@@ -6,8 +6,8 @@ import pfg.config.Config;
 import utils.ConfigData;
 import utils.Log;
 import utils.container.Service;
-import utils.maths.Segment;
-import utils.maths.Vector;
+import utils.math.Segment;
+import utils.math.Vec2;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -83,11 +83,11 @@ public class Table implements Service
      * Met à jour la table à partir d'une liste de points représentant le centre les obstacles détectés
      * @param points    liste des centres des obstacles
      */
-    public void updateMobileObstacles(ArrayList<Vector> points) {
+    public void updateMobileObstacles(ArrayList<Vec2> points) {
         Iterator<MobileCircularObstacle> iterator = mobileObstacles.iterator();
         MobileCircularObstacle obstacle;
-        Iterator<Vector> it = points.iterator();
-        Vector point;
+        Iterator<Vec2> it = points.iterator();
+        Vec2 point;
         Log.LIDAR.debug("Mise à jour des Obstacle...");
 
         while (iterator.hasNext()) {
@@ -104,9 +104,9 @@ public class Table implements Service
             }
         }
 
-        for (Vector pt : points) {
+        for (Vec2 pt : points) {
             int ray = ennemyRobotRay;
-            if (pt.quickDistanceTo(XYO.getBuddyInstance().getPosition()) < compareThreshold) {
+            if (pt.distanceTo(XYO.getBuddyInstance().getPosition()) < compareThreshold) {
                 ray = buddyRobotRay;
             }
             MobileCircularObstacle obst = new MobileCircularObstacle(pt, ray);
@@ -125,7 +125,7 @@ public class Table implements Service
      * Sert à savoir si la position se trouve ou non dans un obstacle fixe
      * @param point  position à tester
      */
-    public boolean isPositionInFixedObstacle(Vector point) {
+    public boolean isPositionInFixedObstacle(Vec2 point) {
         Iterator<Obstacle> iterator = fixedObstacles.iterator();
         Obstacle obstacle;
         while (iterator.hasNext()) {

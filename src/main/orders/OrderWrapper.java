@@ -1,192 +1,235 @@
 package orders;
 
 import connection.Connection;
-import orders.order.ConfigOrder;
-import orders.order.MotionOrder;
 import pfg.config.Config;
+import orders.order.*;
+import orders.hooks.HookNames;
 import utils.ConfigData;
+import utils.Log;
 import utils.communication.CommunicationException;
 import utils.container.Service;
-import utils.maths.MathLib;
-import utils.maths.Vector;
+import utils.math.Vec2;
 
 import java.util.Locale;
 
 /**
- * Map des méthodes sur des ordres LL
+ * Classe qui permet d'envoyer tous les ordres
  */
 public class OrderWrapper implements Service {
 
     /**
-     * Connection à laquelle parler
+     * Symétrie
      */
-    private Connection lowLevelConnection;
+    private boolean symetry;
+
+    /**On utitise comme connexion par défaut le bas niveau*/
+    private Connection llConnection = Connection.TEENSY_MASTER;
+
+    private SymmetrizedActuatorOrderMap symmetrizedActuatorOrderMap;
 
     /**
-     * True si besoin de symetriser les ordres
+     * Conctructeur en privé car déjà instancié par le container, pour éviter que qqn l'instancie
      */
-    private boolean symetrie;
+    private OrderWrapper(SymmetrizedActuatorOrderMap symmetrizedActuatorOrderMap){
+        this.symmetrizedActuatorOrderMap=symmetrizedActuatorOrderMap;
+
+    }
 
     /**
-     * Pour le container
+     * Permet d'envoyer un ordre au bas niveau
+     * @param order ordre quelconque
      */
-    private OrderWrapper() {}
-
-    /**
-     * Permet d'amorcer un mouvement en avant/arrière du robot
-     * @param d     distance de mouvement
-     */
-    public void moveLengthwise(int d) {
+    public void useActuator(Order order)
+    {
+        Order symetrisedOrder;
+        if(symetry && order instanceof ActionsOrder){
+            symetrisedOrder=this.symmetrizedActuatorOrderMap.getSymmetrizedActuatorOrder((ActionsOrder) order);
+            if(symetrisedOrder != null){
+                order=symetrisedOrder;
+            }
+        }
         try {
-            lowLevelConnection.send(String.format(Locale.US,
-                    "%s %d", MotionOrder.MOVE_LENGTHWISE.getStringOrder(), d));
+            llConnection.send(order.getOrderStr());
         } catch (CommunicationException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Permet de tourner à l'angle indiqué
-     * @param angle angle (en absolu)
+     * On envoit au bas niveau comme ordre d'avancer d'une certaine distance
+     * @param distance distance dont on avance
+     */
+    public void moveLenghtwise(double distance){
+        int d = (int)Math.round(distance);
+        try {
+            llConnection.send(String.format(Locale.US, "%s %d", MotionOrder.MOVE_LENTGHWISE.getOrderStr(), d));
+        } catch (CommunicationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * On envoit au bas niveau comme ordre de tourner
+     * @param angle  angle aveclequel on veut tourner
      */
     public void turn(double angle) {
-        if (symetrie) {
-            angle = MathLib.modulo(Math.PI - angle, 2*Math.PI);
+        if(symetry){
+            angle=(Math.PI - angle)%(2*Math.PI);
         }
         try {
-            lowLevelConnection.send(String.format(Locale.US,
-                    "%s %.3f", MotionOrder.TURN.getStringOrder(), angle));
+            llConnection.send(String.format(Locale.US, "%s %.3f", MotionOrder.TURN.getOrderStr(), angle));
         } catch (CommunicationException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Permet d'envoyer l'ordre de déplacement vers un point de la table
-     * @param point le point auquel se déplacer
-     */
-    public void moveToPoint(Vector point) {
-        if (symetrie) {
-            point.setX(-point.getX());
-        }
-        try {
-            lowLevelConnection.send(String.format(Locale.US,
-                    "%s %d %d", MotionOrder.MOVE_TO_POINT.getStringOrder(), point.getX(), point.getY()));
-        } catch (CommunicationException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Immobilise le robot
+     * On envoit au bas niveau comme ordre de s'arrêter
      */
     public void immobilise() {
         try {
-            lowLevelConnection.send(MotionOrder.STOP.getStringOrder());
+            llConnection.send(MotionOrder.STOP.getOrderStr());
         } catch (CommunicationException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Configure position et orientation du LL
-     * @param position
-     *              position
-     * @param orientation
-     *              orientation
+     * On dit au bas niveau la vitesse de translation qu'on veut
+     * @param speed la vitesse qu'on veut
      */
-    public void setPositionAndOrientation(Vector position, double orientation) {
-        if (symetrie) {
-            position.setX(-position.getX());
-            orientation = MathLib.modulo(Math.PI - orientation, 2*Math.PI);
+    public void setTranslationnalSpeed(float speed) {
+        try {
+            llConnection.send(String.format(Locale.US, "%s %.3f", SpeedOrder.SET_TRANSLATION_SPEED.getOrderStr(), speed));
+        } catch (CommunicationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * On dit au abs niveau la vitesse de rotation qu'on veut
+     * @param rotationSpeed la vitesse de rotation qu'on veut
+     */
+    public void setRotationnalSpeed(double rotationSpeed) {
+        try {
+            llConnection.send(String.format(Locale.US, "%s %.3f", SpeedOrder.SET_ROTATIONNAL_SPEED.getOrderStr(), (float) rotationSpeed));
+        } catch (CommunicationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Modifie les vitesses de translation et de rotation du robot
+     * @param speed enum qui contient les deux vitesses
+     */
+    public void setBothSpeed(Speed speed){
+        this.setTranslationnalSpeed(speed.getTranslationSpeed());
+        this.setRotationnalSpeed(speed.getRotationSpeed());
+    }
+
+    /**
+     * On dit au bas niveau dans quelle position on est et quelle orientation on adopte
+     * @param pos position du robot
+     * @param orientation orientation du robot
+     */
+    public void setPositionAndOrientation(Vec2 pos, double orientation)
+    {
+        int x=pos.getX();
+        int y=pos.getY();
+        if(symetry){
+            x=-x;
+            orientation=(Math.PI - orientation)%(2*Math.PI);
         }
         try {
-            lowLevelConnection.send(String.format(Locale.US,
-                    "%s %d %d %.3f", ConfigOrder.SET_XYO.getStringOrder(), position.getX(), position.getY(), orientation));
+            llConnection.send(String.format(Locale.US, "%s %d %d %.3f", PositionAndOrientationOrder.SET_POSITION_AND_ORIENTATION.getOrderStr(), pos.getX(), pos.getY(), orientation));
         } catch (CommunicationException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Configure la position du LL
-     * @param position
-     *              position
+     * On dit au bas niveau quelle orientation le robot a
+     * @param orientation orientation du robot
      */
-    public void setPosition(Vector position) {
-        if (symetrie) {
-            position.setX(-position.getX());
+    public void setOrientation(double orientation)
+    {
+        if(symetry){
+            orientation=(Math.PI - orientation)%(2*Math.PI);
         }
         try {
-            lowLevelConnection.send(String.format(Locale.US,
-                    "%s %d %d", ConfigOrder.SET_POSITION.getStringOrder(), position.getX(), position.getY()));
+            llConnection.send(String.format(Locale.US, "%s %.3f", PositionAndOrientationOrder.SET_ORIENTATION.getOrderStr(), orientation));
         } catch (CommunicationException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Configure l'orientation du robot
-     * @param orientation
-     *              orientation
+     * Permet de configurer un hook
+     * @param id id du hook
+     * @param posTrigger position où on active le hook
+     * @param tolerency tolérance qu'on veut sur la position
+     * @param orientation l'orientation du robot où on active le hook
+     * @param tolerencyAngle l'angle de tolérance sur l'orientation
+     * @param order l'ordre à exécuter pendant que le robot bouge
      */
-    public void setOrientation(double orientation) {
-        if (symetrie) {
-            orientation = MathLib.modulo(Math.PI - orientation, 2*Math.PI);
+    public void configureHook(int id, Vec2 posTrigger, int tolerency, double orientation, double tolerencyAngle, Order order){
+        Order symetrisedOrder;
+        if(symetry){
+            posTrigger = posTrigger.symetrizeVector();
+            Log.HOOK.debug("la position envoyée au bas niveau pour le hook"+posTrigger.toString());
+            orientation=(Math.PI - orientation)%(2*Math.PI);
+            Log.HOOK.debug("l'orientation envoyée au bas niveau pour le hook"+orientation);
+            if( order instanceof ActionsOrder) {
+                symetrisedOrder = symmetrizedActuatorOrderMap.getSymmetrizedActuatorOrder((ActionsOrder) order);
+                if(symetrisedOrder !=null){
+                    order=symetrisedOrder;
+                }
+            }
+
         }
         try {
-            lowLevelConnection.send(String.format(Locale.US,
-                    "%s %.3f", ConfigOrder.SET_ORIENTATION.getStringOrder(), orientation));
+            llConnection.send(String.format(Locale.US, "%s %d %s %d %.3f %.3f %s",
+                    HooksOrder.INITIALISE_HOOK.getOrderStr(), id, posTrigger.toStringEth(), tolerency, orientation, tolerencyAngle, order.getOrderStr()));
         } catch (CommunicationException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Configure la vitesse du LL
-     * @param speed nouvelle vitesse
+     * Active un hook
+     * @param hook hook à activer
      */
-    public void setSpeed(Speed speed) {
+    public void enableHook(HookNames hook) {
         try {
-            lowLevelConnection.send(String.format(Locale.US,
-                    "%s %d %.3f", ConfigOrder.SET_SPEED.getStringOrder(), speed.getTranslationSpeed(), speed.getRotationSpeed()));
+            llConnection.send(String.format(Locale.US, "%s %d", HooksOrder.ENABLE_HOOK.getOrderStr(), hook.getId()));
         } catch (CommunicationException e) {
             e.printStackTrace();
         }
     }
 
-    public void configureHook(Hook... hooks) {
-
-    }
-
-    public void disableHook(Hook... hooks) {
-
-    }
-
-    public void unableHook(Hook... hooks) {
-
-    }
-
     /**
-     * @see Service#updateConfig(Config)
+     * Desactive un hook
+     * @param hook
      */
+    public void disableHook(HookNames hook){
+        try {
+            llConnection.send(String.format(Locale.US, "%s %d", HooksOrder.DISABLE_HOOK.getOrderStr(), hook.getId()));
+        } catch (CommunicationException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void updateConfig(Config config) {
-        boolean master = config.getBoolean(ConfigData.MASTER);
-        if (master) {
-            this.lowLevelConnection = Connection.TEENSY_MASTER;
-        } else {
-            this.lowLevelConnection = Connection.TEENSY_SLAVE;
-        }
-        this.symetrie = config.getString(ConfigData.COULEUR).equals("jaune");
+        //On est du côté violet par défaut , le HL pense en violet
+        symetry=config.getString(ConfigData.COULEUR).equals("jaune");
     }
 
     /**
-     * Set la connection à utiliser pour les envois d'ordres
-     * ATTENTION : utilisé uniquement pour les tests
-     * @param connection    la nouvelle connection
+     * On set la connection, c'est pour faire les tests en local, faire très attention quand on utilise cette méthode
+     * @param connection : à qui on veut envoyer des ordres
      */
-    public void setLowLevelConnection(Connection connection) {
-        this.lowLevelConnection = connection;
+    public void setConnection(Connection connection) {
+        this.llConnection = connection;
     }
 }

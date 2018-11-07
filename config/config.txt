@@ -1,4 +1,8 @@
 [Common]
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev
 # PARAMETRES POUR LOG
 PRINT_LOG                           = true
 SAVE_LOG                            = true
@@ -6,12 +10,19 @@ SAVE_LOG                            = true
 # DIMENSIONS DE L'ADVERSAIRE
 ENNEMY_RAY                          = 220
 
+<<<<<<< HEAD
 # PARAMETRES DU GRAPHE
 NBR_NOEUDS_X                        = 30
 NBR_NOEUDS_Y                        = 20
 NBR_NOEUDS_CIRCLE                   = 14
 ESPACEMENT_CIRCLE                   = 1.2
 
+=======
+#Couleur
+COULEUR                             =violet
+
+#________________________________________________________________________________________________________________________
+>>>>>>> dev
 
 [Master]
 MASTER                              = true
@@ -20,11 +31,23 @@ MASTER                              = true
 ROBOT_RAY                           = 240
 BUDDY_RAY                           = 150
 
+<<<<<<< HEAD
 
 [Slave]
 MASTER                              = false
 MASTER_ROBOT_IP                     = localhost
+=======
+#________________________________________________________________________________________________________________________
+
+[Slave]
+MASTER                              = false
+>>>>>>> dev
 
 # DIMENSIONS DES ROBOTS
 ROBOT_RAY                           = 150
 BUDDY_RAY                           = 240
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> dev

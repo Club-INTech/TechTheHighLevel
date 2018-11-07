@@ -1,12 +1,12 @@
 package data;
 
-import utils.maths.Vector;
+import utils.math.Vec2;
+import utils.math.VectCartesian;
 
 /**
  * Classe représentant les positions des robots (doublons)
  */
-public class XYO
-{
+public class XYO {
     /**
      * Instance du robot
      */
@@ -20,7 +20,7 @@ public class XYO
     /**
      * Position
      */
-    private Vector position;
+    private Vec2 position;
 
     /**
      * Orientation
@@ -30,7 +30,7 @@ public class XYO
     /**
      * Constructeur
      */
-    private XYO(Vector position, double orientation) {
+    private XYO(Vec2 position, double orientation) {
         this.position = position;
         this.orientation = orientation;
     }
@@ -57,11 +57,11 @@ public class XYO
     public static XYO getBuddyInstance() {
         // TODO : Décider comment ca fonctionne ! et virer l'instanciation qui sert pour les tests
         if (buddyXYO == null) {
-            buddyXYO = new XYO(new Vector(0, 0), 0);
+            buddyXYO = new XYO(new VectCartesian(0, 0), 0);
         }
         return buddyXYO;
     }
-    public Vector getPosition() {
+    public Vec2 getPosition() {
         return position;
     }
     public double getOrientation() {

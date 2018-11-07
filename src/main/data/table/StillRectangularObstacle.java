@@ -1,20 +1,19 @@
 package data.table;
 
-import data.graphe.Ridge;
-import utils.maths.Rectangle;
-import utils.maths.Segment;
-import utils.maths.Vector;
+import utils.math.Rectangle;
+import utils.math.Segment;
+import utils.math.Vec2;
 
 /**
  * Classe implémentant les obstacles rectangulaires
  */
-public class FixedRectangularObstacle extends Obstacle
+public class StillRectangularObstacle extends Obstacle
 {
     /**
      * Construit un obstacle rectangulaire
      * @param rectangle rectangle représentant l'obstacle
      */
-    public FixedRectangularObstacle(Rectangle rectangle) {
+    public StillRectangularObstacle(Rectangle rectangle) {
         super(rectangle);
     }
 
@@ -24,15 +23,15 @@ public class FixedRectangularObstacle extends Obstacle
      * @param length    longueur du rectangle
      * @param width     largeur du rectangle
      */
-    public FixedRectangularObstacle(Vector center, int length, int width) {
+    public StillRectangularObstacle(Vec2 center, int length, int width) {
         super(new Rectangle((center), length, width));
     }
 
     /**
-     * @see Obstacle#isInObstacle(Vector)
+     * @see Obstacle#isInObstacle(Vec2)
      */
     @Override
-    public boolean isInObstacle(Vector point) {
+    public boolean isInObstacle(Vec2 point) {
         return shape.isInShape(point);
     }
 
@@ -49,7 +48,7 @@ public class FixedRectangularObstacle extends Obstacle
      */
     @Override
     public Obstacle clone() throws CloneNotSupportedException {
-        return new FixedRectangularObstacle((Rectangle) this.shape.clone());
+        return new StillRectangularObstacle((Rectangle) this.shape.clone());
     }
 
     /**
@@ -57,8 +56,8 @@ public class FixedRectangularObstacle extends Obstacle
      */
     @Override
     public boolean equals(Object object) {
-        if (object instanceof FixedRectangularObstacle) {
-            return this.shape.equals(((FixedRectangularObstacle) object).shape);
+        if (object instanceof StillRectangularObstacle) {
+            return this.shape.equals(((StillRectangularObstacle) object).shape);
         }
         return false;
     }

@@ -1,6 +1,6 @@
 package data.graphe;
 
-import utils.maths.Vector;
+import utils.math.Vec2;
 
 import java.util.HashMap;
 
@@ -19,7 +19,7 @@ public class Node
     /**
      * Position du noeud
      */
-    private Vector position;
+    private Vec2 position;
 
     /**
      * Heuristique : variable servant à évaluer la distance entre le ce noeud et le noeud visé lors d'un éxecution du Pathfinding
@@ -50,7 +50,7 @@ public class Node
      * Constructeur
      * @param position  la position du noeud sur la table
      */
-    public Node(Vector position) {
+    public Node(Vec2 position) {
         this.position = position;
         this.heuristique = DEFAULT_HEURISTIC;
         this.cout = DEFAULT_COST;
@@ -63,7 +63,7 @@ public class Node
      * @param position  la position du noeud
      * @param permanent true si le noeud est un noeud permanent du graphe
      */
-    public Node(Vector position, boolean permanent) {
+    public Node(Vec2 position, boolean permanent) {
         this.position = position;
         this.heuristique = DEFAULT_HEURISTIC;
         this.cout = DEFAULT_COST;
@@ -135,7 +135,7 @@ public class Node
     public void setPred(Node pred) {
         this.pred = pred;
     }
-    public Vector getPosition() {
+    public Vec2 getPosition() {
         return position;
     }
     public HashMap<Node, Ridge> getNeighbours() {

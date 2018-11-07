@@ -1,15 +1,15 @@
 package orders.order;
 
 /**
- * Enum qui contient tous les ordres envoyés au LL concernant les mouvements du robot
+ * Enum qui contient tous les ordres concernant la position et l'orientation du robot
  */
-public enum MotionOrder implements Order {
-    /**Avancer*/
-    MOVE_LENTGHWISE("d"),
-    /**Tourner*/
-    TURN("t"),
-    /**S'arrêter*/
-    STOP("stop"),
+public enum PositionAndOrientationOrder implements Order {
+
+    CXYO("cxyo"),
+    XYO("?xyo"),
+    SET_POSITION_AND_ORIENTATION("cxyo"),
+    SET_ORIENTATION("co"),
+
     ;
 
     /**Ordre envoyé au LL*/
@@ -22,7 +22,7 @@ public enum MotionOrder implements Order {
      * Constructeur qui ne précise pas la durée de l'action
      * @param orderStr : order envoyé au LL
      */
-    MotionOrder(String orderStr){
+    PositionAndOrientationOrder(String orderStr){
         this(orderStr, 0);
     }
 
@@ -32,7 +32,7 @@ public enum MotionOrder implements Order {
      * @param actionDuration : durée de l'action
      */
 
-    MotionOrder(String orderStr, int actionDuration){
+    PositionAndOrientationOrder(String orderStr, int actionDuration){
         this.orderStr=orderStr;
         this.actionDuration=actionDuration;
     }

@@ -1,6 +1,6 @@
 package data.graphe;
 
-import utils.maths.Segment;
+import utils.math.Segment;
 
 /**
  * Classe implémentant les arrêtes pour le graphe

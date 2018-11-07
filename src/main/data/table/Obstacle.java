@@ -1,8 +1,8 @@
 package data.table;
 
-import utils.maths.Segment;
-import utils.maths.Shape;
-import utils.maths.Vector;
+import utils.math.Segment;
+import utils.math.Shape;
+import utils.math.Vec2;
 
 /**
  * Classe abstraite définissant la représentation d'un obstacle dans le code.
@@ -26,7 +26,7 @@ public abstract class Obstacle
      * Méthode utile pour les collision
      * @return  true si le point se trouve dans l'obstacle
      */
-    public abstract boolean isInObstacle(Vector point);
+    public abstract boolean isInObstacle(Vec2 point);
 
     /**
      * Méthode servant à construire et mettre à jour le Graphe
@@ -62,7 +62,7 @@ public abstract class Obstacle
     /**
      * Getter
      */
-    public Vector getPosition() {
+    public Vec2 getPosition() {
         return shape.getCenter();
     }
     public Shape getShape() {

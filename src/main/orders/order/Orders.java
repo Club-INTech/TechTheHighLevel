@@ -1,16 +1,29 @@
 package orders.order;
 
 /**
- * Enum qui contient tous les ordres envoyés au LL concernant les mouvements du robot
+ * Enum où on stocke les orders qu'on ne sait pas classer
  */
-public enum MotionOrder implements Order {
-    /**Avancer*/
-    MOVE_LENTGHWISE("d"),
-    /**Tourner*/
-    TURN("t"),
-    /**S'arrêter*/
-    STOP("stop"),
-    ;
+public enum Orders implements Order {
+
+    Test("tests"),
+    Test1("test1"),
+    Test2("test2"),
+    Test3("test3"),
+    GoTo("goto"),
+    TurnToPoint("turntopoint"),
+    TurnToAngle("turntoangle"),
+    Ping("?"),
+    NewHook("nh"),
+    CXYO("cxyo"),
+    XYO("?xyo"),
+
+    Montlhery("montlhery"),
+    Avance("av"),
+    Recule("rc"),
+    Left("tg"),
+    Right("td"),
+    Stop("sstop"),
+        ;
 
     /**Ordre envoyé au LL*/
     private String orderStr;
@@ -22,7 +35,7 @@ public enum MotionOrder implements Order {
      * Constructeur qui ne précise pas la durée de l'action
      * @param orderStr : order envoyé au LL
      */
-    MotionOrder(String orderStr){
+    Orders(String orderStr){
         this(orderStr, 0);
     }
 
@@ -32,7 +45,7 @@ public enum MotionOrder implements Order {
      * @param actionDuration : durée de l'action
      */
 
-    MotionOrder(String orderStr, int actionDuration){
+    Orders(String orderStr, int actionDuration){
         this.orderStr=orderStr;
         this.actionDuration=actionDuration;
     }
@@ -52,4 +65,5 @@ public enum MotionOrder implements Order {
     public int getActionDuration(){
         return this.actionDuration;
     }
+
 }

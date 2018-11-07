@@ -1,22 +1,20 @@
 package data.table;
 
-import data.graphe.Ridge;
-import utils.maths.Circle;
-import utils.maths.Segment;
-import utils.maths.Vector;
+import utils.math.Circle;
+import utils.math.Segment;
+import utils.math.Vec2;
 
 /**
  * Classe représentant les obstacles circulaires
  */
-public class FixedCircularObstacle extends Obstacle
-{
+public class StillCircularObstacle extends Obstacle {
     /**
      * Constructeur position & rayon
      *
      * @param position  centre du cercle
      * @param ray   rayon du cercle
      */
-    public FixedCircularObstacle(Vector position, int ray) {
+    public StillCircularObstacle(Vec2 position, int ray) {
         super(new Circle(position, ray));
     }
 
@@ -24,16 +22,16 @@ public class FixedCircularObstacle extends Obstacle
      * Constructeur cercle
      * @param circle    cercle
      */
-    public FixedCircularObstacle(Circle circle) {
+    public StillCircularObstacle(Circle circle) {
         super(circle);
     }
 
     /**
-     * @see Obstacle#isInObstacle(Vector)
+     * @see Obstacle#isInObstacle(Vec2)
      */
     @Override
-    public boolean isInObstacle(Vector point) {
-        return (point.withdrawNewVector(getPosition()).getRay() < ((Circle) shape).getRay());
+    public boolean isInObstacle(Vec2 point) {
+        return (point.minusVector(getPosition()).getR() < ((Circle) shape).getRadius());
     }
 
     /**
@@ -46,13 +44,13 @@ public class FixedCircularObstacle extends Obstacle
 
     @Override
     public Obstacle clone() throws CloneNotSupportedException {
-        return new FixedCircularObstacle((Circle) this.shape.clone());
+        return new StillCircularObstacle((Circle) this.shape.clone());
     }
 
     @Override
     public boolean equals(Object object) {
-        if (object instanceof FixedCircularObstacle) {
-            return this.shape.equals(((FixedCircularObstacle) object).shape);
+        if (object instanceof StillCircularObstacle) {
+            return this.shape.equals(((StillCircularObstacle) object).shape);
         }
         return false;
     }

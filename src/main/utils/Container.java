@@ -46,8 +46,7 @@ public class Container implements Service
     /**
      * Instancie le gestionnaire de dépendances ainsi que la config
      */
-    private Container(String profile)
-    {
+    private Container(String profile) {
         /* Affichage du message de bienvenue */
         printMessage("intro.txt");
 
@@ -85,6 +84,8 @@ public class Container implements Service
         System.out.println();
 
         System.out.println("   Remember, with great power comes great current squared times resistance !\n");
+        System.out.println("   Remember, with great power comes great current squared times resistance !");
+        System.out.println();
 
         /* Instanciation des attributs & de la config */
         instanciedServices = new HashMap<>();
@@ -128,6 +129,18 @@ public class Container implements Service
     public static void resetInstance() {
         instance = null;
         System.gc();
+    }
+
+    /**
+     * Méthode appelée au début du programme après instanciation des services,
+     * elle démarre tout les Threads instanciés, dans un certain ordre s'il faut
+     */
+    public void startInstanciedThreads()
+    {
+        // TODO : A compléter au fur et à mesure que l'on implémente les différents Threads
+        for (Thread thread : instanciedThreads.values()) {
+            thread.start();
+        }
     }
 
     /**
