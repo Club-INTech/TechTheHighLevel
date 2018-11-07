@@ -1,5 +1,6 @@
 package validation;
 
+import connection.Connection;
 import connection.ConnectionManager;
 import orders.OrderWrapper;
 import orders.hooks.HookNames;
@@ -13,6 +14,7 @@ import utils.Container;
 import utils.math.VectCartesian;
 
 import java.util.Locale;
+import java.util.Optional;
 
 /**
  * Classe permettant de tester l'orderWrapper
@@ -26,14 +28,20 @@ public class Test_OrderWrapper {
     /**connectionManager pour établir et fermer les connexions en local pour run les tests*/
     private ConnectionManager connectionsManager;
     /**String ajouté pour les asserts : voir tests*/
-    private static String  m;
+    private Optional<String> m;
     /**config*/
     private Config config;
     @Before
-    public void setUp() {
+    public void setUp() throws Exception{
         container = Container.getInstance("Master");
         config = container.getConfig();
-        // TODO Instanciation
+        orderWrapper=container.getService(OrderWrapper.class);
+        connectionsManager=container.getService(ConnectionManager.class);
+        connectionsManager.initConnections(Connection.LOCALHOST_SERVER);
+        Thread.sleep(50);
+        connectionsManager.initConnections(Connection.LOCALHOST_CLIENT);
+        orderWrapper.setConnection(Connection.LOCALHOST_CLIENT);
+
     }
 
     /**
@@ -43,9 +51,11 @@ public class Test_OrderWrapper {
     @Test
     public void stopOrderTest()throws Exception{
         orderWrapper.immobilise();
+        Thread.sleep(10);
+        m=Connection.LOCALHOST_SERVER.read();
+        Assert.assertTrue(m.isPresent());
         String a = MotionOrder.STOP.getOrderStr();
-        Thread.sleep(1000);
-        Assert.assertEquals(a,m);
+        Assert.assertEquals(a,m.get());
     }
 
     /**
@@ -55,9 +65,11 @@ public class Test_OrderWrapper {
     @Test
     public void sendActionOrder() throws Exception{
         orderWrapper.useActuator(ActionsOrder.DesactiveLaPompe);
+        Thread.sleep(10);
+        m=Connection.LOCALHOST_SERVER.read();
+        Assert.assertTrue(m.isPresent());
         String a =ActionsOrder.DesactiveLaPompe.getOrderStr();
-        Thread.sleep(1000);
-        Assert.assertEquals(a,m);
+        Assert.assertEquals(a,m.get());
 
     }
 
@@ -68,9 +80,11 @@ public class Test_OrderWrapper {
     @Test
     public void moveLenghtwiseOrder() throws  Exception{
         orderWrapper.moveLenghtwise(15);
+        Thread.sleep(10);
+        m=Connection.LOCALHOST_SERVER.read();
+        Assert.assertTrue(m.isPresent());
         String a = MotionOrder.MOVE_LENTGHWISE.getOrderStr() + " " + 15;
-        Thread.sleep(1000);
-        Assert.assertEquals(a,m);
+        Assert.assertEquals(a, m.get());
 
     }
 
@@ -83,9 +97,11 @@ public class Test_OrderWrapper {
     public void turnTest() throws Exception
     {
         orderWrapper.turn(Math.PI);
+        Thread.sleep(10);
+        m=Connection.LOCALHOST_SERVER.read();
+        Assert.assertTrue(m.isPresent());
         String a = MotionOrder.TURN.getOrderStr() + " " + new StringBuilder(String.format(Locale.US, "%.3f", Math.PI));
-        Thread.sleep(1000);
-        Assert.assertEquals(a,m);
+        Assert.assertEquals(a,m.get());
     }
 
 
@@ -96,9 +112,11 @@ public class Test_OrderWrapper {
     @Test
     public void setTranslationnalSpeedTest() throws Exception {
         orderWrapper.setTranslationnalSpeed(2);
+        Thread.sleep(10);
+        m=Connection.LOCALHOST_SERVER.read();
+        Assert.assertTrue(m.isPresent());
         String a= SpeedOrder.SET_TRANSLATION_SPEED.getOrderStr() +" "+ new StringBuilder(String.format(Locale.US,"%.3f",2.0));
-        Thread.sleep(1000);
-        Assert.assertEquals(a,m);
+        Assert.assertEquals(a,m.get());
     }
 
     /**
@@ -108,9 +126,11 @@ public class Test_OrderWrapper {
     @Test
     public void setRotationalSpeedTest() throws Exception {
         orderWrapper.setRotationnalSpeed(3);
+        Thread.sleep(10);
+        m=Connection.LOCALHOST_SERVER.read();
+        Assert.assertTrue(m.isPresent());
         String a =SpeedOrder.SET_ROTATIONNAL_SPEED.getOrderStr()+" "+ new StringBuilder(String.format(Locale.US,"%.3f",3.0));
-        Thread.sleep(1000);
-        Assert.assertEquals(a,m);
+        Assert.assertEquals(a,m.get());
     }
 
     /**
@@ -120,9 +140,11 @@ public class Test_OrderWrapper {
     @Test
     public void setPositionAndOrientationTest() throws Exception {
         orderWrapper.setPositionAndOrientation(new VectCartesian(2, 3), Math.PI / 2);
+        Thread.sleep(10);
+        m=Connection.LOCALHOST_SERVER.read();
+        Assert.assertTrue(m.isPresent());
         String a = PositionAndOrientationOrder.SET_POSITION_AND_ORIENTATION.getOrderStr() + " " + new StringBuilder(String.format(Locale.US, "%d", 2)) + " " + new StringBuilder(String.format(Locale.US, "%d", 3)) + " " + new StringBuilder(String.format(Locale.US, "%.3f", Math.PI / 2));
-        Thread.sleep(1000);
-        Assert.assertEquals(a,m);
+        Assert.assertEquals(a,m.get());
     }
 
     /**
@@ -132,9 +154,11 @@ public class Test_OrderWrapper {
     @Test
     public void setOrientationTest() throws Exception {
         orderWrapper.setOrientation(Math.PI);
+        Thread.sleep(10);
+        m=Connection.LOCALHOST_SERVER.read();
+        Assert.assertTrue(m.isPresent());
         String a = PositionAndOrientationOrder.SET_ORIENTATION.getOrderStr() + " " + new StringBuilder(String.format(Locale.US, "%.3f", Math.PI));
-        Thread.sleep(1000);
-        Assert.assertEquals(a, m);
+        Assert.assertEquals(a, m.get());
     }
 
     /**
@@ -144,9 +168,11 @@ public class Test_OrderWrapper {
     @Test
     public void configureHookTest() throws Exception {
         orderWrapper.configureHook(0, new VectCartesian(2, 3), 2, Math.PI, 2, ActionsOrder.FermePorteAvant);
+        Thread.sleep(10);
+        m=Connection.LOCALHOST_SERVER.read();
+        Assert.assertTrue(m.isPresent());
         String a = HooksOrder.INITIALISE_HOOK.getOrderStr() + " " + 0 + " " + new StringBuilder(String.format(Locale.US, "%d", 2)) + " " + new StringBuilder(String.format(Locale.US, "%d", 3)) + " " + new StringBuilder(String.format(Locale.US, "%d", 2)) + " " + new StringBuilder(String.format(Locale.US, "%.3f", Math.PI)) + " " + new StringBuilder(String.format(Locale.US, "%.3f", 2.0) + " " + ActionsOrder.FermePorteAvant.getOrderStr());
-        Thread.sleep(1000);
-        Assert.assertEquals(a,m);
+        Assert.assertEquals(a,m.get());
     }
 
     /**
@@ -156,9 +182,11 @@ public class Test_OrderWrapper {
     @Test
     public void enableHookTest() throws Exception {
         orderWrapper.enableHook(HookNames.SPEED_DOWN);
+        Thread.sleep(10);
+        m=Connection.LOCALHOST_SERVER.read();
+        Assert.assertTrue(m.isPresent());
         String a=HooksOrder.ENABLE_HOOK.getOrderStr() +" "+ HookNames.SPEED_DOWN.getId();
-        Thread.sleep(1000);
-        Assert.assertEquals(a,m);
+        Assert.assertEquals(a,m.get());
     }
 
     /**
@@ -168,17 +196,24 @@ public class Test_OrderWrapper {
     @Test
     public void disableHookTest() throws Exception {
         orderWrapper.disableHook(HookNames.SPEED_DOWN);
+        Thread.sleep(10);
+        m=Connection.LOCALHOST_SERVER.read();
+        Assert.assertTrue(m.isPresent());
         String a = HooksOrder.DISABLE_HOOK.getOrderStr() +" "+ HookNames.SPEED_DOWN.getId();
-        Thread.sleep(1000);
-        Assert.assertEquals(a,m);
+        Assert.assertEquals(a,m.get());
     }
 
     /**
      * après chaque test, on ferme les connexions et réinitialise le m
      */
     @After
-    public void closeConnection() {
-        // TODO
+    public void closeConnection() throws Exception{
+        container = null;
+        config = null;
+        orderWrapper=null;
+        connectionsManager.closeInitiatedConnections();
+        connectionsManager=null;
+        Container.resetInstance();
     }
 }
 

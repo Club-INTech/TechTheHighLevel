@@ -1,5 +1,6 @@
 package validation;
 
+import connection.Connection;
 import connection.ConnectionManager;
 import org.junit.After;
 import org.junit.Assert;
@@ -11,11 +12,13 @@ import orders.order.ActionsOrder;
 import orders.order.HooksOrder;
 import orders.order.MotionOrder;
 import orders.order.PositionAndOrientationOrder;
+import utils.ConfigData;
 import utils.Container;
 import utils.container.ContainerException;
 import utils.math.VectCartesian;
 
 import java.util.Locale;
+import java.util.Optional;
 
 public class Test_OrderWrapper_Symetry {
 
@@ -26,23 +29,23 @@ public class Test_OrderWrapper_Symetry {
     /**connectionManager pour établir et fermer les connexions en local pour run les tests*/
     private ConnectionManager connectionsManager;
     /**String ajouté pour les asserts : voir tests*/
-    private static String  m;
+    private Optional<String> m;
     /**config*/
     private Config config;
     /**
      * Etablir ce dont on a besoin pour faire les tests
      */
     @Before
-    public void setUp(){
-        container=Container.getInstance("Master");
-        config=container.getConfig();
-        try{
-            this.orderWrapper= container.getService(OrderWrapper.class);
-        }
-        catch (ContainerException e){
-            e.printStackTrace();
-        }
-        // TODO
+    public void setUp()throws Exception{
+        container = Container.getInstance("Master");
+        config = container.getConfig();
+        config.override(ConfigData.COULEUR,"jaune");
+        orderWrapper=container.getService(OrderWrapper.class);
+        connectionsManager=container.getService(ConnectionManager.class);
+        connectionsManager.initConnections(Connection.LOCALHOST_SERVER);
+        Thread.sleep(50);
+        connectionsManager.initConnections(Connection.LOCALHOST_CLIENT);
+        orderWrapper.setConnection(Connection.LOCALHOST_CLIENT);
     }
 
     /**
@@ -52,9 +55,11 @@ public class Test_OrderWrapper_Symetry {
     @Test
     public void turnTestWithSymetry() throws Exception {
         orderWrapper.turn(Math.PI / 3);
+        Thread.sleep(10);
+        m=Connection.LOCALHOST_SERVER.read();
+        Assert.assertTrue(m.isPresent());
         String a = String.format(Locale.US, "%s %.3f", MotionOrder.TURN.getOrderStr(), 2 * Math.PI / 3);
-        Thread.sleep(1000);
-        Assert.assertEquals(a, m);
+        Assert.assertEquals(a, m.get());
 
     }
 
@@ -64,9 +69,11 @@ public class Test_OrderWrapper_Symetry {
     @Test
     public void setPositionAndOrientationTestWithSymetry() throws Exception {
         orderWrapper.setPositionAndOrientation(new VectCartesian(2, 3), Math.PI / 3);
+        Thread.sleep(10);
+        m=Connection.LOCALHOST_SERVER.read();
+        Assert.assertTrue(m.isPresent());
         String a = PositionAndOrientationOrder.SET_POSITION_AND_ORIENTATION.getOrderStr() + " " + new StringBuilder(String.format(Locale.US, "%d", -2)) + " " + new StringBuilder(String.format(Locale.US, "%d", 3)) + " " + new StringBuilder(String.format(Locale.US, "%.3f", 2 * Math.PI / 3));
-        Thread.sleep(1000);
-        Assert.assertEquals(a, m);
+        Assert.assertEquals(a, m.get());
 
     }
 
@@ -76,9 +83,11 @@ public class Test_OrderWrapper_Symetry {
     @Test
     public void configureHookTestWithSymetry() throws Exception {
         orderWrapper.configureHook(0, new VectCartesian(2, 3), 2, Math.PI / 3, 2, ActionsOrder.FermePorteDroite);
+        Thread.sleep(10);
+        m=Connection.LOCALHOST_SERVER.read();
+        Assert.assertTrue(m.isPresent());
         String a = HooksOrder.INITIALISE_HOOK.getOrderStr() + " " + 0 + " " + new StringBuilder(String.format(Locale.US, "%d", -2)) + " " + new StringBuilder(String.format(Locale.US, "%d", 3)) + " " + new StringBuilder(String.format(Locale.US, "%d", 2)) + " " + new StringBuilder(String.format(Locale.US, "%.3f", 2 * Math.PI / 3)) + " " + new StringBuilder(String.format(Locale.US, "%.3f", 2.0) + " " + ActionsOrder.FermePorteGauche.getOrderStr());
-        Thread.sleep(1000);
-        Assert.assertEquals(a, m);
+        Assert.assertEquals(a, m.get());
 
     }
 
@@ -87,7 +96,13 @@ public class Test_OrderWrapper_Symetry {
      * et on remet la symetrie à false
      */
     @After
-    public void closeConnection() {
-        // TODO
+    public void closeConnection() throws Exception{
+        container = null;
+        config.override(ConfigData.COULEUR,"violet");
+        config = null;
+        orderWrapper=null;
+        connectionsManager.closeInitiatedConnections();
+        connectionsManager=null;
+        Container.resetInstance();
     }
 }
