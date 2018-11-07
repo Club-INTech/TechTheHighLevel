@@ -141,7 +141,8 @@ public class OrderWrapper implements Service {
             orientation=(Math.PI - orientation)%(2*Math.PI);
         }
         try {
-            llConnection.send(String.format(Locale.US, "%s %d %d %.3f", PositionAndOrientationOrder.SET_POSITION_AND_ORIENTATION.getOrderStr(), pos.getX(), pos.getY(), orientation));
+            llConnection.send(String.format(Locale.US, "%s %d %d %.3f",
+                    PositionAndOrientationOrder.SET_POSITION_AND_ORIENTATION.getOrderStr(), x,y, orientation));
         } catch (CommunicationException e) {
             e.printStackTrace();
         }
