@@ -1,14 +1,12 @@
 package data.table;
 
 import utils.math.Rectangle;
-import utils.math.Segment;
 import utils.math.Vec2;
 
 /**
  * Classe implémentant les obstacles rectangulaires
  */
-public class StillRectangularObstacle extends Obstacle
-{
+public class StillRectangularObstacle extends Obstacle {
     /**
      * Construit un obstacle rectangulaire
      * @param rectangle rectangle représentant l'obstacle
@@ -28,46 +26,11 @@ public class StillRectangularObstacle extends Obstacle
     }
 
     /**
-     * @see Obstacle#isInObstacle(Vec2)
-     */
-    @Override
-    public boolean isInObstacle(Vec2 point) {
-        return shape.isInShape(point);
-    }
-
-    /**
-     * @see Obstacle#intersect(Segment)
-     */
-    @Override
-    public boolean intersect(Segment segment) {
-        return this.shape.intersect(segment);
-    }
-
-    /**
      * @see Obstacle#clone()
      */
     @Override
     public Obstacle clone() throws CloneNotSupportedException {
         return new StillRectangularObstacle((Rectangle) this.shape.clone());
-    }
-
-    /**
-     * @see Obstacle#equals(Object)
-     */
-    @Override
-    public boolean equals(Object object) {
-        if (object instanceof StillRectangularObstacle) {
-            return this.shape.equals(((StillRectangularObstacle) object).shape);
-        }
-        return false;
-    }
-
-    /**
-     * @see Obstacle#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        return this.shape.hashCode();
     }
 
     /**

@@ -1,7 +1,6 @@
 package data.table;
 
 import utils.math.Circle;
-import utils.math.Segment;
 import utils.math.Vec2;
 
 /**
@@ -26,38 +25,9 @@ public class StillCircularObstacle extends Obstacle {
         super(circle);
     }
 
-    /**
-     * @see Obstacle#isInObstacle(Vec2)
-     */
-    @Override
-    public boolean isInObstacle(Vec2 point) {
-        return (point.minusVector(getPosition()).getR() < ((Circle) shape).getRadius());
-    }
-
-    /**
-     * @see Obstacle#intersect(Segment)
-     */
-    @Override
-    public boolean intersect(Segment segment) {
-        return shape.intersect(segment);
-    }
-
     @Override
     public Obstacle clone() throws CloneNotSupportedException {
         return new StillCircularObstacle((Circle) this.shape.clone());
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (object instanceof StillCircularObstacle) {
-            return this.shape.equals(((StillCircularObstacle) object).shape);
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return this.shape.hashCode();
     }
 
     @Override

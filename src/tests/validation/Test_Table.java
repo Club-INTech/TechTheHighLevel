@@ -97,12 +97,15 @@ public class Test_Table {
         points.add(new VectCartesian(800, 150));
         points.add(new VectCartesian(20, 10));
 
+        int ennemyRay = container.getConfig().getInt(ConfigData.ENNEMY_RAY);
+        int buddyRay = container.getConfig().getInt(ConfigData.BUDDY_RAY);
+
         table.updateMobileObstacles(points);
 
         Assert.assertEquals(3, table.getMobileObstacles().size());
-        Assert.assertEquals(ConfigData.ENNEMY_RAY.getDefaultValue(), ((Circle) table.getMobileObstacles().get(0).getShape()).getRadius());
-        Assert.assertEquals(ConfigData.ENNEMY_RAY.getDefaultValue(), ((Circle) table.getMobileObstacles().get(1).getShape()).getRadius());
-        Assert.assertEquals(ConfigData.BUDDY_RAY.getDefaultValue(), ((Circle) table.getMobileObstacles().get(2).getShape()).getRadius());
+        Assert.assertEquals(ennemyRay, ((Circle) table.getMobileObstacles().get(0).getShape()).getRadius(), 0.1);
+        Assert.assertEquals(ennemyRay, ((Circle) table.getMobileObstacles().get(1).getShape()).getRadius(), 0.1);
+        Assert.assertEquals(buddyRay, ((Circle) table.getMobileObstacles().get(2).getShape()).getRadius(), 0.1);
 
         Thread.sleep(MobileCircularObstacle.getDefaultLifeTime() + 1);
 
