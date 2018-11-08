@@ -22,7 +22,7 @@ public class Node
     private Vec2 position;
 
     /**
-     * Heuristique : variable servant à évaluer la distance entre le ce noeud et le noeud visé lors d'un éxecution du Pathfinding
+     * Heuristique : variable servant à évaluer la distance entre le ce noeud et le noeud visé lors d'un éxecution du Pathfinder
      */
     private int heuristique;
 
@@ -32,7 +32,7 @@ public class Node
     private int cout;
 
     /**
-     * Dis si le noeud est permanent (si c'est un noeud ajouté pour le Pathfinding)
+     * Dis si le noeud est permanent (si c'est un noeud ajouté pour le Pathfinder)
      */
     private boolean permanent;
 
