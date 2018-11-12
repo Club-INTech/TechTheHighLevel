@@ -6,6 +6,7 @@ import pfg.config.Config;
 import utils.ConfigData;
 import utils.Log;
 import utils.container.Service;
+import utils.math.Circle;
 import utils.math.Segment;
 import utils.math.Vec2;
 
@@ -148,6 +149,42 @@ public class Table implements Service
         while (iterator.hasNext()) {
             obstacle = iterator.next();
             if (obstacle.intersect(segment)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Sert à savoir si un segment intersecte l'un des obstacles mobiles
+     * @param segment   segment à tester
+     * @return  true si le segment intersecte l'un des obstacles mobiles
+     * TODO Créer le test !
+     */
+    public boolean intersectAnyMobileObstacle(Segment segment) {
+        Iterator<MobileCircularObstacle> iterator = mobileObstacles.iterator();
+        Obstacle obstacle;
+        while (iterator.hasNext()) {
+            obstacle = iterator.next();
+            if (obstacle.intersect(segment)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Sert à savoir si un cercle intersecte l'un des obstacles mobiles
+     * @param circle   cercle à tester
+     * @return  true si le cercle intersecte l'un des obstacles mobiles
+     * TODO Créer le test !
+     */
+    public boolean intersectAnyMobileObstacle(Circle circle) {
+        Iterator<MobileCircularObstacle> iterator = mobileObstacles.iterator();
+        MobileCircularObstacle obstacle;
+        while (iterator.hasNext()) {
+            obstacle = iterator.next();
+            if (obstacle.getPosition().distanceTo(circle.getCenter()) < ((Circle) obstacle.getShape()).getRadius() + circle.getRadius()) {
                 return true;
             }
         }

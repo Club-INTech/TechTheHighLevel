@@ -20,6 +20,12 @@ public enum ConfigData implements ConfigInfo
     ETHERNET_DEFAULT_TIME(1),
 
     /**
+     * Paramètres du log
+     */
+    PRINT_LOG(true),
+    SAVE_LOG(true),
+
+    /**
      * Couleur
      */
     COULEUR("violet"),
@@ -44,12 +50,6 @@ public enum ConfigData implements ConfigInfo
     LOCALSERVER_PORT(13550),
 
     /**
-     * Paramètres du log
-     */
-    PRINT_LOG(true),
-    SAVE_LOG(true),
-
-    /**
      * Dimensions du robot
      */
     ROBOT_RAY(220),
@@ -67,7 +67,14 @@ public enum ConfigData implements ConfigInfo
     NBR_NOEUDS_X(30),
     NBR_NOEUDS_Y(20),
     NBR_NOEUDS_CIRCLE(12),
-    ESPACEMENT_CIRCLE(1.2)
+    ESPACEMENT_CIRCLE(1.2),
+
+    /**
+     * Paramètre Locomotion
+     */
+    LOCOMOTION_LOOP_DELAY(20),
+    LOCOMOTION_DISTANCE_CHECK(200),
+    LOCOMOTION_RADIUS_CHECK(40)
     ;
 
     /**

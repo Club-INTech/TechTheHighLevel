@@ -73,11 +73,28 @@ public class OrderWrapper implements Service {
      * @param angle  angle aveclequel on veut tourner
      */
     public void turn(double angle) {
-        if(symetry){
+        if(symetry) {
             angle=(Math.PI - angle)%(2*Math.PI);
         }
         try {
             llConnection.send(String.format(Locale.US, "%s %.3f", MotionOrder.TURN.getOrderStr(), angle));
+        } catch (CommunicationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * On envoit au LL l'ordre d'aller en ligne droite jusqu'à un point
+     * @param point point visé
+     * TODO Ajouter le test
+     */
+    public void moveToPoint(Vec2 point) {
+        Vec2 p = point;
+        if(symetry) {
+            p.symetrize();
+        }
+        try {
+            llConnection.send(String.format(Locale.US, "%s %d %d", MotionOrder.MOVE_TO_POINT.getOrderStr(), point.getX(), point.getY()));
         } catch (CommunicationException e) {
             e.printStackTrace();
         }

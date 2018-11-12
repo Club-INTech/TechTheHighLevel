@@ -30,7 +30,7 @@ public class XYO {
     /**
      * Constructeur
      */
-    private XYO(Vec2 position, double orientation) {
+    public XYO(Vec2 position, double orientation) {
         this.position = position;
         this.orientation = orientation;
     }

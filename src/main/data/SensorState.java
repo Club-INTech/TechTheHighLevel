@@ -5,7 +5,9 @@ package data;
  */
 public enum SensorState {
     EXEMPLE(1.5, Double.class),
-    CUBE_PRIS(0, Integer.class)
+    CUBE_PRIS(0, Integer.class),
+    MOVING(false, Boolean.class),
+    STUCKED(false, Boolean.class)
     ;
 
     /**

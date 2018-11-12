@@ -8,6 +8,8 @@ public enum MotionOrder implements Order {
     MOVE_LENTGHWISE("d"),
     /**Tourner*/
     TURN("t"),
+    /** Aller jusqu'à un point */
+    MOVE_TO_POINT("p"),
     /**S'arrêter*/
     STOP("stop"),
     ;
