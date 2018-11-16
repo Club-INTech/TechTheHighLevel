@@ -92,6 +92,15 @@ public class Test_OrderWrapper_Symetry {
 
     }
 
+    @Test
+    public void moveToPointSymetry() throws Exception {
+        orderWrapper.moveToPoint(new VectCartesian(158, 587));
+        Thread.sleep(20);
+        m = Connection.LOCALHOST_SERVER.read();
+        Assert.assertTrue(m.isPresent());
+        Assert.assertEquals("p -158 587", m.get());
+    }
+
     /**
      * après chaque test, on ferme les connexions, on réinitialise le m
      * et on remet la symetrie à false

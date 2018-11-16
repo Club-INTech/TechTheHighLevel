@@ -192,15 +192,17 @@ public class PathFollower extends Thread implements Service {
                 } while (hasNext);
             } catch (UnableToMoveException e) {
                 e.printStackTrace();
-                exceptionsQueue.add(e);
-                this.pointsQueue.clear();
+                synchronized (this) {
+                    this.pointsQueue.clear();
+                    exceptionsQueue.add(e);
+                }
             }
         }
     }
 
     @Override
     public void interrupt() {
-
+        // TODO
     }
 
     /**

@@ -12,6 +12,7 @@ import org.junit.Test;
 import pfg.config.Config;
 import utils.Container;
 import utils.math.VectCartesian;
+import utils.math.VectPolar;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -196,6 +197,15 @@ public class Test_OrderWrapper {
         Assert.assertTrue(m.isPresent());
         String a = HooksOrder.DISABLE_HOOK.getOrderStr() +" "+ HookNames.SPEED_DOWN.getId();
         Assert.assertEquals(a,m.get());
+    }
+
+    @Test
+    public void moveToPoint() throws Exception {
+        orderWrapper.moveToPoint(new VectCartesian(54, 647));
+        Thread.sleep(20);
+        m = Connection.LOCALHOST_SERVER.read();
+        Assert.assertTrue(m.isPresent());
+        Assert.assertEquals("p 54 647", m.get());
     }
 
     /**
