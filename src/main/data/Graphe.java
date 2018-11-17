@@ -178,10 +178,8 @@ public class Graphe implements Service
      * Créé un noeud provisoire si un noeud permanent n'existe pas déjà à la position souhaitée
      * @param position  position du noeud
      * @return le noeud qui est à la position souhaitée
-     * @throws CloneNotSupportedException
-     *                  exception qui n'arrive jamais...
      */
-    public Node addProvisoryNode(Vec2 position) throws CloneNotSupportedException {
+    public Node addProvisoryNode(Vec2 position) {
         Node n = null;
         for (Node node : nodes) {
             if (node.getPosition().equals(position)) {
@@ -192,14 +190,19 @@ public class Graphe implements Service
             return n;
         }
         else {
-            n = new Node(position, false);
-            Segment seg = new Segment(position, new VectCartesian(0, 0));
-            for (Node neighbour : nodes) {
-                seg.setPointB(neighbour.getPosition());
-                constructRidge(n, neighbour, seg);
+            try {
+                n = new Node(position, false);
+                Segment seg = new Segment(position, new VectCartesian(0, 0));
+                for (Node neighbour : nodes) {
+                    seg.setPointB(neighbour.getPosition());
+                    constructRidge(n, neighbour, seg);
+                }
+                nodes.add(n);
+                return n;
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
             }
-            nodes.add(n);
-            return n;
+            return null;
         }
     }
 
