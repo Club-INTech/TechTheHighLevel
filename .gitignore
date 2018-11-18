@@ -1,6 +1,10 @@
-# Directories to ignore
-.idea/
+# JetBrains files
+**.idea/
+**.iml
+
+# Output Directories
 out/
+
+# Logs & Config files
 logs/
-*.iml
 config/hierarchy.txt
