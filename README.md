@@ -1,6 +1,25 @@
 ## TechTheHighLevel
 Ce dépôt a pour but de reconstruire le code Haut Niveau (IA) d'Intech !
 
+### Installation - IntelliJ
+#### Prérequis
+1. Installer Java (Par défaut sur beacoup de distribution)
+2. Installer paquet maven (gestionnaire de dépendance, compilation, ...)
+
+##### Si un projet est ouvert 
+File -\> New... -\> Project from Existing Sources... -\> Import Project from external models (Maven)
+
+Laissez tout par defaut
+##### Si sur la fenêtre de démarrage 
+Import Project -\> Choisir le dossier du dépôt cloné -\> Import Project from external models (Maven)
+
+Laissez tout par defaut
+
+#### Installer les dépendances
+Alt+F12 pour ouvrir le terminal : mvn clean install -DskipTest
+
+Vous êtes parré pour naviguer dans le HL !
+
 ### General Architecture
 L'architecture de ce projet est orientée micro-services : l'IA se base sur plusieurs modules qui ont tous une tâche bien
 définie, et qui communiquent entre eux si besoin. Elle est construite de manière à ce qu'elle soit maintenable, 
