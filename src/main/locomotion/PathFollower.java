@@ -174,6 +174,7 @@ public class PathFollower extends Thread implements Service {
 
     @Override
     public void run() {
+        // TODO : Synchroniser
         Vec2 aim;
         boolean hasNext;
         while (!Thread.currentThread().isInterrupted()) {
