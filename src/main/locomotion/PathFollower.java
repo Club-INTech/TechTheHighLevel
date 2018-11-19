@@ -41,7 +41,7 @@ public class PathFollower extends Thread implements Service {
     /**
      * Queue de communication avec Locomotion lors du suivit d'un chemin
      */
-    private ConcurrentLinkedQueue<Exception> exceptionsQueue;
+    private ConcurrentLinkedQueue<UnableToMoveException> exceptionsQueue;
 
     /**
      * Temps entre 2 vérifications de blocage
@@ -221,7 +221,7 @@ public class PathFollower extends Thread implements Service {
     void setPointsQueue(ConcurrentLinkedQueue<Vec2> pointsQueue) {
         this.pointsQueue = pointsQueue;
     }
-    void setExceptionsQueue(ConcurrentLinkedQueue<Exception> exceptionsQueue) {
+    void setExceptionsQueue(ConcurrentLinkedQueue<UnableToMoveException> exceptionsQueue) {
         this.exceptionsQueue = exceptionsQueue;
     }
 }

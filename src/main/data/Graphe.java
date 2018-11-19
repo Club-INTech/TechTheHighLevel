@@ -48,6 +48,11 @@ public class Graphe implements Service
     private ArrayList<Ridge> ridges;
 
     /**
+     * Permet de synchroniser la mise à jour du graphe avec le pathfinding
+     */
+    private boolean updated;
+
+    /**
      * Paramètres du graphe
      */
     private int nodeCricleNbr;
@@ -255,6 +260,12 @@ public class Graphe implements Service
     }
     public ArrayList<Ridge> getRidges() {
         return ridges;
+    }
+    public boolean isUpdated() {
+        return updated;
+    }
+    public void setUpdated(boolean updated) {
+        this.updated = updated;
     }
 
     /**

@@ -5,11 +5,13 @@ import data.Table;
 import data.XYO;
 import data.graphe.Node;
 import pfg.config.Config;
+import utils.Log;
 import utils.container.Service;
 import utils.math.Calculs;
 import utils.math.Vec2;
 import utils.math.VectCartesian;
 
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -48,7 +50,7 @@ public class Locomotion implements Service {
      * Files de communication avec le PathFollower
      */
     private ConcurrentLinkedQueue<Vec2> pointsQueue;
-    private ConcurrentLinkedQueue<Exception> exceptionsQueue;
+    private ConcurrentLinkedQueue<UnableToMoveException> exceptionsQueue;
 
     /**
      * Construit le service de locmotion
@@ -112,20 +114,72 @@ public class Locomotion implements Service {
      * @param point point à atteindre
      */
     public void moveToPoint(Vec2 point) {
-        // TODO : Compléter
+        // TODO : Synchroniser
         Node start;
         Node aim;
+        Node next;
+        ArrayList<Vec2> path;
+        UnableToMoveException exception;
 
+        /* Algo :
+         *  1. Différencier point/position dans un obstacle & hors-obstacle : gestion dans le PF ?
+         *  2. Créer noeuds provisoires (gestion par le graphe)
+         *  3. Tant que l'on est pas arrivé,
+         *      Calculer le chemin entre le point suivant et le point d'arriver
+         *      Mettre à jour le chemin
+         *      Tant que le graphe n'est pas mis à jour
+         *          Si exception du PathFollower
+         *              Si raison est blocage mécanique, rethrow exception
+         *              Si raison est trajectoire
+         *                  Si c'est l'adversaire
+         *                      Detruire le point de départ
+         *                      Créer le nouveau point de départ (position)
+         *                      Point suivant est point de départ
+         *                  Si c'est ton pote
+         *                      TODO
+         *      Signaler un graphe non mis à jour
+         *   4. Clean le graphe : point d'arrivé & de départ
+         */
         if (table.isPositionInFixedObstacle(point) || table.isPositionInFixedObstacle(xyo.getPosition())) {
-
+            Log.LOCOMOTION.warning("Points de départ " + xyo.getOrientation() + " ou d'arriver " + point + " dans un obstacle");
         }
+
+        start = graphe.addProvisoryNode(xyo.getPosition());
+        next = start;
+        aim = graphe.addProvisoryNode(point);
+        pointsQueue.clear();
+        exceptionsQueue.clear();
+
+        while (xyo.getPosition().equals(aim.getPosition())) {
+            try {
+                path = pathfinder.findPath(next, aim);
+                pointsQueue.clear();
+                pointsQueue.addAll(path);
+                while (!graphe.isUpdated()) {
+                    if (exceptionsQueue.peek() != null) {
+                        exception = exceptionsQueue.poll();
+                        if (exception.getReason().equals(UnableToMoveReason.TRAJECTORY_OBSTRUCTED)) {
+                            // TODO : Gérer les cas ou les points d'arrivé et de départ sont dans des obstacles
+                            graphe.removeProvisoryNode(start);
+                            start = graphe.addProvisoryNode(xyo.getPosition());
+                            next = start;
+                        }
+                    }
+                }
+                graphe.setUpdated(false);
+            } catch (NoPathFound e) {
+                // TODO : Compéter
+            }
+        }
+        graphe.removeProvisoryNode(start);
+        graphe.removeProvisoryNode(aim);
+        pointsQueue.clear();
+        exceptionsQueue.clear();
     }
 
     /**
      * @see Service#updateConfig(Config)
      */
     @Override
-    public void updateConfig(Config config) {
-
-    }
+    public void updateConfig(Config config) {}
 }

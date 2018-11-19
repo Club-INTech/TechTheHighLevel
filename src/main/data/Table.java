@@ -123,12 +123,29 @@ public class Table implements Service
     }
 
     /**
-     * Sert à savoir si la position se trouve ou non dans un obstacle fixe
      * @param point  position à tester
+     * @return  true si le point est dans un obstacle fixe
      */
     public boolean isPositionInFixedObstacle(Vec2 point) {
         Iterator<Obstacle> iterator = fixedObstacles.iterator();
         Obstacle obstacle;
+        while (iterator.hasNext()) {
+            obstacle = iterator.next();
+            if (obstacle.isInObstacle(point)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param point position à tester
+     * @return  true si le point est dans un obstacle mobile
+     * TODO Créer le test !
+     */
+    public boolean isPositionInMobileObstacle(Vec2 point) {
+        Iterator<MobileCircularObstacle> iterator = mobileObstacles.iterator();
+        MobileCircularObstacle obstacle;
         while (iterator.hasNext()) {
             obstacle = iterator.next();
             if (obstacle.isInObstacle(point)) {

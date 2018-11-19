@@ -13,7 +13,7 @@ import java.util.Set;
 
 /**
  * Service déstiner à calculer un chemin entre deux points de la table
- * TODO : 1As, Compléter
+ * TODO : 1As
  */
 public class Pathfinder implements Service {
 
@@ -85,7 +85,7 @@ public class Pathfinder implements Service {
             closedList.add(currentNode);
         }
 
-        throw new NoPathFound();
+        throw new NoPathFound(aim.getPosition());
     }
 
     /**
