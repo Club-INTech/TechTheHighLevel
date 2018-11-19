@@ -2,6 +2,7 @@ package utils.math;
 
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * @see Shape
@@ -170,7 +171,8 @@ public class Circle extends Shape {
      */
     @Override
     public String toString() {
-        return "Circle [center: " + this.center + ", ray :" + this.radius + ", angleStart : " + this.angleStart + ", angleEnd : " + this.angleEnd;
+        return String.format(Locale.US, "Circle [center: %s, ray : %.1f, angleStart : %.3f, angleEnd : %.3f",
+                this.center.toString(), this.radius, this.angleStart, this.angleEnd);
     }
 
     /**

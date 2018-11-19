@@ -141,7 +141,6 @@ public class Table implements Service
     /**
      * @param point position à tester
      * @return  true si le point est dans un obstacle mobile
-     * TODO Créer le test !
      */
     public boolean isPositionInMobileObstacle(Vec2 point) {
         Iterator<MobileCircularObstacle> iterator = mobileObstacles.iterator();
@@ -176,7 +175,6 @@ public class Table implements Service
      * Sert à savoir si un segment intersecte l'un des obstacles mobiles
      * @param segment   segment à tester
      * @return  true si le segment intersecte l'un des obstacles mobiles
-     * TODO Créer le test !
      */
     public boolean intersectAnyMobileObstacle(Segment segment) {
         Iterator<MobileCircularObstacle> iterator = mobileObstacles.iterator();
@@ -194,7 +192,6 @@ public class Table implements Service
      * Sert à savoir si un cercle intersecte l'un des obstacles mobiles
      * @param circle   cercle à tester
      * @return  true si le cercle intersecte l'un des obstacles mobiles
-     * TODO Créer le test !
      */
     public boolean intersectAnyMobileObstacle(Circle circle) {
         Iterator<MobileCircularObstacle> iterator = mobileObstacles.iterator();

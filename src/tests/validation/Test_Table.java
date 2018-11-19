@@ -14,10 +14,7 @@ import org.junit.Test;
 import utils.ConfigData;
 import utils.Container;
 import utils.container.ContainerException;
-import utils.math.Circle;
-import utils.math.Segment;
-import utils.math.Vec2;
-import utils.math.VectCartesian;
+import utils.math.*;
 
 import java.util.ArrayList;
 
@@ -75,6 +72,21 @@ public class Test_Table {
     }
 
     @Test
+    public void testIsPositionInMobileObstacle() throws Exception {
+        Vec2 p1 = new VectCartesian(100, 500);
+        Vec2 p2 = new VectCartesian(500, 800);
+        Vec2 po = p1.plusVector(new VectPolar(0.5* (int) ConfigData.BUDDY_RAY.getDefaultValue(), Math.PI/4));
+        ArrayList<Vec2> points = new ArrayList<>();
+
+        XYO.getBuddyInstance();
+        points.add(po);
+        table.updateMobileObstacles(points);
+
+        Assert.assertTrue(table.isPositionInMobileObstacle(p1));
+        Assert.assertFalse(table.isPositionInMobileObstacle(p2));
+    }
+
+    @Test
     public void testIntersectAnyFixedObstacle() throws Exception {
         table.addFixedObstacle(new StillRectangularObstacle(new VectCartesian(200, 300), 300, 200));
         table.addFixedObstacle(new StillCircularObstacle(new VectCartesian(100, 100), 200));
@@ -87,6 +99,36 @@ public class Test_Table {
         Assert.assertTrue(table.intersectAnyFixedObstacle(s2));
         Assert.assertTrue(table.intersectAnyFixedObstacle(s3));
         Assert.assertFalse(table.intersectAnyFixedObstacle(s4));
+    }
+
+    @Test
+    public void testIntersectAnyMobileObstacle_Segment() throws Exception {
+        Vec2 po = new VectCartesian(540, 620);
+        Segment s1 = new Segment(new VectCartesian(500, 600), new VectCartesian(700, 900));
+        Segment s2 = new Segment(new VectCartesian(300, 450), new VectCartesian(1200, 550));
+        ArrayList<Vec2> points = new ArrayList<>();
+
+        XYO.getBuddyInstance();
+        points.add(po);
+        table.updateMobileObstacles(points);
+
+        Assert.assertTrue(table.intersectAnyMobileObstacle(s1));
+        Assert.assertFalse(table.intersectAnyMobileObstacle(s2));
+    }
+
+    @Test
+    public void testIntersectAnyMobileObstacle_Circle() throws Exception {
+        Vec2 po = new VectCartesian(540, 620);
+        Circle c1 = new Circle(new VectCartesian(480, 500), 50);
+        Circle c2 = new Circle(new VectCartesian(1000, 600), 200);
+        ArrayList<Vec2> points = new ArrayList<>();
+
+        XYO.getBuddyInstance();
+        points.add(po);
+        table.updateMobileObstacles(points);
+
+        Assert.assertTrue(table.intersectAnyMobileObstacle(c1));
+        Assert.assertFalse(table.intersectAnyMobileObstacle(c2));
     }
 
     @Test
