@@ -2,8 +2,9 @@
 **.idea/
 **.iml
 
-# Output Directories
-out/
+# Maven Output Directories
+**/out
+**/target
 
 # Logs & Config files
 logs/

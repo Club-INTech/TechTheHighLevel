@@ -9,7 +9,6 @@ import utils.Log;
 import utils.container.Service;
 import utils.math.Calculs;
 import utils.math.Vec2;
-import utils.math.VectCartesian;
 
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -67,8 +66,8 @@ public class Locomotion implements Service {
         this.pathFollower = pathFollower;
         this.pathfinder = pathfinder;
         this.xyo = XYO.getRobotInstance();
-        this.pointsQueue = new ConcurrentLinkedQueue<>();
-        this.exceptionsQueue = new ConcurrentLinkedQueue<>();
+        this.pointsQueue = new ConcurrentLinkedQueue<Vec2>();
+        this.exceptionsQueue = new ConcurrentLinkedQueue<UnableToMoveException>();
         pathFollower.setPointsQueue(pointsQueue);
         pathFollower.setExceptionsQueue(exceptionsQueue);
     }

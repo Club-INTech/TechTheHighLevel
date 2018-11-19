@@ -161,8 +161,8 @@ public enum Log
             String hour = calendar.get(Calendar.HOUR) + ":" +
                     calendar.get(Calendar.MINUTE) + ":" +
                     calendar.get(Calendar.SECOND);
-            File testFinalRepertoire = new File("./logs");
-            finalSaveFile = "./logs/LOG-" + hour + ".txt";
+            File testFinalRepertoire = new File("../logs");
+            finalSaveFile = "../logs/LOG-" + hour + ".txt";
             if (!testFinalRepertoire.exists())
                 testFinalRepertoire.mkdir();
             writer = new BufferedWriter(new FileWriter(finalSaveFile, true));
