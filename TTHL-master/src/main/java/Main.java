@@ -28,24 +28,28 @@ import java.nio.file.Paths;
 /**
  * @author nayth
  */
-public class MainRaspi {
+public class Main {
 
     public static void main(String[] args){
         Container container;
         String hierarchy;
+        /*
         try {
-            hierarchy = Files.readAllLines(Paths.get("config/hierarchy.txt")).get(0);
+            hierarchy = Files.readAllLines(Paths.get("../config/hierarchy.txt")).get(0);
         } catch (IOException e) {
             hierarchy=null;
             e.printStackTrace();
         }
-        container = Container.getInstance(hierarchy);
+        */
+        container = Container.getInstance("Master");
 
         boolean isMaster = container.getConfig().getBoolean(ConfigData.MASTER);
         try {
             ConnectionManager connectionManager = container.getService(ConnectionManager.class);
-        } catch (ContainerException e) {
+            Thread.sleep(2000);
+        } catch (ContainerException | InterruptedException e) {
             e.printStackTrace();
         }
+        Container.resetInstance();
     }
 }
