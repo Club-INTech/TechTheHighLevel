@@ -26,7 +26,7 @@ isInterfaceUp() : boolean</panel_attributes>
       <w>200</w>
       <h>200</h>
     </coordinates>
-    <panel_attributes>/TCPIP/
+    <panel_attributes>/SocketInterface/
 --
 #ip : String
 #port : Integer
@@ -49,7 +49,7 @@ isInterfaceUp() : boolean</panel_attributes>
       <w>210</w>
       <h>60</h>
     </coordinates>
-    <panel_attributes>TCPIPServer
+    <panel_attributes>SocketServerInterface
 --
 --
 +init()</panel_attributes>
@@ -63,7 +63,7 @@ isInterfaceUp() : boolean</panel_attributes>
       <w>210</w>
       <h>60</h>
     </coordinates>
-    <panel_attributes>TCPIPClient
+    <panel_attributes>SocketClientInterface
 --
 --
 +init()</panel_attributes>

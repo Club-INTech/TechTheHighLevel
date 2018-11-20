@@ -141,7 +141,7 @@ Channel
       <w>850</w>
       <h>300</h>
     </coordinates>
-    <panel_attributes>controller
+    <panel_attributes>data.controlers
 --
 bg=light_gray</panel_attributes>
     <additional_attributes/>
