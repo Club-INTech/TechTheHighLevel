@@ -1,9 +1,6 @@
 ## TechTheHighLevel
 Ce dépôt a pour but de reconstruire le code Haut Niveau (IA) d'Intech !
 
-#### Note
-Compilation Maven non fonctionnelle
-
 ### Installation - IntelliJ
 #### Prérequis
 1. Installer Java (Par défaut sur beacoup de distribution)
