@@ -38,17 +38,16 @@ import java.util.Stack;
  *
  * @author pf, rem
  */
-public class Container implements Service
-{
+public class Container implements Service {
     /**
      * Instance du container (Singleton comme tous les services)
      */
-    private static Container instance   = null;
+    private static Container instance       = null;
 
     /**
      * La config, qui ici n'implémente pas service
      */
-    private Config config   = null;
+    private Config config                   = null;
 
     /**
      * Liste des services déjà instanciés. Contient au moins Config et Log.
@@ -66,7 +65,7 @@ public class Container implements Service
      */
     private Container(String profile) {
         /* Affichage du message de bienvenue */
-        printMessage("intro.txt");
+        printMessage("src/main/resources/intro.txt");
 
         /* Affiche la version du programme (dernier commit et sa branche) */
         try {
@@ -106,7 +105,7 @@ public class Container implements Service
         /* Instanciation des attributs & de la config */
         instanciedServices = new HashMap<>();
         instanciedThreads = new HashMap<>();
-        config = new Config(ConfigData.values(), true, "config/config.txt", "Common", profile);
+        config = new Config(ConfigData.values(), true, "../config/config.txt", "Common", profile);
         Log.init(config);
 
         /* Le container est un service ! */
@@ -119,6 +118,7 @@ public class Container implements Service
     @Override
     public void finalize() {
         Log.close();
+        printMessage("src/main/resources/outro.txt");
         try {
             for (Thread thread : instanciedThreads.values()) {
                 thread.interrupt();
