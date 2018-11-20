@@ -40,6 +40,8 @@ import java.util.ArrayList;
  *               |___________ |
  *
  * On relie les arcs de cercles
+ *
+ * @author yousra, rem
  */
 public class CircularRectangle extends Shape {
 

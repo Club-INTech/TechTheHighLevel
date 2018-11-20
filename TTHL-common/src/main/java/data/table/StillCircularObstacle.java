@@ -23,6 +23,8 @@ import utils.math.Vec2;
 
 /**
  * Classe représentant les obstacles circulaires
+ *
+ * @author rem
  */
 public class StillCircularObstacle extends Obstacle {
     /**

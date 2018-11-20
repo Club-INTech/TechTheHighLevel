@@ -20,6 +20,8 @@ package locomotion;
 
 /**
  * Enum rassemblant les raisons de blocage
+ *
+ * @author rem
  */
 public enum UnableToMoveReason {
     PHYSICALLY_STUCKED,

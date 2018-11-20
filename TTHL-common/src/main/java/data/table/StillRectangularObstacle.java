@@ -23,6 +23,8 @@ import utils.math.Vec2;
 
 /**
  * Classe implémentant les obstacles rectangulaires
+ *
+ * @author rem
  */
 public class StillRectangularObstacle extends Obstacle {
     /**

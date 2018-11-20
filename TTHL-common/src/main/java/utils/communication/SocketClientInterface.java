@@ -25,7 +25,7 @@ import java.net.Socket;
  * Interface Socket client
  * @see SocketInterface
  *
- * @author rem
+ * @author rem, william
  */
 public class SocketClientInterface extends SocketInterface {
 

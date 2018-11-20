@@ -20,6 +20,8 @@ package utils.math;
 
 /**
  * On fait des calculs à l'aide des méthodes de cette classe
+ *
+ * @author yousra
  */
 public class Calculs {
 

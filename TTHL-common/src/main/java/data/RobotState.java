@@ -18,13 +18,16 @@
 
 package data;
 
-/** Correspond à une base de données des variables à propos du main.robot */
+/**
+ * Correspond à une base de données des variables à propos du main.robot
+ *
+ * @author william
+ */
 public enum RobotState {
 
     //Exemples
     BRAS_AVANT_DEPLOYE(true),
     BRAS_ARRIERE_DEPLOYE(true),
-
     ;
     private Object valueObject;
     RobotState(Object valueObject){

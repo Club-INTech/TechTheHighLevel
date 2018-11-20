@@ -34,9 +34,10 @@ import java.util.Iterator;
 /**
  * Classe représentant la table et gérant les obstacles
  * // TODO Ajouter des logs
+ *
+ * @author rem
  */
-public class Table implements Service
-{
+public class Table implements Service {
     /**
      * Graphe
      */

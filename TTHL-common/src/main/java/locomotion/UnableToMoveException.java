@@ -22,6 +22,8 @@ import data.XYO;
 
 /**
  * Exceptions de locomotion
+ *
+ * @author rem
  */
 public class UnableToMoveException extends Exception {
 

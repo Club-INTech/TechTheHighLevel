@@ -29,6 +29,8 @@ import java.util.GregorianCalendar;
 
 /**
  * Service de Log par canaux
+ *
+ * @author rem
  */
 public enum Log
 {

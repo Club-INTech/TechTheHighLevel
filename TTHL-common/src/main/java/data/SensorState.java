@@ -20,6 +20,8 @@ package data;
 
 /**
  * Liste les données du robot et leurs état
+ *
+ * @author william
  */
 public enum SensorState {
     EXEMPLE(1.5, Double.class),

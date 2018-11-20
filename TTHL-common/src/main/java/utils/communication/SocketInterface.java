@@ -31,7 +31,7 @@ import java.util.Optional;
  * Interface Socket client
  * @see CommunicationInterface
  *
- * @author rem
+ * @author rem, william
  */
 public abstract class SocketInterface implements CommunicationInterface {
     /**

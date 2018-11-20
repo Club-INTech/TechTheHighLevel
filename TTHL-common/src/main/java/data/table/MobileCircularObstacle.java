@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2018, INTech.
  * this file is part of INTech's HighLevel.
-
+ *
  * INTech's HighLevel is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -23,6 +23,8 @@ import utils.math.Vec2;
 
 /**
  * Classe implémentant les obstacles mobiles circulaires, dans notre cas les autres robots (adverse & buddy)
+ *
+ * @author rem
  */
 public class MobileCircularObstacle extends Obstacle {
     /**

@@ -23,6 +23,8 @@ import utils.math.VectCartesian;
 
 /**
  * Classe représentant les positions des robots (doublons)
+ *
+ * @author rem
  */
 public class XYO {
     /**

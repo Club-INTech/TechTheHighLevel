@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2018, INTech.
  * this file is part of INTech's HighLevel.
-
+ *
  * INTech's HighLevel is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -24,9 +24,11 @@ import java.util.HashMap;
 
 /**
  * Classe implémentant un noeud afin de paramtérer la table
+ *
+ * @author rem
  */
-public class Node
-{
+public class Node {
+
     /**
      * Variables static pour l'initialistation des noeuds
      */

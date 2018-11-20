@@ -37,9 +37,10 @@ import java.util.ArrayList;
 /**
  * Classe permettant de paramétrer la table pour faciliter la navigation du robot
  * // TODO Ajouter des logs
+ *
+ * @author rem
  */
-public class Graphe implements Service
-{
+public class Graphe implements Service {
     /**
      * Table
      */

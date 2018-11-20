@@ -28,7 +28,7 @@ import java.util.Iterator;
 /**
  * Gère l'instanciation et l'iniitalisation des interfaces de communication
  *
- * @author rem
+ * @author william, rem
  */
 public class ConnectionManager implements Service {
 

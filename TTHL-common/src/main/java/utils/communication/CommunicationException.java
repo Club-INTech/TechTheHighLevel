@@ -21,7 +21,7 @@ package utils.communication;
 /**
  * Exception levée en cas de problème de communication
  *
- * @author rem
+ * @author william
  */
 public class CommunicationException extends Exception {
     public CommunicationException() {super();}

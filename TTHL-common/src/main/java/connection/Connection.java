@@ -32,7 +32,7 @@ import java.util.Optional;
 /**
  * Defines all the communication interfaces
  *
- * @author rem
+ * @author william, rem
  */
 public enum Connection {
     MASTER(ConfigData.MASTER_IP, ConfigData.MASTER_PORT, SocketClientInterface.class),

@@ -22,7 +22,11 @@ import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-/** Cette classe ne sert uniquement qu'à changer des booléens en fonctions des inputs utilisés */
+/**
+ * Cette classe ne sert uniquement qu'à changer des booléens en fonctions des inputs utilisés
+ *
+ * @author nayth
+ */
 class InputFrame extends JFrame implements KeyListener {
 
     boolean isUpPressed = false;

@@ -22,6 +22,8 @@ import java.util.Optional;
 
 /**
  * Définit les fonctionnalitées d'une interface de communication
+ *
+ * @author rem, william
  */
 public interface CommunicationInterface {
     /**
