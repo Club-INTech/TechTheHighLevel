@@ -59,10 +59,9 @@ public class XYO {
      * Mise à jour des XYO
      * package-private
      */
-    void update(String message) {
-        String data[] = message.split(" ");
-        this.position.setXY(Integer.parseInt(data[0]), Integer.parseInt(data[1]));
-        this.orientation = Double.parseDouble(data[2]);
+    public void update(int x, int y, double o) {
+        this.position.setXY(x, y);
+        this.orientation = o;
     }
 
     /**
