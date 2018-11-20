@@ -1,10 +1,13 @@
 ## TechTheHighLevel
 Ce dépôt a pour but de reconstruire le code Haut Niveau (IA) d'Intech !
 
+#### Note
+Compilation Maven non fonctionnelle
+
 ### Installation - IntelliJ
 #### Prérequis
 1. Installer Java (Par défaut sur beacoup de distribution)
-2. Installer paquet maven (gestionnaire de dépendance, compilation, ...)
+2. Installer Maven (gestionnaire de dépendance, compilation, ...)
 
 ##### Si un projet est ouvert 
 File -\> New... -\> Project from Existing Sources... -\> Import Project from external models (Maven)
@@ -16,7 +19,7 @@ Import Project -\> Choisir le dossier du dépôt cloné -\> Import Project from 
 Laissez tout par defaut
 
 #### Installer les dépendances
-Alt+F12 pour ouvrir le terminal : mvn clean install -DskipTest
+Alt+F12 pour ouvrir le terminal : mvn clean install -DskipTests
 
 Vous êtes parré pour naviguer dans le HL !
 
