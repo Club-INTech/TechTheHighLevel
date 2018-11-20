@@ -16,11 +16,24 @@ Import Project -\> Choisir le dossier du dépôt cloné -\> Import Project from 
 Laissez tout par defaut
 
 #### Installer les dépendances
-Alt+F12 pour ouvrir le terminal : mvn clean install -DskipTests
+Alt+F12 pour ouvrir le terminal : 
+
+    mvn clean install -DskipTests
 
 Vous êtes parré pour naviguer dans le HL !
 
 ### General Architecture
+Le HL est composé de trois modules Maven :
+    
+* **TTHL-common** : Socle commun aux codes des deux robots, il regroupe la gestion des données des capteurs, la gestion
+    des mouvements du robot et la gestion des ordres à envoyer au LL
+    
+* **TTHL-master** : IA du robot principale, il concentre toute les décisions stratégiques
+
+* **TTHL-slave** : IA du robot secondaire
+
+#### TTHL-common 
+    
 L'architecture de ce projet est orientée micro-services : l'IA se base sur plusieurs modules qui ont tous une tâche bien
 définie, et qui communiquent entre eux si besoin. Elle est construite de manière à ce qu'elle soit maintenable, 
 performante (dans la limite du language utilisé), et tolérante aux fautes (voir norme ISO/IEC 25010).
@@ -54,6 +67,9 @@ Dans le dossier des sources, plusieurs packages regroupent les classes par fonct
 L'orchestration de tout ces packages et modules se fait de la manière suivante :
 
 **TODO** : UML de l'architecture générale
+
+#### TTHL-master
+#### TTHL-slave
 
 ### Detailed Architecture
 #### Utils 
