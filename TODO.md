@@ -11,4 +11,5 @@
     * PathFollower
     * Locomotion
 3. Traiter les cas délicats dans Locomotion
-4. Créer un squelette stratégie
+4. Mettre à jour la documentation
+5. Créer un squelette stratégie
