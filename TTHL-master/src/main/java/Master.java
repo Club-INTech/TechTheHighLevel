@@ -16,14 +16,22 @@
  * along with it.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
-import utils.Container;
+import locomotion.Locomotion;
+import orders.OrderWrapper;
+import pfg.config.Config;
 
 /**
+ * Robot principale : on rassemble ici tout ce qui est unique au robot principale
+ *
  * @author rem
  */
-public class Main {
-    public static void main(String[] args) {
-        Container container = Container.getInstance("Slave");
-        System.out.println("Hello World ! I'm Billy's Slave :D");
+public class Master extends Robot {
+    public Master(Locomotion locomotion, OrderWrapper orderWrapper) {
+        super(locomotion, orderWrapper);
+    }
+
+    @Override
+    public void updateConfig(Config config) {
+        super.updateConfig(config);
     }
 }
