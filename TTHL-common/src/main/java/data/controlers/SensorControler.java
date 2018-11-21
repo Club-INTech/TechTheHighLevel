@@ -19,7 +19,7 @@ public class SensorControler extends Thread implements Service {
     /**
      * Temps d'attente entre deux vérification de la queue
      */
-    private static final int TIME_LOOP                  = 20;
+    private static final int TIME_LOOP                  = 5;
 
     /**
      * Separateur entre deux coordonnées d'un point

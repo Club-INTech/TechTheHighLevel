@@ -92,6 +92,8 @@ public class Listener extends Thread implements Service {
 
     @Override
     public void run() {
+        Connection me = Connection.MASTER;
+        Connection buddy = Connection.SLAVE;
         // Initialisation des connexions
         Log.COMMUNICATION.debug("Listener lancé : connection aux devices...");
         try {
@@ -103,6 +105,8 @@ public class Listener extends Thread implements Service {
                 Log.COMMUNICATION.debug("Teensy Master");
             } else {
                 connectionManager.initConnections(Connection.MASTER, Connection.TEENSY_SLAVE);
+                me = Connection.SLAVE;
+                buddy = Connection.MASTER;
                 Log.COMMUNICATION.debug("Master");
                 Log.COMMUNICATION.debug("Teensy Slave");
             }
@@ -134,7 +138,9 @@ public class Listener extends Thread implements Service {
                         header = buffer.get().substring(0, 2);
                         message = buffer.get().substring(2);
                         handleMessage(header, message);
-                        // TODO Redirections
+                        if (header.equals(Channel.ROBOT_POSITION.getHeaders())) {
+                            buddy.send(String.format("%s%s", Channel.BUDDY_POSITION.getHeaders(), message));
+                        }
                     }
                 } catch (CommunicationException e) {
                     e.printStackTrace();
