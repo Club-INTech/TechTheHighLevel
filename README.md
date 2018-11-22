@@ -108,11 +108,11 @@ constructeur en tant que service s'ils n'ont pas déjà instanciés. Utilisation
     Container container = Container.getInstance("Master");
     MonService service = container.getService(MonService.class);
     
-"Mais tu nous parles de service depuis tout à l'heure mais c'est quoi ???"
+"Tu nous parles de service depuis tout à l'heure mais c'est quoi au juste un service ???"
 
 Et bien c'est un **singleton** offrant des **fonctionnalités** bien définies ! Dans notre cas c'est une interface qui 
 doit surcharger la méthode _public void updateConfig(Config config)_, qui permet justement de récupérer des valeurs de 
-la config ! Exemple :
+la config ! On entend par singleton une classe qui n'a qu'un seule instance. Exemple :
 
 ConfigData.java :
 
@@ -141,17 +141,17 @@ MonService.java :
     }
 
 ##### Orders
-* OrderWrapper
-* HookFactory
+* **OrderWrapper**
+* **HookFactory**
 ##### Data
-* Table
-* Graphe
-* SensorState
-* XYO
-* Controlers & Listener
+* **Table**
+* **Graphe**
+* **SensorState**
+* **XYO**
+* **Controlers & Listener**
 ##### Locomotion
-* PathFollower
-* PathFinder
+* **PathFollower**
+* **PathFinder**
 
 #### TTHL-master
 #### TTHL-slave
@@ -160,17 +160,17 @@ MonService.java :
 Les tests, indispensables pour la maintenabilité du HL, et permettant d'être efficace pour trouver l'origine de vos bugs
 lorsque vous développez de nouvelles fonctionnalités, sont découpés ici en trois packages :
 
-* Unitaires : ce sont les tests de fonctionnalités qui ne dépendent d'aucune autre fonctionnalités ! Typiquement tout
+* **Unitaires** : ce sont les tests de fonctionnalités qui ne dépendent d'aucune autre fonctionnalités ! Typiquement tout
   ce qu'il y a dans le package utils. Ils servent tout simplement à vérifier que les fonctionnalités de base n'ont pas
   été altérées par quelques curieux : si ces tests ne passent pas, rien ne fonctionnera correctement
 
-* Validation : ces tests sont plus nombreux et plus complexes. Il servent à vérifier l'intégrité des 
+* **Validation** : ces tests sont plus nombreux et plus complexes. Il servent à vérifier l'intégrité des 
   fonctionnalités testables sans le hardware, principalement celles du package data dans notre cas. Par exemple, on 
   vérifie que la méthode de mise à jour du graphe à partir de points données par le Lidar donne des résultats sans 
   fautes, c'est-à-dire que les obstacles sont correctement placés et que les arrêtes parcourables du Graphe ne traverse 
   pas ces obstacles.
   
-* Réels : ces tests sont ceux réalisés en conditions réels, c'est-à-dire avec un vrai robot ! Ce sont ceux que vous 
+* **Embedded** : ces tests sont ceux réalisés en conditions réels, c'est-à-dire avec un vrai robot ! Ce sont ceux que vous 
   devrez sans doute beaucoup toucher puisqu'ils doivent assurer toute la fonctionnalité du Robot : **GAGNER**
   
 Ces tests sont destinés à être executer quotidiennement par un bot Jenkins (excépté pour les réels), vous permettant de 
