@@ -26,10 +26,11 @@
     <version>1.0</version>
     <packaging>pom</packaging>
 
-    <!-- Propriété de compilation : Java 8 -->
+    <!-- Compilation properties : Java 8 -->
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <!-- Repository to search dependencies -->

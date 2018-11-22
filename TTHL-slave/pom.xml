@@ -28,6 +28,21 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>TTHL-slave</artifactId>
 
+    <!-- Checkstyle configuration -->
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <configLocation>../resources/intcheckstyle.xml</configLocation>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+
+    <!-- Dependencies -->
     <dependencies>
         <dependency>
             <groupId>TechTheHighLevel</groupId>
@@ -37,8 +52,10 @@
         </dependency>
     </dependencies>
 
+    <!-- Build Configuration -->
     <build>
         <plugins>
+            <!-- Gather all depedencies in the jar file -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -58,9 +75,11 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- Specify Main Class -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.0</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -70,6 +89,22 @@
                         </manifest>
                     </archive>
                 </configuration>
+            </plugin>
+            <!-- Checkstyle configuration -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <configLocation>../resources/intcheckstyle.xml</configLocation>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

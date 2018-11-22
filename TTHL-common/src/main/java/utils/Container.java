@@ -65,7 +65,7 @@ public class Container implements Service {
      */
     private Container(String profile) {
         /* Affichage du message de bienvenue */
-        printMessage("src/main/resources/intro.txt");
+        printMessage("../resources/intro.txt");
 
         /* Affiche la version du programme (dernier commit et sa branche) */
         try {
@@ -118,7 +118,7 @@ public class Container implements Service {
     @Override
     public void finalize() {
         Log.close();
-        printMessage("src/main/resources/outro.txt");
+        printMessage("../resources/outro.txt");
         try {
             for (Thread thread : instanciedThreads.values()) {
                 thread.interrupt();
