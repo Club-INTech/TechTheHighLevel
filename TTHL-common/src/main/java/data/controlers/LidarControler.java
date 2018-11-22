@@ -87,7 +87,8 @@ public class LidarControler extends Thread implements Service {
 
     @Override
     public void run() {
-        Log.LIDAR.debug("Controler lancé : en attente du listener...");
+        Log.LIDAR.debug("Controller lancé : en attente du listener...");
+        // TODO : lancer le processus du Lidar !
         while (!listener.isAlive()) {
             try {
                 Thread.sleep(Listener.TIME_LOOP);
