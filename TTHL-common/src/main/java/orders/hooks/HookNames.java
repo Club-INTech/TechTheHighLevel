@@ -20,7 +20,7 @@ package orders.hooks;
 
 import orders.order.Order;
 
-import orders.order.Speed;
+import orders.Speed;
 import utils.math.Vec2;
 import utils.math.VectCartesian;
 

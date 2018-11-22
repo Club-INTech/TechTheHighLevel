@@ -20,7 +20,7 @@ import data.XYO;
 import locomotion.Locomotion;
 import orders.OrderWrapper;
 import orders.order.ActionsOrder;
-import orders.order.Speed;
+import orders.Speed;
 import pfg.config.Config;
 import utils.container.Service;
 import utils.math.Vec2;

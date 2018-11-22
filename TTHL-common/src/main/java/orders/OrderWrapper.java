@@ -19,8 +19,13 @@
 package orders;
 
 import connection.Connection;
+import orders.order.MotionOrder;
+import orders.order.ActionsOrder;
+import orders.order.Order;
+import orders.order.SpeedOrder;
+import orders.order.PositionAndOrientationOrder;
+import orders.order.HooksOrder;
 import pfg.config.Config;
-import orders.order.*;
 import orders.hooks.HookNames;
 import utils.ConfigData;
 import utils.Log;

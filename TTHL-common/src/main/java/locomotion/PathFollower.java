@@ -25,7 +25,11 @@ import orders.OrderWrapper;
 import pfg.config.Config;
 import utils.ConfigData;
 import utils.container.Service;
-import utils.math.*;
+import utils.math.Calculs;
+import utils.math.Vec2;
+import utils.math.VectPolar;
+import utils.math.Circle;
+import utils.math.Segment;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 

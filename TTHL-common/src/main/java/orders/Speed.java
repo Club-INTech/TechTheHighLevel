@@ -16,7 +16,9 @@
  * along with it.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
-package orders.order;
+package orders;
+
+import orders.order.Order;
 
 /**
  * Définition des vitesses possibles de déplacement du robot.
