@@ -72,22 +72,89 @@ L'orchestration de tout ces packages et modules se fait de la manière suivante 
 #### TTHL-slave
 
 ### Detailed Architecture
-#### Utils 
-##### Log
-##### Config
-##### Container
-#### Orders
-##### Order
-##### Hook
-#### Data
-##### XYO
-##### Table
-##### Graphe
-##### SensorState
-##### Controlers
-#### Locomotion
-##### PathFollower
-##### PathFinder
+Prenez une grande inspiration, on rentre ici dans le détail de l'architecture !
+#### TTHL-common
+##### Utils 
+* **Log**
+
+Le service de log est une enum : chaque instance représente un cannal de journalisation que l'on peut activer et
+désactiver au besoin, le but étant d'éviter de surcharger le terminal d'informations lorsque l'on se concentre sur une
+fonctionnalité du robot. Il y a trois niveau de log : debug, warning, et critical. Ce dernier niveau de log s'affiche
+toujours, que le cannal spécifié soit activé ou non. Attention à bien initialiser log si le container n'est pas 
+instancié !
+Utilisation :
+    
+    Log.CANNAL.setActive(true);
+    Log.CANNAL.debug("Debut de la methode A");  // Ca s'affiche !
+    Log.CANNAL.setActive(false);
+    Log.CANNAL.warning("Fin de la methode A");  // Ca ne s'affiche pas...
+    Log.CANNAL.critical("AH GROS BUG");         // Ca s'affiche !
+    
+
+
+* **Config**
+
+La config est une librairie externe utilisé pour changer des paramètres dans le Haut Niveau sans avoir à recompiler. Il
+a été developpé par PF Gimenez, un vieux d'Intech aujourd'hui docteur ! Bref, ce service est lui aussi gérer par le 
+container et les paramètres que l'on veut manipuler/retirer/ajouter sont rassemblé dans l'enum ConfigData, qui contient
+les valeurs des paramètres par défaut. Les valeurs chargées par le container à l'instanciation des services sont 
+présentes dans le fichier config.txt. Attention à utiliser les mêmes clés et types entre le fichier texte et l'enum !
+* **Container**
+
+Le container fait office à la fois de factory .ie il instancie les services, et de gestion des dépendances : lorsque 
+l'on demande un service via la methode _getService(Class class)_, le container va instancier tout les paramètres du 
+constructeur en tant que service s'ils n'ont pas déjà instanciés. Utilisation :
+    
+    Container container = Container.getInstance("Master");
+    MonService service = container.getService(MonService.class);
+    
+"Mais tu nous parles de service depuis tout à l'heure mais c'est quoi ???"
+
+Et bien c'est un **singleton** offrant des **fonctionnalités** bien définies ! Dans notre cas c'est une interface qui 
+doit surcharger la méthode _public void updateConfig(Config config)_, qui permet justement de récupérer des valeurs de 
+la config ! Exemple :
+
+ConfigData.java :
+
+    import pfg.config.ConfigInfo;
+    
+    public enum ConfigData implements ConfigInfo {
+        PARAM_MONSERVICE(18)
+        ;
+    }
+config/config.txt :
+
+    ...
+    PARAM_MONSERVICE =              24
+    ...
+MonService.java :
+
+    import utils.container.Service
+    
+    public class MonService implements Service {
+        private int param;
+        public MonService(MonAutreService ah) {...}
+        @Override
+        public void updateConfig(Config config) {
+            this.param = config.getInt(ConfigData.PARAM_MONSERVICE);
+        }
+    }
+
+##### Orders
+* OrderWrapper
+* HookFactory
+##### Data
+* Table
+* Graphe
+* SensorState
+* XYO
+* Controlers & Listener
+##### Locomotion
+* PathFollower
+* PathFinder
+
+#### TTHL-master
+#### TTHL-slave
     
 ### Tests
 Les tests, indispensables pour la maintenabilité du HL, et permettant d'être efficace pour trouver l'origine de vos bugs
