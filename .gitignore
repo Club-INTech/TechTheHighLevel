@@ -9,3 +9,6 @@
 # Logs & Config files
 logs/
 config/hierarchy.txt
+
+# Doc
+doc/formation/*.pdf
