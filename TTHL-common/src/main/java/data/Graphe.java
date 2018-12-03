@@ -132,7 +132,7 @@ public class Graphe implements Service {
             for (int i = 0; i < nodeCricleNbr; i++) {
                 pos.setR(spaceCircleParameter * ((Circle) obstacle.getShape()).getRadius());
                 pos.setA(i * 2 * Math.PI / nodeCricleNbr);
-                pos.plusVector(obstacle.getPosition());
+                pos.plus(obstacle.getPosition());
 
                 if (!table.isPositionInFixedObstacle(pos)) {
                     nodes.add(new Node(pos.clone()));

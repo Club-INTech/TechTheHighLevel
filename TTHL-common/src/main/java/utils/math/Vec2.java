@@ -224,6 +224,14 @@ public abstract class Vec2 {
     }
 
     /**
+     * @see Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return this.y + this.x*2000;
+    }
+
+    /**
      * @see Object#clone()
      */
     @Override

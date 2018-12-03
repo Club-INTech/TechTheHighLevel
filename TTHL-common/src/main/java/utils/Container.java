@@ -22,13 +22,12 @@ import pfg.config.Config;
 import utils.container.ContainerException;
 import utils.container.Service;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Stack;
 
 /**
@@ -42,7 +41,7 @@ public class Container implements Service {
     /**
      * Instance du container (Singleton comme tous les services)
      */
-    private static Container instance       = null;
+    private volatile static Container instance       = null;
 
     /**
      * La config, qui ici n'implémente pas service
@@ -71,8 +70,8 @@ public class Container implements Service {
         try {
             Process process_log = Runtime.getRuntime().exec("git log -1 --oneline");
             Process process_git = Runtime.getRuntime().exec("git branch");
-            BufferedReader input_log = new BufferedReader(new InputStreamReader(process_log.getInputStream()));
-            BufferedReader input_git = new BufferedReader(new InputStreamReader(process_git.getInputStream()));
+            BufferedReader input_log = new BufferedReader(new InputStreamReader(process_log.getInputStream(), StandardCharsets.UTF_8));
+            BufferedReader input_git = new BufferedReader(new InputStreamReader(process_git.getInputStream(), StandardCharsets.UTF_8));
             String toprint_log = input_log.readLine();
             if (toprint_log == null) {
                 System.out.println("Projet non-versionné");
@@ -116,7 +115,7 @@ public class Container implements Service {
      * Méthode appelée juste avant la destruction de l'objet
      */
     @Override
-    public void finalize() {
+    protected void finalize() {
         Log.close();
         printMessage("../resources/outro.txt");
         try {
@@ -142,6 +141,7 @@ public class Container implements Service {
     /**
      * WARNING : Utilisé UNIQUEMENT pour les tests !!! Jamais on fait appel au Garbage Collector, c'est sale !
      */
+    @SuppressWarnings("")
     public static void resetInstance() {
         instance = null;
         System.gc();
@@ -193,11 +193,11 @@ public class Container implements Service {
             /* Détection des dépendances circulaires */
             if (stack.contains(service.getSimpleName()))
             {
-                String out = "";
+                StringBuffer buf = new StringBuffer();
                 for (String stk : stack)
-                    out += stk + " -> ";
-                out += service.getSimpleName();
-                throw new ContainerException(out);
+                    buf.append(String.format(Locale.US, "%s -> ", stk));
+                buf.append(service.getSimpleName());
+                throw new ContainerException(buf.toString());
             }
 
             /* Mise à jour de la pile */
@@ -258,7 +258,7 @@ public class Container implements Service {
     {
         BufferedReader reader;
         try {
-            reader = new BufferedReader(new FileReader(filename));
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(filename), StandardCharsets.UTF_8));
             String line;
 
             while((line = reader.readLine()) != null)

@@ -107,9 +107,6 @@ public enum HookNames {
     public double getTolerencyAngle() {
         return tolerencyAngle;
     }
-    public void setPosition(Vec2 position) {
-        this.position = position;
-    }
 }
 
 

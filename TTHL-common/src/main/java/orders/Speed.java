@@ -57,12 +57,12 @@ public enum Speed implements Order {
     /**
      * Vitesse de translation du robot - envoyé au LL via l'OrderWrapper
      */
-    public int translationSpeed;
+    private int translationSpeed;
 
     /**
      * Vitesse de rotation du roboy - envoyé au LL via l'OrderWrapper
      */
-    public double rotationSpeed;
+    private double rotationSpeed;
 
     /**
      * Constructeur d'une vitesse.

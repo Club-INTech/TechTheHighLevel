@@ -20,10 +20,8 @@ package utils;
 
 import pfg.config.Config;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -176,6 +174,7 @@ public enum Log
      */
     public static void init(Config config)
     {
+        boolean ret = true;
         try {
             calendar = new GregorianCalendar();
             String hour = calendar.get(Calendar.HOUR) + ":" +
@@ -184,14 +183,16 @@ public enum Log
             File testFinalRepertoire = new File("../logs");
             finalSaveFile = "../logs/LOG-" + hour + ".txt";
             if (!testFinalRepertoire.exists())
-                testFinalRepertoire.mkdir();
-            writer = new BufferedWriter(new FileWriter(finalSaveFile, true));
+                ret = testFinalRepertoire.mkdir();
+            if (!ret) {
+                throw new IOException("Impossible de créer le répertoire logs");
+            }
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(finalSaveFile), StandardCharsets.UTF_8));
             saveLogs = config.getBoolean(ConfigData.SAVE_LOG);
             printLogs = config.getBoolean(ConfigData.PRINT_LOG);
             System.out.println(LOG_INFO + "DEMARRAGE DU SERVICE DE LOG");
             System.out.println(RESET);
-        } catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

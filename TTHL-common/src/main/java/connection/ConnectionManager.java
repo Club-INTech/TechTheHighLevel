@@ -93,7 +93,7 @@ public class ConnectionManager implements Service {
      * @see Object#finalize()
      */
     @Override
-    public void finalize() {
+    protected void finalize() {
         try {
             this.closeInitiatedConnections();
         } catch (CommunicationException e) {

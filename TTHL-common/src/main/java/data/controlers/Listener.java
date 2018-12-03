@@ -92,7 +92,6 @@ public class Listener extends Thread implements Service {
 
     @Override
     public void run() {
-        Connection me = Connection.MASTER;
         Connection buddy = Connection.SLAVE;
         // Initialisation des connexions
         Log.COMMUNICATION.debug("Listener lancé : connection aux devices...");
@@ -105,7 +104,6 @@ public class Listener extends Thread implements Service {
                 Log.COMMUNICATION.debug("Teensy Master");
             } else {
                 connectionManager.initConnections(Connection.MASTER, Connection.TEENSY_SLAVE);
-                me = Connection.SLAVE;
                 buddy = Connection.MASTER;
                 Log.COMMUNICATION.debug("Master");
                 Log.COMMUNICATION.debug("Teensy Slave");

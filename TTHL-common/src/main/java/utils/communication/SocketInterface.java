@@ -25,6 +25,7 @@ import java.io.OutputStreamWriter;
 import java.io.InputStreamReader;
 
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 /**
@@ -130,8 +131,8 @@ public abstract class SocketInterface implements CommunicationInterface {
      */
     protected void initBuffers() throws CommunicationException {
         try {
-            this.input = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
-            this.output = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
+            this.input = new BufferedReader(new InputStreamReader(this.socket.getInputStream(), StandardCharsets.UTF_8.name()));
+            this.output = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream(), StandardCharsets.UTF_8.name()));
             this.initiate = true;
         } catch (IOException e) {
             throw new CommunicationException("Impossible de créer les buffers IO");
