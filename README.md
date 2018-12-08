@@ -140,9 +140,98 @@ MonService.java :
         }
     }
 
+##### Connection
+* **ConnectionManager**
+
 ##### Orders
 * **OrderWrapper**
+
+L'order wrapper est un service servant à simplifier l'envoie d'ordre au bas niveau via des méthodes plus simple
+d'utilisation. Par exemple, plutôt que de devoir écrire, à chaque fois que l'on veut l'ordre au bas niveau
+d'avancer d'une certaine distance _Connection.TEENSY_MASTER.send("d 100")_, on préfère utiliser une méthode
+du style _orderWrapper.moveLenghtwise(100)_ ! C'est le premier intérêt de l'order wrapper. Pour cela on se base
+sur des enums qui implémentent l'interface _orders.order.Order_, et qui typent les chaînes de caractères correspondant aux
+ordres que l'on envoie au bas niveau. Regardez la classe _orders.order.MotionOrder_ ainsi que dans l'order wrapper
+pour plus d'informations.
+
+L'order wrapper ne s'occupe pas que de simplifier l'envoie d'ordre au bas-niveau, il est également en charge de
+la symétrisation des ordres. Pour ne pas avoir à écrire deux version du code, une pour chaque côté de la table, le
+haut niveau réfléchit toujours du même côté et symétrise les ordres envoyés au bas niveau si nécessaire. C'est
+au niveau de l'order wrapper que cela se fait. Imaginons que le HL réfléchisse toujours du côté violet, et que
+l'on utilise la méthode _moveToPoint(Vec2 point)_, avec _point\[x: 370, y: 800\] (voir en annexe pour le repère
+de la table). Si l'on est du côté violet, l'order wrapper doit envoyé au LL la chaîne de caractères _"p 370 800"_.
+Si l'on est du côté jaune, il envoie _"p -370 800"_.
+
+"Et du coup comment je crée un ordre ?"
+
+La première chose à faire est de se mettre d'accord avec le bas niveau sur la chaîne de caractère associé à l'odre
+et le format d'envoie si nécéssaire. Une fois ceci fait, c'est tout simple si c'est un actionneur !
+
+orders.order.ActuatorsOrder.java:
+
+    public enum ActuatorsOrder {
+        ...
+        MON_ORDRE_ACTIONNEUR("ordre LL", 100);
+        MON_ORDRE_SYMETRIQUE("ordre LL 2", 100); // S'il a besoin d'être symétrisé
+        ...
+    }
+
+Si l'ordre a besoin d'être symétrisé (si l'actionneur à bouger dépend du côté de la couleur qui nous été attribuée) :
+
+orders.SymmetrizedActuatorOrderMap.java:
+
+    public class SymmetrizedActuatorOrderMap implement Service {
+        ...
+        private SymmetrizedActuatorOrderMap {
+            correspondanceMap.put(ActuatorOrder.MON_ORDRE_ACTIONNEUR, ActuatorOrder.MON_ORDRE_SYMETRIQUE);
+        }
+        ...
+    }
+
+Voilà pour un ordre de type actionneur, la méthode _useActuator(ActuatorOrder order, boolean waitForCompletion)_
+s'occupe du reste !
+
+"Le reste ? Du genre l'entier à côté de la chaîne de caractère et le booléen waitForCompletion
+dans le prototype de la méthode que t'as pas expliqué ?"
+
+Ce petit entier est enfaite le temps que le HL doit attendre pour l'action se finisse. Si l'on ne met pas d'entier,
+l'action est considérée comme immédiate et le HL va continuer sa réflexion et son envoie d'ordre au LL. Cela aboutit
+souvent à des actions qui se déroulent en même temps, et ce n'est pas toujours souhaitable. Cependant il y a bien des
+fois ou c'est pratique de déplier/replier des actionneurs en même temps ! C'est pourquoi ce petit booléen
+waitForCompletion existe dans le prototype de la méthode. Mis à false, le HL ne va pas attendre le temps indiqué
+dans la classe _orders.order.ActuatorsOrder_ avant de passer à la suite.
 * **HookFactory**
+
+Le service HookFactory comme son nom l'indique, permet de créer des Hooks ! Un hook est tout simplement un mécanisme
+qui permet d'effectuer une action en mouvement. C'est le LL qui s'occupe d'executer des hooks mais c'est le HL qui
+crée les hooks et décident s'ils doivent être activés ou non. Pour créer un hook, rien de plus simple :
+
+oders.hooks.HookNames.java:
+
+    public enum HookNames {
+        ...
+        MON_HOOK(1, new VectCartesian(500, 400), 10, Math.PI/2, Math.PI/8, ActuatorsOrder.MON_ORDRE_ACTIONNEUR),
+        ...
+    }
+
+Le hook est maintenant créer ! Mais il faut le configurer, c'est-à-dire dire au LL qu'il existe lors de l'execution,
+et l'activer. Par exemple dans la classe Main.java:
+
+    public class Main {
+        Container container;
+        HookFactory factory;
+        ...
+        public static void main(String[] args) {
+            container = Container.getInstance("Master");
+            factory = container.getService(HookFactory.class);
+            ...
+            factory.configureHook(HookNames.MON_HOOK);
+            factory.enableHook(HookNames.MON_HOOK);
+            ...
+            // Do what you want !
+        }
+    }
+
 ##### Data
 * **Table**
 * **Graphe**
@@ -175,3 +264,6 @@ lorsque vous développez de nouvelles fonctionnalités, sont découpés ici en t
   
 Ces tests sont destinés à être executer quotidiennement par un bot Jenkins (excépté pour les réels), vous permettant de 
 vite voir si un bug a été introduit par une feature et d'indentifier plus rapidement son origine.
+
+### Annexes
+**TODO** : Plan de la table + umls
