@@ -30,7 +30,6 @@ import org.junit.Test;
 import pfg.config.Config;
 import utils.Container;
 import utils.math.VectCartesian;
-import utils.math.VectPolar;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -42,14 +41,19 @@ public class Test_OrderWrapper {
 
     /**Container*/
     private Container container;
+
     /**orderWrapper*/
     private OrderWrapper orderWrapper;
+
     /**connectionManager pour établir et fermer les connexions en local pour run les tests*/
     private ConnectionManager connectionsManager;
+
     /**String ajouté pour les asserts : voir tests*/
     private Optional<String> m;
+
     /**config*/
     private Config config;
+
     @Before
     public void setUp() throws Exception{
         container = Container.getInstance("Master");
@@ -83,11 +87,11 @@ public class Test_OrderWrapper {
      */
     @Test
     public void sendActionOrder() throws Exception{
-        orderWrapper.useActuator(ActionsOrder.DesactiveLaPompe);
+        orderWrapper.useActuator(ActuatorsOrder.DESACTIVE_LA_POMPE);
         Thread.sleep(20);
         m=Connection.LOCALHOST_SERVER.read();
         Assert.assertTrue(m.isPresent());
-        String a =ActionsOrder.DesactiveLaPompe.getOrderStr();
+        String a = ActuatorsOrder.DESACTIVE_LA_POMPE.getOrderStr();
         Assert.assertEquals(a,m.get());
     }
 
@@ -101,7 +105,7 @@ public class Test_OrderWrapper {
         Thread.sleep(20);
         m=Connection.LOCALHOST_SERVER.read();
         Assert.assertTrue(m.isPresent());
-        String a = MotionOrder.MOVE_LENTGHWISE.getOrderStr() + " " + 15;
+        String a = String.format(Locale.US, "%s %d", MotionOrder.MOVE_LENTGHWISE.getOrderStr(), 15);
         Assert.assertEquals(a, m.get());
     }
 
@@ -115,7 +119,7 @@ public class Test_OrderWrapper {
         Thread.sleep(20);
         m=Connection.LOCALHOST_SERVER.read();
         Assert.assertTrue(m.isPresent());
-        String a = MotionOrder.TURN.getOrderStr() + " " + new StringBuilder(String.format(Locale.US, "%.3f", Math.PI));
+        String a = String.format(Locale.US, "%s %.3f", MotionOrder.TURN.getOrderStr(), Math.PI);
         Assert.assertEquals(a,m.get());
     }
 
@@ -129,7 +133,7 @@ public class Test_OrderWrapper {
         Thread.sleep(20);
         m = Connection.LOCALHOST_SERVER.read();
         Assert.assertTrue(m.isPresent());
-        String a= SpeedOrder.SET_TRANSLATION_SPEED.getOrderStr() +" "+ new StringBuilder(String.format(Locale.US,"%.3f",2.0));
+        String a = String.format(Locale.US, "%s %.3f", SpeedOrder.SET_TRANSLATION_SPEED.getOrderStr(), 2.0);
         Assert.assertEquals(a,m.get());
     }
 
@@ -143,7 +147,7 @@ public class Test_OrderWrapper {
         Thread.sleep(20);
         m = Connection.LOCALHOST_SERVER.read();
         Assert.assertTrue(m.isPresent());
-        String a =SpeedOrder.SET_ROTATIONNAL_SPEED.getOrderStr()+" "+ new StringBuilder(String.format(Locale.US,"%.3f",3.0));
+        String a = String.format(Locale.US, "%s %.3f", SpeedOrder.SET_ROTATIONNAL_SPEED.getOrderStr(), 3.0);
         Assert.assertEquals(a,m.get());
     }
 
@@ -157,7 +161,7 @@ public class Test_OrderWrapper {
         Thread.sleep(20);
         m = Connection.LOCALHOST_SERVER.read();
         Assert.assertTrue(m.isPresent());
-        String a = PositionAndOrientationOrder.SET_POSITION_AND_ORIENTATION.getOrderStr() + " " + new StringBuilder(String.format(Locale.US, "%d", 2)) + " " + new StringBuilder(String.format(Locale.US, "%d", 3)) + " " + new StringBuilder(String.format(Locale.US, "%.3f", Math.PI / 2));
+        String a = String.format(Locale.US, "%s %d %d %.3f", PositionAndOrientationOrder.SET_POSITION_AND_ORIENTATION.getOrderStr(), 2, 3, Math.PI/2);
         Assert.assertEquals(a,m.get());
     }
 
@@ -171,7 +175,7 @@ public class Test_OrderWrapper {
         Thread.sleep(20);
         m=Connection.LOCALHOST_SERVER.read();
         Assert.assertTrue(m.isPresent());
-        String a = PositionAndOrientationOrder.SET_ORIENTATION.getOrderStr() + " " + new StringBuilder(String.format(Locale.US, "%.3f", Math.PI));
+        String a = String.format(Locale.US, "%s %.3f", PositionAndOrientationOrder.SET_ORIENTATION.getOrderStr(), Math.PI);
         Assert.assertEquals(a, m.get());
     }
 
@@ -181,12 +185,12 @@ public class Test_OrderWrapper {
      */
     @Test
     public void configureHookTest() throws Exception {
-        orderWrapper.configureHook(0, new VectCartesian(2, 3), 2, Math.PI, 2, ActionsOrder.FermePorteAvant);
+        orderWrapper.configureHook(0, new VectCartesian(2, 3), 2, Math.PI, 2, ActuatorsOrder.FERME_PORTE_AVANT);
         Thread.sleep(20);
         m=Connection.LOCALHOST_SERVER.read();
         Assert.assertTrue(m.isPresent());
-        String a = HooksOrder.INITIALISE_HOOK.getOrderStr() + " " + 0 + " " + new StringBuilder(String.format(Locale.US, "%d", 2)) + " " + new StringBuilder(String.format(Locale.US, "%d", 3)) + " " + new StringBuilder(String.format(Locale.US, "%d", 2)) + " " + new StringBuilder(String.format(Locale.US, "%.3f", Math.PI)) + " " + new StringBuilder(String.format(Locale.US, "%.3f", 2.0) + " " + ActionsOrder.FermePorteAvant.getOrderStr());
-        Assert.assertEquals(a,m.get());
+        String a = String.format(Locale.US, "%s %d %d %d %d %.3f %.3f %s", HooksOrder.INITIALISE_HOOK.getOrderStr(), 0, 2, 3, 2, Math.PI, 2.0, ActuatorsOrder.FERME_PORTE_AVANT.getOrderStr());
+        Assert.assertEquals(a, m.get());
     }
 
     /**
@@ -199,8 +203,8 @@ public class Test_OrderWrapper {
         Thread.sleep(20);
         m = Connection.LOCALHOST_SERVER.read();
         Assert.assertTrue(m.isPresent());
-        String a=HooksOrder.ENABLE_HOOK.getOrderStr() +" "+ HookNames.SPEED_DOWN.getId();
-        Assert.assertEquals(a,m.get());
+        String a = String.format(Locale.US, "%s %d", HooksOrder.ENABLE_HOOK.getOrderStr(),  HookNames.SPEED_DOWN.getId());
+        Assert.assertEquals(a, m.get());
     }
 
     /**
@@ -213,7 +217,7 @@ public class Test_OrderWrapper {
         Thread.sleep(20);
         m = Connection.LOCALHOST_SERVER.read();
         Assert.assertTrue(m.isPresent());
-        String a = HooksOrder.DISABLE_HOOK.getOrderStr() +" "+ HookNames.SPEED_DOWN.getId();
+        String a = String.format(Locale.US, "%s %d", HooksOrder.DISABLE_HOOK.getOrderStr(),  HookNames.SPEED_DOWN.getId());
         Assert.assertEquals(a,m.get());
     }
 

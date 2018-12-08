@@ -23,16 +23,16 @@ package orders.order;
  *
  * @author yousra
  */
-public enum ActionsOrder implements Order {
+public enum ActuatorsOrder implements Order {
     //Exemples
-    OuvrePorteAvant("olpAv"),
-    FermePorteAvant("flpAv"),
-    OuvrePorteArriere("olpAr"),
-    FermePorteArriere("flpAr"),
-    ActiveLaPompe("alp"),
-    DesactiveLaPompe("dlp"),
-    FermePorteDroite("flpd"),
-    FermePorteGauche("flpg"),
+    OUVRE_PORTE_AVANT("olpAv"),
+    FERME_PORTE_AVANT("flpAv"),
+    OUVRE_PORTE_ARRIERE("olpAr"),
+    FERME_PORTE_ARRIERE("flpAr"),
+    ACTIVE_LA_POMPE("alp"),
+    DESACTIVE_LA_POMPE("dlp"),
+    FERME_PORTE_DROITE("flpd"),
+    FERME_PORTE_GAUCHE("flpg"),
     ;
 
     /**
@@ -49,7 +49,7 @@ public enum ActionsOrder implements Order {
      * Constructeur qui ne précise pas la durée l'action
      * @param orderStr action à faire
      */
-    ActionsOrder(String orderStr){
+    ActuatorsOrder(String orderStr){
         this(orderStr, 0);
     }
 
@@ -58,7 +58,7 @@ public enum ActionsOrder implements Order {
      * @param orderStr : action à faire 
      * @param actionDuration : durée de l'action
      */
-    ActionsOrder(String orderStr, int actionDuration){
+    ActuatorsOrder(String orderStr, int actionDuration){
         this.orderStr=orderStr;
         this.actionDuration=actionDuration;
     }

@@ -19,7 +19,7 @@
 import data.XYO;
 import locomotion.Locomotion;
 import orders.OrderWrapper;
-import orders.order.ActionsOrder;
+import orders.order.ActuatorsOrder;
 import orders.Speed;
 import pfg.config.Config;
 import utils.container.Service;
@@ -71,7 +71,7 @@ public abstract class Robot implements Service {
         //TODO
     }
 
-    protected void useActuator(ActionsOrder order) {
+    protected void useActuator(ActuatorsOrder order) {
         //TODO
     }
 

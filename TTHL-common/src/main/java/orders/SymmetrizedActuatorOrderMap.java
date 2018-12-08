@@ -19,7 +19,7 @@
 package orders;
 
 import pfg.config.Config;
-import orders.order.ActionsOrder;
+import orders.order.ActuatorsOrder;
 import orders.order.Order;
 import utils.container.Service;
 
@@ -36,22 +36,22 @@ public class SymmetrizedActuatorOrderMap implements Service {
     /**
      * Map contenant un actionneur pour clé, et son symétrique pour valeur
      */
-    Map<ActionsOrder, ActionsOrder> mCorrespondenceMap = new HashMap<ActionsOrder, ActionsOrder>();
+    Map<ActuatorsOrder, ActuatorsOrder> correspondenceMap = new HashMap<ActuatorsOrder, ActuatorsOrder>();
 
     /**
      * construit la map de correspondances
      */
-    public SymmetrizedActuatorOrderMap(){
-        mCorrespondenceMap.put(ActionsOrder.FermePorteDroite, ActionsOrder.FermePorteGauche);
+    private SymmetrizedActuatorOrderMap(){
+        correspondenceMap.put(ActuatorsOrder.FERME_PORTE_DROITE, ActuatorsOrder.FERME_PORTE_GAUCHE);
     }
 
     /**
      * @param order l'actionneur à symétriser
      * @return l'actionneur à symétriser
      */
-    public Order getSymmetrizedActuatorOrder(ActionsOrder order)
+    public Order getSymmetrizedActuatorOrder(ActuatorsOrder order)
     {
-        return mCorrespondenceMap.get(order);
+        return correspondenceMap.get(order);
     }
 
     @Override

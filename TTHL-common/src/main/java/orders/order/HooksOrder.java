@@ -35,37 +35,18 @@ public enum HooksOrder implements Order {
     /**Ordre envoyé au LL*/
     private String orderStr;
 
-    /**Durée de l'action en ms*/
-    private int actionDuration;
-
     /**
      * Constructeur qui ne précise pas la durée des actions
      * @param orderStr ordre envoyé au LL
      */
     HooksOrder(String orderStr){
-        this(orderStr, 0);
+        this.orderStr = orderStr;
     }
 
-    /**
-     * Constructeur qui précise la durée des actions
-     * @param orderStr
-     * @param actionDuration
-     */
-    HooksOrder(String orderStr, int actionDuration){
-        this.orderStr=orderStr;
-        this.actionDuration=actionDuration;
-    }
     /**getter de l'ordre
      * @return ordre en string envoyé
      * */
     public String getOrderStr(){
         return this.orderStr;
     }
-    /**Getter de la durée de l'action
-     *@return durée de l'action
-     * */
-    public int getActionDuration(){
-        return this.actionDuration;
-    }
-
 }

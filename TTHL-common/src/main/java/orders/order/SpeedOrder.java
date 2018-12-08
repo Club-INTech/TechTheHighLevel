@@ -36,26 +36,11 @@ public enum SpeedOrder implements Order {
     private String orderStr;
 
     /**
-     * Durée de l'action en ms
-     */
-    private int actionDuration;
-
-    /**
      * Constructeur qui ne précise pas la durée l'action
      * @param orderStr action à faire
      */
     SpeedOrder(String orderStr){
-        this(orderStr, 0);
-    }
-
-    /**
-     * Constructeur qui précise l'action et sa durée
-     * @param orderStr : action à faire
-     * @param actionDuration : durée de l'action
-     */
-    SpeedOrder(String orderStr, int actionDuration){
-        this.orderStr=orderStr;
-        this.actionDuration=actionDuration;
+        this.orderStr = orderStr;
     }
 
     /**
@@ -63,8 +48,5 @@ public enum SpeedOrder implements Order {
      */
     public String getOrderStr(){
         return this.orderStr;
-    }
-    public int getActionDuration(){
-        return this.actionDuration;
     }
 }

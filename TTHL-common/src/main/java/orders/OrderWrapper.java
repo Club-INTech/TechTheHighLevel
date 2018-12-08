@@ -20,7 +20,7 @@ package orders;
 
 import connection.Connection;
 import orders.order.MotionOrder;
-import orders.order.ActionsOrder;
+import orders.order.ActuatorsOrder;
 import orders.order.Order;
 import orders.order.SpeedOrder;
 import orders.order.PositionAndOrientationOrder;
@@ -67,8 +67,8 @@ public class OrderWrapper implements Service {
     public void useActuator(Order order)
     {
         Order symetrisedOrder;
-        if(symetry && order instanceof ActionsOrder){
-            symetrisedOrder=this.symmetrizedActuatorOrderMap.getSymmetrizedActuatorOrder((ActionsOrder) order);
+        if(symetry && order instanceof ActuatorsOrder){
+            symetrisedOrder=this.symmetrizedActuatorOrderMap.getSymmetrizedActuatorOrder((ActuatorsOrder) order);
             if(symetrisedOrder != null){
                 order=symetrisedOrder;
             }
@@ -222,8 +222,8 @@ public class OrderWrapper implements Service {
             Log.HOOK.debug("la position envoyée au bas niveau pour le hook"+posTrigger.toString());
             orientation=(Math.PI - orientation)%(2*Math.PI);
             Log.HOOK.debug("l'orientation envoyée au bas niveau pour le hook"+orientation);
-            if( order instanceof ActionsOrder) {
-                symetrisedOrder = symmetrizedActuatorOrderMap.getSymmetrizedActuatorOrder((ActionsOrder) order);
+            if( order instanceof ActuatorsOrder) {
+                symetrisedOrder = symmetrizedActuatorOrderMap.getSymmetrizedActuatorOrder((ActuatorsOrder) order);
                 if(symetrisedOrder !=null){
                     order=symetrisedOrder;
                 }

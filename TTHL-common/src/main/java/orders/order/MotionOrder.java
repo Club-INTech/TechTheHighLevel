@@ -37,26 +37,12 @@ public enum MotionOrder implements Order {
     /**Ordre envoyé au LL*/
     private String orderStr;
 
-    /**Durée de l'action en ms*/
-    private int actionDuration;
-
     /**
      * Constructeur qui ne précise pas la durée de l'action
      * @param orderStr : order envoyé au LL
      */
     MotionOrder(String orderStr){
-        this(orderStr, 0);
-    }
-
-    /**
-     * Constructeur qui précise la durée de l'action
-     * @param orderStr : ordre envoyé au LL
-     * @param actionDuration : durée de l'action
-     */
-
-    MotionOrder(String orderStr, int actionDuration){
-        this.orderStr=orderStr;
-        this.actionDuration=actionDuration;
+        this.orderStr = orderStr;
     }
 
     /**
@@ -65,13 +51,5 @@ public enum MotionOrder implements Order {
      */
     public String getOrderStr(){
         return this.orderStr;
-    }
-
-    /**
-     * Getter de la durée de l'action
-     * @return durée de l'action
-     */
-    public int getActionDuration(){
-        return this.actionDuration;
     }
 }

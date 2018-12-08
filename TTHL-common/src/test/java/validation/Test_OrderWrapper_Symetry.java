@@ -26,13 +26,12 @@ import org.junit.Before;
 import org.junit.Test;
 import pfg.config.Config;
 import orders.OrderWrapper;
-import orders.order.ActionsOrder;
+import orders.order.ActuatorsOrder;
 import orders.order.HooksOrder;
 import orders.order.MotionOrder;
 import orders.order.PositionAndOrientationOrder;
 import utils.ConfigData;
 import utils.Container;
-import utils.container.ContainerException;
 import utils.math.VectCartesian;
 
 import java.util.Locale;
@@ -101,11 +100,17 @@ public class Test_OrderWrapper_Symetry {
      */
     @Test
     public void configureHookTestWithSymetry() throws Exception {
-        orderWrapper.configureHook(0, new VectCartesian(2, 3), 2, Math.PI / 3, 2, ActionsOrder.FermePorteDroite);
+        orderWrapper.configureHook(0, new VectCartesian(2, 3), 2, Math.PI / 3, 2, ActuatorsOrder.FERME_PORTE_DROITE);
         Thread.sleep(10);
         m=Connection.LOCALHOST_SERVER.read();
         Assert.assertTrue(m.isPresent());
-        String a = HooksOrder.INITIALISE_HOOK.getOrderStr() + " " + 0 + " " + new StringBuilder(String.format(Locale.US, "%d", -2)) + " " + new StringBuilder(String.format(Locale.US, "%d", 3)) + " " + new StringBuilder(String.format(Locale.US, "%d", 2)) + " " + new StringBuilder(String.format(Locale.US, "%.3f", 2 * Math.PI / 3)) + " " + new StringBuilder(String.format(Locale.US, "%.3f", 2.0) + " " + ActionsOrder.FermePorteGauche.getOrderStr());
+        String a = HooksOrder.INITIALISE_HOOK.getOrderStr() + " "
+                + 0 + " " + new StringBuilder(String.format(Locale.US, "%d", -2)) + " "
+                + new StringBuilder(String.format(Locale.US, "%d", 3)) + " "
+                + new StringBuilder(String.format(Locale.US, "%d", 2)) + " "
+                + new StringBuilder(String.format(Locale.US, "%.3f", 2 * Math.PI / 3)) + " "
+                + new StringBuilder(String.format(Locale.US, "%.3f", 2.0) + " "
+                + ActuatorsOrder.FERME_PORTE_GAUCHE.getOrderStr());
         Assert.assertEquals(a, m.get());
 
     }
