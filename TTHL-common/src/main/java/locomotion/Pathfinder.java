@@ -75,21 +75,27 @@ public class Pathfinder implements Service {
         Set<Node> neighbours;
         int currentCost;
 
+        // On clean la liste des noeuds à visiter et on ajoute le noeud de départ
         openList.clear();
         openList.add(start);
 
+        // Tant qu'il y a des noeuds à visiter
         while (!openList.isEmpty()) {
             currentNode = openList.poll();
 
+            // Si c'est le noeud d'arrivé, on s'arrête
             if (currentNode.equals(aim)) {
                 return reconstructPath(start, aim);
             }
-            neighbours = currentNode.getNeighbours().keySet();
 
+            // Sinon on parcours tout ses voisins
+            neighbours = currentNode.getNeighbours().keySet();
             for (Node neighbour : neighbours) {
                 Ridge ridge = currentNode.getNeighbours().get(neighbour);
+                // Si le voisin est accessible (s'il n'y a pas d'obstacle mobile entre les deux noeuds)
                 if (ridge.isReachable()) {
                     currentCost = currentNode.getCout() + ridge.getCost();
+                    // Si l'on a déjà visiter ce noeud et que l'on a trouvé un meilleur chemin, on met à jour le noeud
                     if ((openList.contains(neighbour) || closedList.contains(neighbour)) && currentCost < neighbour.getCout()) {
                         neighbour.setCout(currentCost);
                         neighbour.setPred(currentNode);
@@ -98,6 +104,7 @@ public class Pathfinder implements Service {
                             openList.add(neighbour);
                         }
                     } else if (!(openList.contains(neighbour) || closedList.contains(neighbour))) {
+                        // Sinon, si le noeud n'as jamais été visité, lui assigne le coût courant et le noeud courant comme prédecesseur
                         neighbour.setCout(currentCost);
                         neighbour.setPred(currentNode);
                         openList.add(neighbour);

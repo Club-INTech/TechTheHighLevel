@@ -47,17 +47,23 @@ public class OrderWrapper implements Service {
      */
     private boolean symetry;
 
-    /**On utitise comme connexion par défaut le bas niveau*/
+    /**
+     * On utitise comme connexion par défaut le bas niveau
+     */
     private Connection llConnection = Connection.TEENSY_MASTER;
 
+    /**
+     * Le service de symétrie des ordres
+     */
     private SymmetrizedActuatorOrderMap symmetrizedActuatorOrderMap;
 
     /**
-     * Conctructeur en privé car déjà instancié par le container, pour éviter que qqn l'instancie
+     * Construit l'order wrapper
+     * @param symmetrizedActuatorOrderMap
+     *              service permettant de gérer la symétrie des ordres
      */
     private OrderWrapper(SymmetrizedActuatorOrderMap symmetrizedActuatorOrderMap){
-        this.symmetrizedActuatorOrderMap=symmetrizedActuatorOrderMap;
-
+        this.symmetrizedActuatorOrderMap = symmetrizedActuatorOrderMap;
     }
 
     /**
@@ -111,7 +117,6 @@ public class OrderWrapper implements Service {
     /**
      * On envoit au LL l'ordre d'aller en ligne droite jusqu'à un point
      * @param point point visé
-     * TODO Ajouter le test
      */
     public void moveToPoint(Vec2 point) {
         Vec2 p = point;
