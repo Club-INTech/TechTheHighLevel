@@ -15,5 +15,9 @@
     * <u>FieldOrMethods</u> static
     * @ surcharge
     
-### MEMO - JAVA ?
+### MEMO - JAVA
+#### JAVA LANGUAGE
+TODO
+#### JAVA CONVENTION
+TODO
 ### MEMO - MAVEN ?

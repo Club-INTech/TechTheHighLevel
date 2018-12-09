@@ -90,8 +90,8 @@ public class Test_OrderWrapper_Symetry {
         Thread.sleep(10);
         m=Connection.LOCALHOST_SERVER.read();
         Assert.assertTrue(m.isPresent());
-        String a = String.format("%s %d %d %.3f",
-                PositionAndOrientationOrder.SET_POSITION_AND_ORIENTATION.getOrderStr(), -2, 3, 2 * Math.PI/3);
+        String a = String.format(Locale.US, "%s %d %d %.3f",
+                PositionAndOrientationOrder.SET_POSITION_AND_ORIENTATION.getOrderStr(), -2, 3, 2* Math.PI/3);
         Assert.assertEquals(a, m.get());
 
     }
@@ -105,7 +105,7 @@ public class Test_OrderWrapper_Symetry {
         Thread.sleep(10);
         m=Connection.LOCALHOST_SERVER.read();
         Assert.assertTrue(m.isPresent());
-        String a = String.format("%s %d %d %d %d %.3f %.3f %s",
+        String a = String.format(Locale.US, "%s %d %d %d %d %.3f %.3f %s",
                 HooksOrder.INITIALISE_HOOK.getOrderStr(), 0, -2, 3, 2, 2* Math.PI/3, 2.0, ActuatorsOrder.FERME_PORTE_GAUCHE.getOrderStr());
         Assert.assertEquals(a, m.get());
 
