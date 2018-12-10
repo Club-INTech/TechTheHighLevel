@@ -19,11 +19,14 @@
 
 # TTHL - TODO & Documentation
 **TODO** :
+
+* Ajouter la gestion des capteurs Sick
 * Mettre en place les ordres, actions & scripts
 * Gérer les cas délicats dans du package Locomotion
 * Construire une IA !
 
 **Documentation** :
+
 * TODO.md
 * README.md
 * doc/MEMO.md
