@@ -1,7 +1,52 @@
 ## MEMO
 ### MEMO - JAVA
 #### JAVA - LANGUAGE
-TODO
+* Les types primitifs des variables en java sont : boolean, char(2 octets), byte(1 octet), short( octets), int(4 octets), long(8 octets), 
+  float(4 octets) et double(8 octets)
+* Les références en java sont tous les types qui n'appartiennent pas aux 8 types primitifs cités dessus. 
+* Le passage dans les fonctions se fait soit par référénce soit par type primitif, quand il se fait par type primitif,
+  la fonction crée une copie de la variable, agit sur cette variable et la renvoit, donc la variable 
+  donnée en paramètre ne se retrouve pas modifiée. 
+  Quand le passage se fait par référence, la variable passée en paramètre se rerouve modifiée, il faut donc 
+  la clone si on ne veut pas qu'elle soit modifiée. 
+ * La programmation orientée objet consiste à penser l'application qu'on souhaite coder en terme de fonctionnalités, ou plutôt de concepts, 
+ en partant d'un diagramme UML. Il s'agit donc de cerner les entités qui présentent des caractéristiques et de construire un modèle à partir 
+ de cela. 
+ *Une classe c'est un moule qui permettra d'instancier plusieurs objets présentant des caractéristiques qu'on nommera
+ attributs de la classe, ces objets doivent bien évidemment intéragir entre eux à travers des méthodes. 
+ *Il ne faut pas oublier d'instancier son objet sinon vous aurez une erreur d'éxecution (Nul Pointer Exception)
+ * Il existe deux types de méthodes : méthodes de classe (en static), il n'y a pas besoin d'instancier les objets pour les utiliser, 
+ et les méthodes d'instance qui doivent être appelés sur un objet instancié (avec le new), l'appel se fait ainsi : 
+        
+        Objet objet = new Objet();
+        objet.maMéthode();
+ * Il existe quatre attributs utilisés pour gérer la visibilité : public, private, (rien), protected, donc quatre déclarations possibles de méthodes : 
+        
+        public void methode(){....}
+        private void methode(){....}
+        void methode(){....}
+        protected void methode(){....}
+ * public : attribut ou méthode visible partout 
+ * private: attribut ou méthode visible dans la classe : fonctionnalités internes à la classe  
+ * protected: attribut ou méthode visible dans les classes filles  ( voir héritage en dessous)
+ * rien: attribut ou méthode visible dans le package
+ 
+ * Une classe peut hériter d'autres classes avec le mot extends, une classe fille est du même type que sa classe mère, possède ses mêmes attributs et 
+ méthodes qu'elle peut modifier en les override. Une classe mère n'est pas du même type que sa classe fille, mais on peut le transtyper en faisant : 
+ 
+        ClasseMère classeMère=(ClasseFille) new ClasseFille();
+ 
+ * Une classe ne peut hériter que d'une seule classe, d'où l'intérêt des interfaces. 
+ * Les interfaces définissent un comportement de la classe qui les implémentent. Les classes peuvent implémenter plusieurs interfaces. 
+ * Les enums : c'est une classe comme les autres mais avec la particularité de lister toutes ses instances à l’intérieur de la classe.
+  Les instances sont visibles partout et accessibles de partout dans le code.
+ * Les exceptions servent à gérer les erreurs via un système de try catch. 
+
+ 
+ 
+ 
+ 
+  
 #### JAVA - CONVENTION
 * Une Classe commence toujours par une majuscule, une instance par une minuscule :
 
@@ -18,8 +63,8 @@ TODO
         }
 
 * Les méthodes doivent être documentées : une documentation doit expliquer à quoi sert la méthode,
-  pas son fonctionnement interne. Si son fonctionnement interne est complexe et merite d'être
-  détaillé, on ajoute du commentaire dans le corps de la méthode. Exemple de utils.math.Rectangle.java :
+  pas son fonctionnement interne. Si son fonctionnement interne est complexe et mérite d'être
+  détaillée, on ajoute du commentaire dans le corps de la méthode. Exemple de utils.math.Rectangle.java :
 
         /**
          * Ceci est une documentation (javadoc)
