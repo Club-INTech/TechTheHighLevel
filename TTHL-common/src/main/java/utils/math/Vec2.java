@@ -37,6 +37,39 @@ public abstract class Vec2 {
     /**calculateAngle polaire du point*/
     private double a;
 
+    /**
+     * Construit un vecteur nul
+     */
+    protected Vec2() {
+        this.x = 0;
+        this.y = 0;
+        this.a = 0;
+        this.r = 0;
+    }
+
+    /**
+     * Construit un vecteur
+     * @param x abscisse
+     * @param y ordonnée
+     */
+    protected Vec2(int x, int y) {
+        this.x = x;
+        this.y = y;
+        this.a = this.calculateAngle();
+        this.r = this.calculateRay();
+    }
+
+    /**
+     * Construit un vecteur
+     * @param r rayon
+     * @param a angle
+     */
+    protected Vec2(double r, double a) {
+        this.r = r;
+        this.a = a;
+        this.x = (int) Math.round(r*Math.cos(a));
+        this.y = (int) Math.round(r*Math.sin(a));
+    }
 
     /**
      * Produit scalaire
@@ -121,7 +154,7 @@ public abstract class Vec2 {
      * @return  r²
      */
     public double squaredLength(){
-        return (int) (r * r);
+        return (this.x * this.x + this.y + this.y);
     }
 
     /**
