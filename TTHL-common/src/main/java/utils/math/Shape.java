@@ -24,7 +24,7 @@ package utils.math;
  * @author yousra, rem
  */
 public abstract class Shape implements Cloneable {
-    /**
+    /**œ
      * Centre de la forme
      */
     protected Vec2 center;

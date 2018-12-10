@@ -37,39 +37,6 @@ public abstract class Vec2 {
     /**calculateAngle polaire du point*/
     private double a;
 
-    /**
-     * Constructeur d'un vecteur nul
-     */
-    protected Vec2(){
-        this.x = 0;
-        this.y = 0;
-        this.r = 0;
-        this.a = 0;
-    }
-
-    /**
-     * Constructeur d'un vecteur en coordonnées cartésiennes
-     * @param x
-     * @param y
-     */
-    protected Vec2(int x, int y) {
-        this.x = x;
-        this.y = y;
-        this.r = Math.sqrt(x*x+y*y);
-        this.a = this.calculateAngle();
-    }
-
-    /**
-     * Constructeur d'un vecteur en coordonnées polaires
-     * @param r rayon
-     * @param a angle
-     */
-    protected Vec2(double r, double a) {
-        this.r = r;
-        this.a = a;
-        this.x = (int)Math.round((r*Math.cos(a)));
-        this.y = (int)Math.round((r*Math.sin(a)));
-    }
 
     /**
      * Produit scalaire
@@ -175,7 +142,7 @@ public abstract class Vec2 {
     }
 
     /**
-     * On calcule l'calculateAngle du vecteur entre [-pi, pi[ (non inclus)
+     * On calcule l'angle du vecteur entre [-pi, pi[ (non inclus)
      * @return  a
      */
     private double calculateAngle() {
