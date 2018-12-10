@@ -32,9 +32,7 @@ Le HL est composé de trois modules Maven :
 
 * **TTHL-slave** : IA du robot secondaire
 
-#### TTHL-common 
-    
- 
+#### TTHL-common
 
 L'architecture de ce projet est orientée micro-services : l'IA se base sur plusieurs modules qui ont tous une tâche bien
 définie, et qui communiquent entre eux si besoin. Elle est construite de manière à ce qu'elle soit maintenable, 
@@ -71,7 +69,7 @@ Dans le dossier des sources, plusieurs packages regroupent les classes par fonct
   
 L'orchestration de tous ces packages et modules se fait de la manière suivante :
 
-**TODO** : UML de l'architecture générale
+![TTHL - Architecture générale](doc/images/TTHL.png)
 
 #### TTHL-master
 #### TTHL-slave
@@ -148,6 +146,29 @@ MonService.java :
 
 ##### Connection
 * **ConnectionManager**
+
+Ce service sert à gérer des IO (Input Output) du HL, c'est-à-dire l'échange de messages entre le HL et le LL,
+mais aussi avec le Lidar, et la communication Master-Slave. Il se base sur l'enum Connection qui répertorie les
+connections du HL. Après avoir initialiser les connections à l'aide de la méthode _initConnections(Connection... connections)_,
+on peut simplement envoyer et lire des messages grâce aux autres méthodes :
+
+    import connection.ConnectionManager
+    import connection.Connection
+
+    public static void main(String[] args) {
+        Container container = Container.getInstance("Master");
+        ConnectionManager connectionManager = container.getService(ConnectionManager.class);
+
+        connectionManager.initConnections(Connection.LOCALHOST_SERVER, Connection.LOCALHOST_CLIENT);
+        Connection.LOCALHOST_SERVER.send("Hello !");
+        Optional<String> m = Connection.LOCALHOST_CLIENT.read();
+        String mess;
+        if (m.isPresent()) {
+            mess = m.get();
+        }
+    }
+
+**ATTENTION** : Dans le HL, les connections sont initialisées dans le Listener ! (voir plus bas)
 
 ##### Orders
 * **OrderWrapper**
@@ -240,6 +261,22 @@ et l'activer. Par exemple dans la classe Main.java:
 
 ##### Data
 * **Table**
+
+Cette classe représente la table et contient donc les obstacles et tout ce qu'on peut faire avec, les supprimer ou les
+bouger par exemple. Cette classe s'appuie donc sur la classe Obstacle est ses classes filles. La principale modification
+effectuée dans cette classe est l'ajout des obstacles fixes (les élements de jeu dont on connait la position exacte au top
+départ)
+
+    public class Table {
+        ...
+        private void initObstacle() {
+            StillRectangularObstacle monObstacle = new StillRectangularObstacle(
+                new VectCartesian(0, 1800), 1600 + 2* this.robotRay, 300 + 2* this.robotRay);
+            this.fixedObstacles.add(monObstacle);
+        }
+        ...
+    }
+
 * **Graphe**
 * **SensorState**
 * **XYO**
