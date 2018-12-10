@@ -18,6 +18,7 @@
 
 import data.XYO;
 import locomotion.Locomotion;
+import locomotion.UnableToMoveException;
 import orders.OrderWrapper;
 import orders.order.ActuatorsOrder;
 import orders.Speed;
@@ -54,36 +55,78 @@ public abstract class Robot implements Service {
      * @param orderWrapper
      *              service d'envoie d'ordre vers le LL
      */
-    public Robot(Locomotion locomotion, OrderWrapper orderWrapper) {
+    protected Robot(Locomotion locomotion, OrderWrapper orderWrapper) {
         this.locomotion = locomotion;
         this.orderWrapper = orderWrapper;
     }
 
-    public void moveToPoint(Vec2 point) {
-        //TODO
+    /**
+     * Permet au robot d'aller jusqu'à un point donnée
+     * @param point
+     *              le point visé
+     * @throws UnableToMoveException
+     *              en cas de problème de blocage/adversaire
+     */
+    public void moveToPoint(Vec2 point) throws UnableToMoveException {
+        this.locomotion.moveToPoint(point);
     }
 
-    public void moveLengthwise(int distance) {
-        //TODO
+    /**
+     * Permet au robot d'avancer/recluer en ligne droite
+     * @param distance
+     *              la distance à parcourir, négative si l'on veut aller en arrière
+     * @param expectedWallImpact
+     *              true si l'on s'attend à un blocage mécanique (lorsque l'on veut se caler contre le mur par exemple)
+     * @throws UnableToMoveException
+     *              en cas de problèmes de blocage/adversaire
+     */
+    public void moveLengthwise(int distance, boolean expectedWallImpact) throws UnableToMoveException {
+        this.locomotion.moveLenghtwise(distance, expectedWallImpact);
     }
 
-    public void turn(double angle) {
-        //TODO
+    /**
+     * Permet au robot de tourner sur lui-même
+     * @param angle
+     *              angle absolue vers lequel on veut se tourner
+     * @throws UnableToMoveException
+     *              en cas de problème de blocage/adversaire
+     */
+    public void turn(double angle) throws UnableToMoveException {
+        this.locomotion.turn(angle);
     }
 
+    /**
+     * Permet au robot d'utiliser un actionneur
+     * @param order
+     *              l'ordre que l'on veut executer
+     */
     protected void useActuator(ActuatorsOrder order) {
-        //TODO
+        this.orderWrapper.useActuator(order);
     }
 
+    /**
+     * Change la vitesse du LL
+     * @param speed
+     *              la vitesse souhaitée
+     */
     public void setSpeed(Speed speed) {
-        //TODO
+        this.orderWrapper.setBothSpeed(speed);
     }
 
+    /**
+     * Change la position du LL
+     * @param pos
+     *              position souhaitée
+     * @param orientation
+     *              orientation souhaitée
+     */
     public void setPositionAndOrientation(Vec2 pos, double orientation) {
-        //TODO
+        this.orderWrapper.setPositionAndOrientation(pos, orientation);
     }
     // And so on...
 
     @Override
-    public void updateConfig(Config config) {}
+    public void updateConfig(Config config) {
+
+    }
 }

@@ -130,7 +130,7 @@ public class Locomotion implements Service {
      * Méthode permettant au robot de se déplacer jusqu'à un point de la table
      * @param point point à atteindre
      */
-    public void moveToPoint(Vec2 point) {
+    public void moveToPoint(Vec2 point) throws UnableToMoveException {
         // TODO : Synchroniser
         Node start;
         Node aim;
