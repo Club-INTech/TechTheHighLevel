@@ -12,15 +12,24 @@
 ![TTHL - Common](../images/TTHL-common.png){ width=105% }
 
 # TTHL - Master & Slave
-TODO : Trouver une image de l'oncle Sam
+![Please Wait...](../images/Loading.png)
 
 # TTHL - Et du coup ?
-TODO : Image de la table et explication de ce qu'on fait concrètement
+![La Table](../images/Eurobot2019_Table.jpg)
 
-# TTHL - Documentation
+# TTHL - TODO & Documentation
+**TODO** :
+
+* Ajouter la gestion des capteurs Sick
+* Mettre en place les ordres, actions & scripts
+* Gérer les cas délicats dans du package Locomotion
+* Construire une IA !
+
+**Documentation** :
+
+* TODO.md
 * README.md
 * doc/MEMO.md
-* TODO.md
 
 # TTHL - GO
 1.  Installer IntelliJ Ultimate :
