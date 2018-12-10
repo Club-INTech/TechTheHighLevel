@@ -42,11 +42,6 @@
   Les instances sont visibles partout et accessibles de partout dans le code.
  * Les exceptions servent à gérer les erreurs via un système de try catch. 
 
- 
- 
- 
- 
-  
 #### JAVA - CONVENTION
 * Une Classe commence toujours par une majuscule, une instance par une minuscule :
 
@@ -101,6 +96,19 @@
          * You should have received a copy of the GNU General Public License
          * along with it.  If not, see <http://www.gnu.org/licenses/>.
          **/
+
+### MEMO - GIT
+* On travaille toujours dans la branche **dev**, la branche **master** est réservée à ce qui **fonctionne** !
+* On **commit** TOUJOURS quelque chose qui compile, avec un message CLAIR (git commit -m "Mon message"),
+  pour vérifier, dans le terminal :
+
+        mvn compile
+
+* On **push** quelque chose d'à peu près terminé !
+* On **merge** sur **master** des features dont les **tests** fonctionnent,
+  pour vérifier, dans le terminal :
+
+        mvn clean install
 
 ### MEMO - UML
 ![Exemple UML - utils.communication](uml/utils.communication-conection.png)
